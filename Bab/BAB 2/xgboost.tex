@@ -1,0 +1,85 @@
+\section{\it XGBoost}
+
+{\it Extreme Gradient Boosting} (XGBoost) merupakan algoritma klasifikasi berbasis pohon keputusan yang dikembangkan dari metode {\it Gradient Boosting Machine} (GBM) dan dioptimalkan untuk efisiensi, skalabilitas, serta akurasi (Chen \& Guestrin, 2016). XGBoost bekerja dengan cara membangun model secara bertahap melalui penambahan pohon-pohon keputusan secara berurutan untuk memperbaiki kesalahan prediksi dari model sebelumnya. Pada setiap iterasi, model baru dilatih untuk meminimalkan fungsi kerugian yang dikombinasikan dengan regularisasi guna mencegah {\it overfitting} (Friedman, 2001).
+
+    Fungsi objektif pada XGBoost dirumuskan sebagai berikut:
+    \[
+    \mathcal{L}(\phi) = \sum_{i=1}^{n} l(\hat{y}_i, y_i) + \sum_{k=1}^{K} \Omega(f_k)
+    \]
+    dengan \(\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2\),  
+    di mana \(l\) adalah fungsi kerugian (misalnya log-loss), \(\Omega\) adalah fungsi regularisasi, dan \(T\) adalah jumlah daun pada pohon, dan \(w_j\) bobot pada daun ke-$j$. Tujuan dari XGBoost adalah meminimalkan fungsi \(\mathcal{L}\), sehingga model menjadi akurat dan tidak terlalu kompleks.
+    
+    Misalkan terdapat tiga data penyewa untuk pelatihan:
+    \begin{itemize}
+        \item Data 1: (lama menginap = 2 hari, check-in = 22.00) $\rightarrow$ label: 0 (normal)
+        \item Data 2: (lama menginap = 1 hari, check-in = 00.00) $\rightarrow$ label: 1 (mencurigakan)
+        \item Data 3: (lama menginap = 3 hari, check-in = 20.00) $\rightarrow$ label: 0 (normal)
+    \end{itemize}
+    
+    Asumsikan prediksi awal (\(\hat{y}_i\)) untuk semua data adalah 0.5, maka residu dihitung menggunakan derivatif pertama dari log-loss.
+    \[
+    g_i = \hat{y}_i - y_i
+    \] maka: 
+    \[
+    \text{Data 1: } g_1 = 0{.}5 - 0 = 0{.}5,\quad 
+    \text{Data 2: } g_2 = 0{.}5 - 1 = -0{.}5,\quad 
+    \text{Data 3: } g_3 = 0{.}5 - 0 = 0{.}5
+    \]
+    
+    Kemudian pohon pertama dibentuk berdasarkan {\it gradient} tersebut. Misalkan pohon tersebut membagi data berdasarkan \textit{check-in}:
+    \begin{itemize}
+      \item jika \textit{check-in} $>$ 21.00 $\rightarrow$ ke daun A
+      \item jika \textit{check-in} $\leq$ 21.00 $\rightarrow$ ke daun B
+    \end{itemize}
+    
+    maka:
+    \begin{itemize}
+      \item data 1 dan 2 masuk daun A
+      \item data 3 masuk daun B
+    \end{itemize}
+    
+    Langkah selanjutnya adalah menghitung nilai bobot prediksi di tiap daun menggunakan rumus berikut.
+    \[
+    w_j = -\frac{\sum g_i}{\sum h_i + \lambda}
+    \]
+    Dengan \(g_i\) adalah {\it gradient} dan \(h_i = \hat{y}_i (1 - \hat{y}_i)\) adalah {\it hessian} (turunan kedua dari log-loss). Misal \(\lambda = 1\), dan semua \(h_i = 0{,}5 \cdot 0{,}5 = 0{,}25\).
+    
+    Untuk daun A (Data 1 dan 2):
+    \[
+    \sum g_i = 0{.}5 + (-0{.}5) = 0,\quad
+    \sum h_i = 0{.}25 + 0{.}25 = 0{.}5
+    \Rightarrow w_A = -\frac{0}{0{.}5 + 1} = 0
+    \]
+    
+    Untuk daun B (Data 3):
+    \[
+    \sum g_i = 0{.}5,\quad
+    \sum h_i = 0{.}25
+    \Rightarrow w_B = -\frac{0{.}5}{0{.}25 + 1} = -\frac{0{.}5}{1{.}25} = -0{.}4
+    \]
+    % \newpage
+    Pohon ini kemudian akan memberikan nilai output:
+    \begin{itemize}
+      \item Untuk daun A: $0$
+      \item Untuk daun B: $-0{.}4$
+    \end{itemize}
+    
+    
+    Output tersebut dijumlahkan dengan prediksi sebelumnya (0{.}5) untuk mendapatkan prediksi baru menggunakan fungsi logit:
+    \[
+    \hat{y}_{baru} = \sigma(\hat{y}_{lama} + \eta \cdot w_j)
+    \]
+    Dengan \(\eta =\) {\it learning rate} (misal 0{.}3) dan \(\sigma\) adalah sigmoid:
+    \[
+    \sigma(z) = \frac{1}{1 + e^{-z}}
+    \]
+    
+    Untuk Data 3:
+    \[
+    z = 0{,}5 + (0{,}3 \cdot -0{,}4) = 0{,}5 - 0{,}12 = 0{,}38
+    \Rightarrow \hat{y} = \frac{1}{1 + e^{-0{,}38}} \approx 0{,}594
+    \]
+    
+    Dikarenakan prediksi masih di bawah batas klasifikasi 0{.}60, maka penyewa diklasifikasikan sebagai normal. Jika nilai akhir $\geq$ 0{.}60, maka akan diklasifikasikan sebagai mencurigakan. Model akan melanjutkan iterasi dengan membentuk pohon-pohon tambahan untuk terus memperbaiki kesalahan prediksi sebelumnya.
+    
+    Keunggulan XGBoost terletak pada kemampuannya menangani data tidak seimbang menggunakan parameter seperti {\tt scale\_pos\_weight}, serta mendukung evaluasi pentingnya fitur melalui teknik {\it feature importance}. Hal ini menjadikannya sangat cocok untuk aplikasi yang menuntut akurasi tinggi serta kemampuan interpretasi terhadap pola perilaku, seperti pada sistem pengawasan penyewa mencurigakan (Kou et al., 2021).

@@ -1,0 +1,268 @@
+% \section{Node.js}
+
+% Node.js adalah (\textit{runtime environment}) untuk JavaScript yang bersifat \textit{open-source} dan lintas platform, dibangun di atas mesin JavaScript V8 milik Chrome. Node.js menggunakan model I/O yang bersifat \textit{non-blocking} dan \textit{event-driven} yang menjadikannya ringan dan efisien terutama untuk aplikasi yang berjalan secara \textit{real-time} pada perangkat terdistribusi (Tilkov \& Vinoski, 2010).
+
+% Dalam konteks penelitian ini, Node.js dipilih sebagai platform utama pengembangan sistem \textit{data capture} dan integrasi model. Pemilihan ini didasarkan pada kebutuhan kompatibilitas dengan sistem \texttt{srusun.id} yang digunakan oleh pengelola Apartemen The Jarrdin, serta untuk memastikan integrasi yang mulus dengan modul-modul lain yang dikembangkan dalam ekosistem yang sama. Node.js memungkinkan penanganan permintaan data penyewa secara asinkronus, sehingga proses input dan validasi data penyewa dapat dilakukan dengan cepat tanpa membebani kinerja server secara keseluruhan.
+
+% Untuk mendukung fungsionalitas sistem, Node.js didukung oleh ekosistem pustaka yang luas melalui NPM (\textit{Node Package Manager}). Beberapa pustaka utama yang digunakan dalam penelitian ini meliputi \texttt{express} untuk pengelolaan server dan rute API, \texttt{mysql2} untuk koneksi ke basis data, \texttt{bcrypt} untuk keamanan autentikasi, serta \texttt{cors} untuk menangani akses lintas domain. Berikut langkah-langkah implementasi sistem \textit{backend} menggunakan Node.js.
+
+% \begin{enumerate}
+%     \item \textbf{Persiapan lingkungan dan instalasi pustaka}
+%     \begin{enumerate}
+%         \item Menginisialisasi proyek Node.js dan menginstal pustaka yang dibutuhkan untuk server dan basis data.
+%         \item Menginstal dependensi utama:
+%         \begin{lstlisting}[language=bash]
+%             npm init -y
+%             npm install express mysql2 bcrypt dotenv path body-parser express-session cors multer json2csv
+%         \end{lstlisting}
+%                 \item Menyiapkan struktur proyek dan variabel lingkungan (\textit{environment variables}) untuk konfigurasi basis data yang aman.
+%             \end{enumerate}
+        
+%             \item \textbf{Konfigurasi server dan koneksi basis data}
+%             \begin{enumerate}
+%                 \item Membuat konfigurasi server menggunakan \textit{framework} Express.js dan mengatur \textit{middleware}:
+%                 \begin{lstlisting}[language=JavaScript]
+%                 const express = require('express');
+%                 const cors = require('cors');
+%                 const bodyParser = require('body-parser');
+                
+%                 const app = express();
+%                 app.use(cors());
+%                 app.use(bodyParser.json());
+%                 \end{lstlisting}
+                
+%                 \item Membangun koneksi ke basis data MySQL untuk penyimpanan data penyewa:
+%                 \begin{lstlisting}[language=JavaScript]
+%                 const mysql = require('mysql2');
+                
+%                 const db = mysql.createConnection({
+%                     host: 'localhost',
+%                     user: 'root',
+%                     password: '',
+%                     database: 'hotel_booking_2'
+%                 });
+                
+%                 db.connect((err) => {
+%                     if (err) throw err;
+%                     console.log('Terhubung ke Basis Data MySQL');
+%                 });
+%                 \end{lstlisting}
+%             \end{enumerate}
+        
+%             \item \textbf{Implementasi API \textit{data capture}} \\
+%             Membuat \textit{endpoint} API (\texttt{POST /api/rentals}) untuk menerima input data penyewa. Implementasi ini menggunakan mekanisme \textit{database transaction} untuk menjamin integritas data, di mana penyimpanan data penyewa dan pencatatan \textit{log} aktivitas dilakukan dalam satu kesatuan proses.
+
+%             \begin{lstlisting}[language=JavaScript]
+%                 app.post('/api/rentals', checkAuth, async (req, res) => {
+%                     const conn = await pool.getConnection();
+%                     try {
+%                         const {
+%                             nama, nik, status_pasutri, unit_number, status_kewarganegaraan,
+%                             jenis_sewa, metode_pembayaran, metode_lain, 
+%                             tanggal_checkin, waktu_checkin, tanggal_checkout
+%                         } = req.body;
+                
+%                         // Hitung durasi menginap
+%                         const lama_menginap = calculateDays(tanggal_checkin, tanggal_checkout);
+%                         const agent_email = req.session.user.email;
+                
+%                         // Mulai transaksi database
+%                         await conn.beginTransaction();
+                
+%                         // 1. Simpan data ke tabel rentals
+%                         const sql = `INSERT INTO rentals (
+%                             nama, nik, status_pasutri, status_kewarganegaraan, 
+%                             jenis_sewa, unit_number, metode_pembayaran, metode_lain, 
+%                             tanggal_checkin, waktu_checkin, tanggal_checkout, 
+%                             lama_menginap, user_email
+%                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                
+%                         const params = [
+%                             nama, nik, status_pasutri, status_kewarganegaraan,
+%                             jenis_sewa, unit_number, metode_pembayaran, 
+%                             metode_pembayaran === 'Others' ? metode_lain : null,
+%                             tanggal_checkin, waktu_checkin, tanggal_checkout, 
+%                             lama_menginap, agent_email
+%                         ];
+                
+%                         const [result] = await conn.query(sql, params);
+%                         const newRentalId = result.insertId;
+                
+%                         // 2. Simpan riwayat ke tabel rental_logs (Audit Trail)
+%                         const logQuery = `INSERT INTO rental_logs (action, field_changed, new_value, email, rental_id) VALUES ?`;
+%                         const logEntries = [
+%                             ['create', 'all', JSON.stringify(req.body), agent_email, newRentalId]
+%                         ];
+%                         await conn.query(logQuery, [logEntries]);
+                
+%                         // Commit transaksi jika semua sukses
+%                         await conn.commit();
+%                         res.json({ success: true, message: "Data penyewa berhasil disimpan." });
+                
+%                     } catch (error) {
+%                         // Rollback jika terjadi error
+%                         if (conn) await conn.rollback();
+%                         console.error("Error saving rental:", error);
+%                         res.status(500).json({ success: false, message: 'Gagal menyimpan data penyewa.' });
+%                     } finally {
+%                         if (conn) conn.release();
+%                     }
+%                 });
+%             \end{lstlisting}
+%     \end{enumerate}
+
+% Sistem ini kemudian diintegrasikan dengan modul klasifikasi (yang dibangun menggunakan Python), memungkinkan hasil deteksi penyewa mencurigakan dapat langsung ditampilkan melalui notifikasi setelah melakukan input data penyewa.
+
+
+% Implementasi sistem \textit{backend} pada penelitian ini dibangun menggunakan kerangka kerja \textbf{Express.js} di atas Node.js untuk menangani rute API, autentikasi, dan logika bisnis. Beberapa komponen kunci yang diimplementasikan dalam kode \texttt{app.js} meliputi:
+
+% \begin{enumerate}
+%     \item \textbf{Manajemen Koneksi Database:}
+%     Sistem menggunakan pustaka \texttt{mysql2} dengan mekanisme \textit{connection pooling} (\texttt{mysql.createPool}) untuk mengelola koneksi ke basis data MySQL secara efisien. Hal ini memungkinkan aplikasi menangani banyak permintaan konkuren tanpa harus membuka dan menutup koneksi secara berulang, yang meningkatkan performa aplikasi.
+    
+%     \item \textbf{Autentikasi dan Keamanan:}
+%     Keamanan data pengguna dijaga menggunakan \textit{middleware} \texttt{bcrypt} untuk melakukan \textit{hashing} kata sandi sebelum disimpan ke database. Selain itu, manajemen sesi pengguna dikelola menggunakan \texttt{express-session} dengan konfigurasi \textit{cookie} yang aman, serta penerapan \textit{Cross-Origin Resource Sharing} (CORS) untuk membatasi akses sumber daya dari domain yang tidak diizinkan. Middleware khusus seperti \texttt{checkAuth} dan \texttt{checkAdmin} diimplementasikan untuk memvalidasi hak akses pengguna berdasarkan peran (\textit{role-based access control}), memastikan fitur sensitif hanya dapat diakses oleh pihak yang berwenang (seperti Ketua Agen, P3SRS, dan PKJ).
+    
+%     \item \textbf{Pengelolaan Data dan Berkas:}
+%     Sistem menggunakan \texttt{body-parser} untuk memproses data formulir (JSON dan URL-encoded) dan \texttt{multer} untuk menangani pengunggahan berkas, seperti foto bukti pelanggaran. Fitur ekspor data juga disediakan menggunakan pustaka \texttt{json2csv}, memungkinkan pengelola mengunduh laporan penyewa dan log aktivitas dalam format CSV untuk analisis lebih lanjut.
+    
+%     \item \textbf{Logika Bisnis dan Transaksi:}
+%     Operasi basis data yang kompleks, seperti pendaftaran pengguna baru atau pembaruan data penyewa yang melibatkan pencatatan log aktivitas (\textit{audit trail}), dibungkus dalam blok transaksi database (\texttt{beginTransaction}, \texttt{commit}, \texttt{rollback}). Pendekatan ini menjamin integritas data, di mana perubahan hanya akan disimpan jika seluruh rangkaian operasi berhasil dieksekusi tanpa kesalahan.
+% \end{enumerate}
+
+
+
+% Kombinasi fitur-fitur tersebut menjadikan Node.js solusi yang tangguh untuk mendukung kebutuhan operasional sistem pemantauan penyewa yang aman, responsif, dan terukur.
+
+
+
+\section{Node.js}
+
+Node.js adalah lingkungan eksekusi (\textit{runtime environment}) untuk JavaScript yang bersifat \textit{open-source} dan lintas platform, dibangun di atas mesin JavaScript V8 milik Chrome. Node.js menggunakan model I/O yang bersifat \textit{non-blocking} dan \textit{event-driven} yang menjadikannya ringan dan efisien, terutama untuk aplikasi yang berjalan secara \textit{real-time} pada perangkat terdistribusi (Tilkov \& Vinoski, 2010).
+
+Dalam konteks penelitian ini, Node.js dipilih sebagai platform utama pengembangan sistem \textit{data capture} dan integrasi model. Pemilihan ini didasarkan pada kebutuhan kompatibilitas dengan sistem \texttt{srusun.id} yang digunakan oleh pengelola Apartemen The Jarrdin, serta untuk memastikan integrasi yang mulus dengan modul-modul lain yang dikembangkan dalam ekosistem yang sama. Node.js memungkinkan penanganan permintaan data penyewa secara asinkronus, sehingga proses input dan validasi data penyewa dapat dilakukan dengan cepat tanpa membebani kinerja server secara keseluruhan.
+
+Untuk mendukung fungsionalitas sistem, Node.js didukung oleh ekosistem pustaka yang luas melalui NPM (\textit{Node Package Manager}). Beberapa pustaka utama yang digunakan dalam penelitian ini meliputi \texttt{express} untuk pengelolaan server dan rute API, \texttt{mysql2/promise} untuk koneksi asinkronus ke basis data melalui mekanisme \textit{connection pool}, \texttt{jsonwebtoken} untuk keamanan autentikasi lintas platform, \texttt{multer} untuk menangani unggahan berkas (\textit{file upload}), \texttt{json2csv} untuk keperluan ekspor data laporan, serta \texttt{cors} untuk menangani akses lintas domain. Berikut langkah-langkah implementasi sistem \textit{backend} menggunakan Node.js.
+
+\begin{enumerate}
+    \item \textbf{Persiapan lingkungan dan instalasi pustaka}
+    \begin{enumerate}
+        \item Menginisialisasi proyek Node.js dan menginstal pustaka yang dibutuhkan untuk server dan basis data.
+        \item Menginstal dependensi utama melalui terminal
+        \begin{lstlisting}[language=bash]
+npm init -y
+npm install express mysql2 dotenv path body-parser cors multer json2csv jsonwebtoken
+        \end{lstlisting}
+        \item Menyiapkan variabel lingkungan (\textit{environment variables}) pada berkas \texttt{.env} untuk menyimpan konfigurasi basis data jarak jauh (\textit{remote}) dan kunci rahasia secara aman.
+    \end{enumerate}
+        
+    \newpage
+    \item \textbf{Konfigurasi server dan koneksi basis data}
+    \begin{enumerate}
+        \item Membuat konfigurasi server menggunakan \textit{framework} Express.js dan mengatur \textit{middleware} untuk keamanan dan format pertukaran data
+        \begin{lstlisting}[language=JavaScript, caption={Inisialisasi Server dan \textit{Middleware}}]
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+
+const app = express();
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Validasi domain yang diizinkan
+        callback(null, true); 
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+        \end{lstlisting}
+             
+        % \newpage
+        \item Membangun koneksi terpusat ke basis data MySQL (SRusun) menggunakan \textit{Connection Pool} untuk mengelola lalu lintas kueri secara efisien
+        \begin{lstlisting}[language=JavaScript, caption={Konfigurasi \textit{Connection Pool} Basis Data}]
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+    host: process.env.SRUSUN_MYSQL_HOST,
+    user: process.env.SRUSUN_MYSQL_USER,
+    password: process.env.SRUSUN_MYSQL_PASSWORD,
+    database: process.env.SRUSUN_MYSQL_DATABASE,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+        \end{lstlisting}
+    \end{enumerate}
+        
+    \item \textbf{Implementasi API {data capture}} \\
+    Membuat \textit{endpoint} API (\texttt{POST /api/rentals}) untuk menerima input data penyewa dari antarmuka pengguna (\textit{frontend}). Implementasi ini menggunakan mekanisme \texttt{\textit{database transaction}} untuk menjamin integritas data (ACID), di mana penyimpanan data profil penyewa dan pencatatan riwayat aktivitas (\textit{audit trail}) dilakukan dalam satu kesatuan proses yang saling bergantung.
+
+    \begin{lstlisting}[language=JavaScript, caption={Implementasi Transaksi API Data Capture}]
+app.post('/api/rentals', checkAuth, async (req, res) => {
+    const conn = await pool.getConnection();
+    try {
+        const {
+            nama, nik, status_pasutri, status_kewarganegaraan, 
+            jenis_sewa, unit_number, metode_pembayaran, metode_lain, 
+            tanggal_checkin, waktu_checkin, tanggal_checkout
+        } = req.body;
+
+        // Normalisasi NIK dan penentuan agen
+        const normalizedNik = String(nik || '').replace(/\D/g, '');
+        let agent_email = req.user.email;
+        if (isAdmin(req.user) && req.body.agent_email) {
+            agent_email = req.body.agent_email;
+        }
+
+        const lama_menginap = calculateDays(tanggal_checkin, tanggal_checkout);
+        const db_status_pasutri = status_pasutri === 'Ya' ? 'Menikah' : 'Belum Menikah';
+
+        // Memulai transaksi basis data
+        await conn.beginTransaction();
+
+        // Menyimpan data profil ke tabel rentals
+        const sql = `INSERT INTO rentals (
+            nama, nik, status_pasutri, status_kewarganegaraan, 
+            jenis_sewa, unit_number, metode_pembayaran, metode_lain, 
+            tanggal_checkin, waktu_checkin, tanggal_checkout, lama_menginap, user_email
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        const params = [
+            nama, normalizedNik, db_status_pasutri, status_kewarganegaraan,
+            jenis_sewa, unit_number, metode_pembayaran, 
+            metode_pembayaran === 'Others' ? metode_lain : null,
+            tanggal_checkin, waktu_checkin, tanggal_checkout, lama_menginap, agent_email
+        ];
+
+        const [result] = await conn.query(sql, params);
+        const newRentalId = result.insertId;
+
+        // Menyimpan rekam jejak pembuatan awal ke tabel rental_logs
+        const logQuery = `INSERT INTO rental_logs (action, field_changed, new_value, email, rental_id) VALUES ?`;
+        const logEntries = [['create', 'all', JSON.stringify(req.body), req.user.email, newRentalId]];
+        await conn.query(logQuery, [logEntries]);
+
+        // Menyelesaikan transaksi jika seluruh kueri berhasil
+        await conn.commit();
+        res.json({ success: true, message: "Data penyewa berhasil disimpan." });
+
+    } catch (error) {
+        // Membatalkan seluruh perubahan jika terjadi galat pada salah satu tahapan
+        if (conn) await conn.rollback();
+        console.error("Error saving rental:", error);
+        res.status(500).json({ success: false, message: 'Gagal menyimpan data penyewa.' });
+    } finally {
+        if (conn) conn.release();
+    }
+});
+    \end{lstlisting}
+\end{enumerate}
+
+Data yang telah tersimpan secara terstruktur dalam basis data SRusun kemudian diakses dan diolah lebih lanjut menggunakan bahasa pemrograman Python untuk tahapan klasifikasi.

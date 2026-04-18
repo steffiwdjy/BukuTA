@@ -1,0 +1,47 @@
+% \newpage
+\section{Deteksi Anomali}
+
+{Deteksi anomali} merupakan proses identifikasi pola atau data yang menyimpang secara signifikan dari perilaku mayoritas dan dapat digunakan untuk mengungkap aktivitas tidak biasa seperti penipuan, intrusi sistem, maupun penyewa mencurigakan (Chandola, Banerjee, \& Kumar, 2009; Aggarwal, 2013). Deteksi anomali berguna ketika data yang dianalisis tidak memiliki label, sehingga membutuhkan metode {\it unsupervised learning}. Dua metode umum dalam kategori ini adalah {\it Isolation Forest} dan {\it One-Class Support Vector Machine (SVM)}.
+    
+    \begin{enumerate}
+      \item {{\it Isolation Forest}}
+    
+      {\it Isolation Forest} adalah algoritma berbasis pohon keputusan yang didesain untuk mengisolasi data anomali lebih cepat daripada data normal dengan cara membuat pembelahan acak berulang terhadap fitur data (Liu, Ting, \& Zhou, 2008). Data yang dapat dipisahkan dalam sedikit pembelahan dianggap sebagai anomali. Kedalaman rata-rata isolasi sebuah data dari banyak pohon digunakan untuk menghitung skor anomali. Berikut rumusnya
+      \[
+      s(x, n) = 2 - \frac{E(h(x))}{c(n)}
+      \]
+
+      \[
+        s(x, n) = 2^{-\frac{E(h(x))}{c(n)}}
+      \]
+        
+      dengan \(E(h(x))\) adalah rata-rata kedalaman isolasi dari data \(x\), dan \(c(n) \approx \ln(n) + 0{.}5772\) adalah nilai koreksi kedalaman untuk dataset berukuran \(n\) (nilai eksak untuk harmonik ke-\(n\)).
+    
+      Misalkan data penyewa A memiliki kedalaman isolasi 2, 3, dan 2 dari 3 pohon yang dibentuk, maka:
+      \[
+      E(h(x)) = \frac{2 + 3 + 2}{3} = 2{,}33
+      \quad \text{dan} \quad c(n) = 1{.}5 \ (\text{asumsi dataset kecil})
+      \]
+      Maka skor anomali:
+      \[
+        s(x, n) = 2^{-\frac{2,33}{1,5}} = 2^{-1,553} \approx 0,341
+      \]
+      Skor mendekati 0{.}5 menunjukkan data cenderung normal, sedangkan jika skor mendekati 1, maka data dianggap anomali kuat (Liu et al., 2008).
+    
+      \item {{\it One-Class SVM}}
+    
+        {\it One-Class SVM} adalah metode margin maksimal yang dirancang untuk memisahkan distribusi data normal dari titik asal ({\it origin}) dalam ruang fitur (Sch\"{o}lkopf et al., 2001). Algoritma ini sering menggunakan fungsi kernel seperti {\it Radial Basis Function} (RBF) untuk memetakan data ke dimensi yang lebih tinggi, berikut rumusnya
+        \[
+        K(x_i, x_j) = \exp\left(-\gamma \cdot \|x_i - x_j\|^2\right)
+        \]
+        dengan \(\gamma\) sebagai parameter lebar kernel dan \(\|x_i - x_j\|^2\) sebagai kuadrat jarak Euclidean.
+        
+        Misalkan dua data penyewa \(A = (1, 2)\) dan \(B = (2, 3)\) dengan \(\gamma = 0{,}5\), maka:
+        \[
+        \|A - B\|^2 = (1-2)^2 + (2-3)^2 = 2
+        \quad \Rightarrow \quad
+        K(A, B) = \exp(-0{,}5 \times 2) \approx 0{,}368
+        \]
+        
+        Nilai kernel ini merepresentasikan skor kemiripan antar data. Jika skor mendekati 1, berarti kedua data tersebut sangat mirip. Sebaliknya, jika skor kecil atau mendekati 0 (seperti hasil \(0{,}368\) pada contoh), maka data tersebut jauh berbeda. Dalam konteks deteksi anomali, jika ada penyewa yang memiliki skor kemiripan sangat rendah terhadap mayoritas penyewa lain, maka akan ditandai sebagai pencilan ({\it outlier}).
+        \end{enumerate}

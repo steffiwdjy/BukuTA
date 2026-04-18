@@ -1,0 +1,89 @@
+
+\section{{K-Nearest Neighbors} (KNN)}
+
+Algoritma {K-Nearest Neighbors} (KNN) merupakan metode klasifikasi non-parametrik berbasis kemiripan yang memprediksi kelas dari suatu data baru berdasarkan mayoritas kelas dari $k$ tetangga terdekatnya dalam ruang fitur. Menurut Cover dan Hart (1967) dalam jurnalnya, serta Duda, Hart, dan Stork (2001) dalam buku \textit{Pattern Classification}, KNN termasuk dalam kategori \textit{lazy learning}. Algoritma ini tidak membangun model komputasi secara eksplisit selama fase pelatihan, melainkan menyimpan seluruh data pelatihan dan menggunakan metrik jarak untuk menentukan kedekatan antar data pada saat fase pengujian. Algoritma ini sangat efektif digunakan pada data dengan distribusi yang lugas dan memiliki hubungan lokal yang kuat antar fiturnya.
+
+\subsection{Metrik Jarak pada KNN}
+Untuk mengukur seberapa ``dekat'' atau ``mirip'' suatu data baru dengan data pelatihan, KNN membutuhkan metrik jarak. Tiga jenis metrik jarak yang paling umum digunakan dalam literatur pembelajaran mesin adalah sebagai berikut.
+
+\begin{enumerate}
+    \item \textbf{Jarak Euclidean} \\
+    Jarak Euclidean mengukur panjang garis lurus antara dua titik. Metode ini merupakan metrik standar dalam KNN dan sangat sesuai untuk data kontinu dengan distribusi yang proporsional dan linier.
+    \[
+    d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
+    \]
+    
+    \item \textbf{Jarak Manhattan (\textit{L1 Distance})} \\
+    Jarak Manhattan mengukur jumlah total selisih absolut dari tiap dimensi. Metrik ini sering digunakan ketika fitur data bersifat ordinal, diskret, atau memiliki skala yang tidak proporsional (misalnya, rentang jumlah hari yang sangat berbeda dengan kategori waktu jam).
+    \[
+    d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
+    \]
+    
+    \item \textbf{Jarak Minkowski} \\
+    Minkowski adalah generalisasi matematis dari jarak Euclidean dan Manhattan yang dikontrol oleh parameter $p$. Jika parameter $p=1$, rumusnya menjadi jarak Manhattan, sedangkan jika $p=2$, rumusnya menjadi jarak Euclidean. Fleksibilitas parameter $p$ ini memungkinkan metrik disesuaikan dengan karakteristik unik dari sebuah dataset.
+    \[
+    d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p}
+    \]
+\end{enumerate}
+
+\subsection{Studi Kasus: Klasifikasi Status Penyewa}
+Sebagai ilustrasi penerapan KNN, misalkan terdapat data penyewa dengan dua fitur, yaitu \textbf{lama menginap} (hari) dan \textbf{waktu \textit{check-in}} (jam), serta label kelas klasifikasi ``normal'' atau ``mencurigakan''. Terdapat lima data latih (A--E) sebagai berikut.
+
+\begin{table}[H]
+    \centering
+    \caption{Data Latih Penyewa Properti}
+    \begin{tabular}{|c|c|c|l|}
+        \hline
+        \textbf{Titik} & \textbf{Lama Menginap} & \textbf{Waktu \textit{Check-in}} & \textbf{Label Kelas} \\
+        \hline
+        A & 2 & 9 & normal \\
+        B & 3 & 7 & normal \\
+        C & 4 & 6 & mencurigakan \\
+        D & 5 & 5 & mencurigakan \\
+        E & 6 & 4 & mencurigakan \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Misalkan terdapat sebuah data uji baru, yaitu $X(3, 6)$ yang dapat diukur kedekatannya terhadap seluruh data latih menggunakan ketiga metrik jarak di atas.
+
+\subsubsection*{1. Perhitungan Menggunakan Jarak Euclidean}
+\begin{itemize}
+    \item \textbf{Jarak ke A}: $\sqrt{(3 - 2)^2 + (6 - 9)^2} = \sqrt{1 + 9} = \sqrt{10} \approx 3{,}16$
+    \item \textbf{Jarak ke B}: $\sqrt{(3 - 3)^2 + (6 - 7)^2} = \sqrt{0 + 1} = \sqrt{1} = 1{,}00$
+    \item \textbf{Jarak ke C}: $\sqrt{(3 - 4)^2 + (6 - 6)^2} = \sqrt{1 + 0} = \sqrt{1} = 1{,}00$
+    \item \textbf{Jarak ke D}: $\sqrt{(3 - 5)^2 + (6 - 5)^2} = \sqrt{4 + 1} = \sqrt{5} \approx 2{,}24$
+    \item \textbf{Jarak ke E}: $\sqrt{(3 - 6)^2 + (6 - 4)^2} = \sqrt{9 + 4} = \sqrt{13} \approx 3{,}61$
+\end{itemize}
+
+\subsubsection*{2. Perhitungan Menggunakan Jarak Manhattan}
+\begin{itemize}
+    \item \textbf{Jarak ke A}: $|3 - 2| + |6 - 9| = 1 + |-3| = 1 + 3 = 4$
+    \item \textbf{Jarak ke B}: $|3 - 3| + |6 - 7| = 0 + |-1| = 0 + 1 = 1$
+    \item \textbf{Jarak ke C}: $|3 - 4| + |6 - 6| = |-1| + 0 = 1 + 0 = 1$
+    \item \textbf{Jarak ke D}: $|3 - 5| + |6 - 5| = |-2| + 1 = 2 + 1 = 3$
+    \item \textbf{Jarak ke E}: $|3 - 6| + |6 - 4| = |-3| + 2 = 3 + 2 = 5$
+\end{itemize}
+
+\subsubsection*{3. Perhitungan Menggunakan Jarak Minkowski ($p=3$)}
+\begin{itemize}
+    \item \textbf{Jarak ke A}: $(|3 - 2|^3 + |6 - 9|^3)^{1/3} = (1 + 27)^{1/3} = \sqrt[3]{28} \approx 3{,}04$
+    \item \textbf{Jarak ke B}: $(|3 - 3|^3 + |6 - 7|^3)^{1/3} = (0 + 1)^{1/3} = \sqrt[3]{1} = 1{,}00$
+    \item \textbf{Jarak ke C}: $(|3 - 4|^3 + |6 - 6|^3)^{1/3} = (1 + 0)^{1/3} = \sqrt[3]{1} = 1{,}00$
+    \item \textbf{Jarak ke D}: $(|3 - 5|^3 + |6 - 5|^3)^{1/3} = (8 + 1)^{1/3} = \sqrt[3]{9} \approx 2{,}08$
+    \item \textbf{Jarak ke E}: $(|3 - 6|^3 + |6 - 4|^3)^{1/3} = (27 + 8)^{1/3} = \sqrt[3]{35} \approx 3{,}27$
+\end{itemize}
+
+\subsection{Penentuan Kelas Berdasarkan Metrik Jarak}
+Dari hasil perhitungan matematis di atas, nilai jarak bisa bervariasi bergantung pada metrik yang digunakan. Setelah semua jarak dihitung, algoritma KNN akan mengurutkan titik-titik tersebut dari yang terdekat hingga terjauh untuk memilih $k$ tetangga. Berikut adalah evaluasi penentuan kelas untuk masing-masing metode dengan parameter $k = 3$.
+
+\begin{itemize}
+    \item \textbf{Berdasarkan Euclidean:} Urutan titik terdekat adalah \textbf{B} ($1{,}00$), \textbf{C} ($1{,}00$), \textbf{D} ($2{,}24$), A ($3{,}16$), dan E ($3{,}61$). 
+    \item \textbf{Berdasarkan Manhattan:} Urutan titik terdekat adalah \textbf{B} ($1$), \textbf{C} ($1$), \textbf{D} ($3$), A ($4$), dan E ($5$).
+    \item \textbf{Berdasarkan Minkowski ($p=3$):} Urutan titik terdekat adalah \textbf{B} ($1{,}00$), \textbf{C} ($1{,}00$), \textbf{D} ($2{,}08$), A ($3{,}04$), dan E ($3{,}27$).
+\end{itemize}
+
+Berdasarkan ketiga metrik tersebut, jika $k=3$, maka himpunan tetangga terdekat secara konsisten jatuh pada titik B (normal), C (mencurigakan), dan D (mencurigakan). Melalui mekanisme pemungutan suara mayoritas (\textit{majority voting}), yaitu 2 berbanding 1, maka data uji $X(3, 6)$ akan diklasifikasikan sebagai penyewa yang \textbf{mencurigakan}.
+
+\subsection{Kesimpulan Probabilistik dan Evaluasi Algoritma}
+Pada versi probabilistik, proporsi mayoritas tersebut dapat diterjemahkan menjadi probabilitas kelas. Karena 2 dari 3 tetangga terdekat berlabel ``mencurigakan'', maka skor probabilitas anomali untuk data $X$ adalah $\frac{2}{3} \approx 66{,}7\%$. Dalam implementasi sistem deteksi, dapat diterapkan ambang batas (\textit{threshold}) klasifikasi—misalnya $\geq 60\%$—untuk secara otomatis memberikan notifikasi kepada pengelola properti apabila terdapat penyewa yang terindikasi melanggar aturan. Menurut Tan, Steinbach, dan Kumar (2019) dalam buku \textit{Introduction to Data Mining}, keunggulan utama KNN terletak pada kesederhanaannya, sifatnya yang intuitif, serta kemudahan dalam interpretasi hasil prediksi. Meskipun demikian, algoritma ini memiliki kelemahan yang sangat rentan terhadap skala fitur (\textit{scale-dependent}) dan menuntut beban komputasi yang tinggi ketika ukuran data latih semakin besar. Oleh karena itu, tahapan pra-pemrosesan seperti normalisasi fitur (untuk menyamakan skala antara lama menginap dan waktu jam) serta pemilihan metrik jarak yang tepat menjadi syarat krusial agar performa KNN tetap optimal di dunia nyata.

@@ -1,0 +1,136 @@
+\chapter{Pendahuluan}
+\label{chap:intro}
+
+Bab ini menjelaskan tentang latar belakang yang menjadi dasar pengerjaan dari penelitian pada tugas akhir ini. Kemudian, dijelaskan mengenai rumusan masalah, tujuan, serta batasan masalah yang membahas ruang lingkup dari penelitian ini. Kemudian, dibahas juga mengenai metodologi penelitian yang menjelaskan mengenai langkah-langkah penyelesaian berdasarkan rumusan masalah yang sudah didefinisikan. Bagian ini diakhiri dengan sistematika pembahasan yang menguraikan isi dari setiap bab pada laporan tugas akhir ini. Definisi dari terminologi yang digunakan dapat dilihat pada Lampiran~\ref{lamp:A}.
+
+\section{Latar Belakang}
+\label{sec:1:latar_belakang}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{Gambar/The-Jarrdin-Beranda-crop.png}
+\caption{Rusunami The Jarrdin Cihampelas}
+\label{fig:the jardin}
+\end{figure}
+
+Rusunami The Jarrdin Cihampelas (RTJC) merupakan kompleks hunian vertikal yang terletak di kawasan strategis Cihampelas, Kota Bandung. RTJC terdiri dari empat {tower} dengan lebih dari 2.400 unit hunian, dilengkapi dengan area komersial, kolam renang, dan fasilitas parkir bertingkat\footnote{\url{https://thejarrdin.com/}, diakses pada 17 Maret 2025}. Letaknya yang berdekatan dengan destinasi wisata populer seperti Teras Cihampelas dan Cihampelas Walk menjadikan hunian ini memiliki tingkat okupansi yang tinggi, baik oleh wisatawan, mahasiswa, maupun pekerja dari luar kota, dengan durasi sewa yang bervariasi dari jangka pendek hingga jangka panjang.
+
+Sistem penyewaan di RTJC dijalankan melalui dua jalur utama, yaitu secara langsung oleh pemilik unit atau melalui perantara agen properti yang tergabung dalam \textbf{Paguyuban Komersial Jarrdin (PKJ)}. Selain itu, pengelolaan lingkungan hunian didukung oleh \textbf{Perhimpunan Pemilik dan Penghuni Satuan Rumah Susun (P3SRS)} yang bertanggung jawab atas tata kelola, penerimaan titipan penyewaan, serta menjaga ketertiban umum. Meskipun tingginya mobilitas penyewa memberikan keuntungan ekonomi, namun juga menghadirkan tantangan signifikan dalam aspek pengawasan dan keamanan.
+
+Tantangan nyata yang dihadapi adalah munculnya aktivitas ilegal di lingkungan hunian. Sepanjang tahun 2024, tercatat setidaknya 15 kasus pelanggaran hukum di lingkungan RTJC, meliputi praktik prostitusi terselubung, penyalahgunaan narkoba, serta tindak kriminal lainnya. Kasus-kasus ini umumnya terungkap melalui laporan warga, patroli keamanan rutin, atau saat dilakukan pelayanan kebersihan. Meskipun pihak pengelola telah menerapkan prosedur preventif seperti penjagaan fisik dan verifikasi identitas penyewa, pendekatan yang masih bersifat {manual} terbukti belum cukup efektif dan responsif dalam mengidentifikasi penyewa yang memiliki potensi risiko tinggi. Permasalahan ini mengindikasikan urgensi akan adanya sistem deteksi dini yang mampu mengenali pola perilaku penyewa mencurigakan berdasarkan data historis. 
+
+% Ketersediaan data penyewa yang telah diberi label (normal dan tidak normal) memungkinkan penerapan teknologi \textit{machine learning}, khususnya pendekatan \textit{supervised learning}, untuk membangun model klasifikasi.
+
+% \textit{Supervised learning} melatih model menggunakan data berlabel untuk mempelajari pola perilaku dan menghasilkan prediksi klasifikasi terhadap data penyewa baru. Beberapa algoritma yang potensial untuk diterapkan dalam kasus ini meliputi \textit{Decision Tree, Random Forest, Support Vector Machine} (SVM), {\it K-Nearest Neighbors} (KNN), dan \textit{XGBoost}.
+
+% Selain pengembangan model klasifikasi, diperlukan pula sebuah platform untuk input data dan distribusi hasil analisis. Oleh karena itu, penelitian ini juga mencakup pengembangan sistem berbasis web menggunakan teknologi \textbf{Node.js}. Pemilihan \textbf{Node.js} didasarkan pada pertimbangan interoperabilitas dan kemudahan integrasi dengan ekosistem sistem lain yang dikembangkan oleh rekan mahasiswa di bawah bimbingan dosen yang sama, sehingga menjamin kompatibilitas antar-modul. Di sisi lain, bahasa pemrograman \textbf{Python} digunakan secara khusus untuk tahap pembangunan dan pelatihan model \textit{machine learning} mengingat kelengkapan pustaka \textit{data science} yang dimilikinya. Sistem terintegrasi ini dirancang untuk mempermudah para agen dalam melakukan input data penyewa dan menerima notifikasi hasil klasifikasi secara \textit{real-time} bila terdeteksi adanya penyewa yang berpotensi melakukan pelanggaran. Integrasi antara model klasifikasi berbasis Python dan sistem aplikasi web berbasis Node.js ini diharapkan dapat memberikan kontribusi nyata dalam meningkatkan keamanan hunian vertikal RTJC secara proaktif, efisien, dan berbasis data.
+
+\section{Rumusan Masalah}
+\label{sec:rumusan}
+Berdasarkan latar belakang dan identifikasi permasalahan yang telah dijelaskan, maka rumusan masalah dalam penelitian ini adalah sebagai berikut.
+\begin{enumerate}
+    \item Model klasifikasi apa yang paling sesuai untuk mendeteksi perilaku penyewa mencurigakan di RTJC?
+    \item Bagaimana pola perilaku penyewa di RTJC dan langkah-langkah antisipatif apa yang telah diterapkan dalam mencegah aktivitas ilegal?
+    \item Bagaimana membangun model klasifikasi yang paling sesuai untuk mendeteksi perilaku penyewa mencurigakan di RTJC?
+    \item Bagaimana membangun sistem berbasis Node.js yang dapat mengotomatiskan proses identifikasi penyewa mencurigakan dan memberikan informasi kepada pemangku kepentingan?
+\end{enumerate}
+
+\section{Tujuan}
+\label{sec:tujuan}
+Mengacu pada rumusan masalah di atas, tujuan dari penelitian ini adalah sebagai berikut.
+\begin{enumerate}
+    \item Menentukan model klasifikasi yang paling sesuai untuk mendeteksi perilaku penyewa mencurigakan di RTJC.
+    \item Menganalisis pola perilaku penyewa di RTJC dan mengetahui langkah-langkah antisipatif yang telah diterapkan dalam mencegah aktivitas ilegal.
+    \item Membangun model klasifikasi yang paling sesuai untuk mendeteksi perilaku penyewa mencurigakan di RTJC.
+    \item Membangun sistem berbasis Node.js yang dapat mengotomatiskan proses identifikasi penyewa mencurigakan dan memberikan informasi kepada pemangku kepentingan.
+\end{enumerate}
+
+
+
+\section{Batasan Masalah}
+\label{sec:batasan}
+
+Penelitian ini berfokus pada bidang \textit{data science} yang menitikberatkan pada analisis pola perilaku penyewa serta pengembangan perangkat lunak pendukung. Maka ditetapkan batasan-batasan masalah sebagai berikut.
+
+\begin{enumerate}
+    \item Data yang digunakan merupakan data historis transaksi penyewaan dan catatan pelanggaran di Rusunami The Jarrdin Cihampelas (RTJC).
+    
+    \item Algoritma \textit{machine learning} yang dianalisis dan dibandingkan kinerjanya terbatas pada metode \textit{Supervised Learning}, yaitu \textit{Decision Tree, Random Forest, Support Vector Machine} (SVM), \textit{K-Nearest Neighbors} (KNN), dan \textit{XGBoost}. Klasifikasi yang dilakukan bersifat biner, yaitu mengelompokkan penyewa ke dalam kelas ``normal'' atau ``tidak normal'' (berpotensi melanggar).
+    
+    \item Sistem aplikasi yang dibangun berfokus pada aspek fungsional utama, yaitu sebagai antarmuka input data bagi agen dan notifikasi hasil deteksi. Pengembangan sistem menggunakan teknologi {Node.js} untuk sisi server dan integrasi sistem, serta {Python} khusus untuk pemrosesan model \textit{machine learning}.
+    
+    \item Penelitian ini merupakan studi kasus yang spesifik dilakukan di lingkungan Rusunami The Jarrdin Cihampelas (RTJC) bekerja sama dengan Paguyuban Komersial Jarrdin (PKJ) dan P3SRS. Karakteristik data dan pola perilaku yang dihasilkan tidak digeneralisasi untuk seluruh apartemen atau rumah susun di lokasi lain.
+    
+    \item Aspek non-fungsional sistem seperti keamanan jaringan tingkat lanjut, uji performansi beban server tinggi (\textit{stress testing}), dan penyediaan infrastruktur perangkat keras fisik tidak menjadi fokus utama dalam penelitian ini.
+\end{enumerate}
+
+
+
+\section{Metodologi}
+\label{sec:metlit}
+Metodologi penelitian yang digunakan dalam tugas akhir ini dirancang untuk mengembangkan, melatih, serta menguji model klasifikasi perilaku penyewa mencurigakan, sekaligus membangun sistem berbasis Node.js yang dapat mengotomatiskan proses deteksi. Tahapan metodologi penelitian yang dilakukan adalah sebagai berikut.
+
+\begin{enumerate}
+    \item \textbf{{Melakukan studi pustaka}} \\
+    Studi pustaka dilakukan untuk memahami konsep dasar hunian vertikal dan pola penyewaan di Rusunami The Jarrdin Cihampelas, perilaku penyewa berisiko, serta pendekatan yang digunakan oleh para pengurus di RTJC terkait deteksi aktivitas ilegal. Studi pustaka juga mencakup teori model klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, {SVM}, {K-NN}, dan \textit{XGBoost}, konsep data tidak seimbang, \textit{resampling}, teknik evaluasi model, serta literatur mengenai pengembangan sistem berbasis Node.js dan Express.js.
+    
+    \item \textbf{{Melakukan survei dan wawancara}} \\
+    Tahap ini dilakukan dengan melakukan survei langsung ke lokasi Rusunami The Jarrdin Cihampelas (RTJC) serta wawancara mendalam dengan pihak-pihak terkait, yaitu pengurus Paguyuban Komersial Jarrdin (PKJ), P3SRS, dan para agen. Kegiatan ini bertujuan untuk mendapatkan data faktual mengenai kondisi operasional di RTJC, mengidentifikasi pola perilaku penyewa (termasuk indikator-indikator perilaku mencurigakan yang sering ditemui di lapangan), serta menggali kebutuhan spesifik pengguna terkait fitur, alur kerja, dan antarmuka sistem web yang akan dikembangkan agar sesuai dengan kondisi nyata di lapangan.
+    
+    \item \textbf{{Analisis kebutuhan sistem klasifikasi dan aplikasi}} \\
+    Berdasarkan hasil studi pustaka dan data lapangan, tahap ini dilakukan untuk menganalisis kebutuhan model klasifikasi berdasarkan karakteristik penyewa RTJC, termasuk identifikasi fitur, pola perilaku mencurigakan, dan kebutuhan pengelolaan data. Selain itu, dilakukan analisis kebutuhan aplikasi bagi pengguna (agen, PKJ, dan P3SRS), mencakup kebutuhan fungsional seperti input penyewa, proses klasifikasi otomatis dalam bentuk notifikasi, manajemen unit, serta kebutuhan non-fungsional seperti kecepatan, keakuratan, dan keamanan aplikasi.
+    
+    \item \textbf{Perancangan model dan sistem} \\
+    Tahap ini meliputi:
+    \begin{itemize}
+        \item perancangan alur pemrosesan data, termasuk pembersihan data, \textit{feature engineering}, \textit{feature selection}, pembagian data pelatihan dan pengujian, serta penanganan data tidak seimbang;
+        \item pemilihan algoritma klasifikasi dengan strategi \textit{anti-overfitting}, mencakup \textit{Decision Tree}, \textit{Random Forest}, {SVM}, {K-NN}, dan \textit{XGBoost};
+        \item perancangan arsitektur aplikasi berbasis Node.js, termasuk desain API, desain basis data relasional, dan perancangan antarmuka pengguna;
+    \end{itemize}
+    
+    \item \textbf{Implementasi model klasifikasi dan sistem} \\
+    Implementasi dilakukan dalam dua bagian utama:
+    \begin{enumerate}
+        \item {Implementasi model {\it machine learning}}, meliputi pemrosesan dataset, pelatihan model menggunakan berbagai algoritma, evaluasi performa, dan pemilihan model terbaik berdasarkan metrik seperti \textit{precision}, \textit{recall}, dan \textit{F1-score}.
+        \item {Implementasi sistem}, meliputi pembangunan API dengan Express.js, implementasi modul klasifikasi yang memanggil model, pembangunan halaman input penyewa, halaman dashboard, halaman untuk menambahkan/menghapus kamar, halaman lihat data penyewa, notifikasi hasil klasifikasi, serta integrasi antara antarmuka pengguna, API, dan model.
+    \end{enumerate}
+    
+    \item \textbf{Pengujian model dan pengujian sistem} \\
+    Pengujian dilakukan untuk memastikan performa dan keandalan baik pada model maupun sistem.
+    \begin{itemize}
+        \item {Pengujian model} dilakukan menggunakan data uji untuk menilai kemampuan model dalam mengidentifikasi penyewa berisiko pada dataset tidak seimbang.
+        \item {Pengujian fungsional aplikasi} dilakukan untuk mengevaluasi seluruh fitur, termasuk input data terkait penyewaan, proses klasifikasi otomatis, penyajian hasil, validasi data, dan autentikasi pengguna.
+        \item {Pengujian integrasi} memastikan bahwa API, basis data, antarmuka, dan model {\it machine learning} bekerja secara konsisten dan stabil.
+    \end{itemize}
+    
+    \item \textbf{Penyusunan laporan akhir} \\
+    Tahap terakhir adalah menyusun dokumentasi lengkap mengenai analisis, perancangan, implementasi, pengujian model dan sistem, serta pembahasan hasil penelitian beserta implikasinya terhadap pengelolaan keamanan di RTJC.
+\end{enumerate}
+
+
+\section{Sistematika Pembahasan}
+\label{sec:sispem}
+Sistematika pembahasan dalam tugas akhir ini disusun ke dalam enam bab yang saling berkaitan, sesuai dengan tahapan metodologi penelitian, yaitu:
+
+\begin{enumerate}
+
+    \item \textbf{Bab 1 Pendahuluan} \
+    Berisi latar belakang penelitian terkait kondisi penyewaan di Rusunami The Jarrdin Cihampelas, rumusan masalah, tujuan penelitian, batasan masalah, metodologi penelitian, serta gambaran umum sistematika pembahasan tugas akhir ini.
+
+    \item \textbf{Bab 2 Landasan Teori} \\
+    Menjelaskan teori-teori yang menjadi dasar dari penelitian ini, meliputi konsep hunian vertikal dan pengelolaan penyewa, pengenalan aktivitas ilegal yang umum terjadi di lingkungan hunian, serta teori dasar \textit{machine learning}. Bab ini juga menguraikan jenis-jenis model klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost}. Selain itu dibahas konsep data tidak seimbang (\textit{imbalanced data}), teknik penanganannya seperti \textit{resampling} dan penentuan \textit{threshold}, evaluasi model menggunakan metrik seperti \textit{accuracy}, \textit{precision}, \textit{recall}, \textit{F1-score}, serta konsep pembangunan aplikasi berbasis Node.js.
+
+    \item \textbf{Bab 3 Eksplorasi Teknologi dan Analisis Masalah} \\
+    Bab ini membahas analisis terhadap kondisi faktual penyewaan di Rusunami The Jarrdin Cihampelas (RTJC) melalui wawancara dan observasi, serta eksplorasi teknologi yang akan digunakan untuk menyelesaikan permasalahan. Pembahasan mencakup analisis proses bisnis berjalan, pemilihan teknologi \textit{backend} berbasis Node.js untuk sistem \textit{data capture}, serta eksplorasi pustaka \textit{Python} untuk kebutuhan pemrosesan data dan pembangunan model \textit{machine learning} untuk data tidak seimbang.
+    
+    \item \textbf{Bab 4 Pengembangan Model} \\
+    Bab ini membahas keseluruhan proses penambangan data (\textit{data mining}) dan pengembangan model deteksi. Pembahasan dimulai dari pendefinisian masalah data, pengumpulan data melalui sistem \textit{data capture}, (\textit{feature engineering}), (\textit{feature selection}) , serta penanganan ketidakseimbangan kelas. Bab ini juga menguraikan proses pelatihan berbagai model klasifikasi, seperti (\textit{Random Forest}, \textit{XGBoost}, SVM, dll), evaluasi kinerja model menggunakan metrik yang relevan, hingga penentuan ambang batas (\textit{threshold}) terbaik untuk operasional.
+    
+    \item \textbf{Bab 5 Pembangunan Perangkat Lunak dan Pengujian} \\
+    Bab ini membahas implementasi hasil pengembangan model ke dalam perangkat lunak berbasis web. Penjelasan mencakup pembangunan arsitektur sistem menggunakan Node.js dan Express.js, integrasi model klasifikasi dengan aplikasi utama, serta pembangunan antarmuka pengguna untuk agen dan pengelola. Bab ini diakhiri dengan pengujian perangkat lunak, yakni dengan {\it white box testing}.
+    
+    \item \textbf{Bab 6 Kesimpulan dan Saran} \\
+    Bab ini berisi kesimpulan dari seluruh tahapan penelitian yang telah dilakukan, mulai dari analisis masalah, pengembangan model, hingga pembangunan perangkat lunak. Selain itu, bab ini juga memuat saran untuk pengembangan penelitian selanjutnya.
+    
+
+\end{enumerate}

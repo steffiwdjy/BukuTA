@@ -1,0 +1,538 @@
+% % \newpage
+% \section{Feature Engineering}
+
+% % \textit{Feature engineering} adalah proses membuat fitur-fitur (kolom data) baru atau mengubah fitur yang sudah ada agar lebih informatif untuk model \textit{machine learning}. Tujuannya adalah membantu komputer \textit{belajar} dari data dan mengidentifikasi pola, termasuk pola yang menyimpang dari normal (anomali). Dalam konteks ini, fitur-fitur yang dibuat bertujuan untuk membantu mendeteksi penyewa yang menunjukkan perilaku di luar kebiasaan umum. Berikut fitur-fitur utama yang akan dikembangkan dalam penelitian ini.
+
+% %     \begin{enumerate}
+% %         \item {{Jumlah transaksi per bulan}}\\
+% %         Fitur ini menggambarkan berapa banyak uang yang dikeluarkan penyewa untuk sewa setiap bulan. Jika seorang penyewa tiba-tiba membayar sangat banyak atau sangat sedikit dibandingkan bulan-bulan sebelumnya, itu bisa menjadi sinyal anomali.
+% %         Contoh data:
+        
+% %         \begin{center}
+% %         \begin{tabular}{|c|c|}
+% %             \hline
+% %             {\bf Bulan} & {\bf Jumlah Transaksi} \\
+% %             \hline
+% %             Januari & Rp5.000.000 \\
+% %             Februari & Rp3.000.000 \\
+% %             Maret & Rp4.500.000 \\
+% %             \hline
+% %         \end{tabular}
+% %         \end{center}
+
+% %         {Langkah-langkah perhitungan:}
+% %         \begin{enumerate}
+% %             \item {Rata-rata transaksi ($\mu$):}
+% %             \[
+% %             \mu = \frac{5.000.000 + 3.000.000 + 4.500.000}{3} = \frac{12.500.000}{3} = 4.166.667
+% %             \]
+    
+% %             \item {Hitung selisih setiap bulan dari rata-rata:}
+% %             \begin{itemize}
+% %                 \item Januari: $5.000.000 - 4.166.667 = 833.333$
+% %                 \item Februari: $3.000.000 - 4.166.667 = -1.166.667$
+% %                 \item Maret: $4.500.000 - 4.166.667 = 333.333$
+% %             \end{itemize}
+    
+% %             \item {Kuadratkan selisih:}
+% %             \begin{itemize}
+% %                 \item $833.333^2 = 694.444.444.889$
+% %                 \item $(-1.166.667)^2 = 1.361.111.112.889$
+% %                 \item $333.333^2 = 111.111.110.889$
+% %             \end{itemize}
+    
+% %             \item {Hitung varians (rata-rata dari kuadrat selisih):}
+% %             \[
+% %             \sigma^2 = \frac{694.444.444.889 + 1.361.111.112.889 + 111.111.110.889}{3} = \frac{2.166.666.668.667}{3} \approx 722.222.223.000
+% %             \]
+    
+% %             \item {Hitung standar deviasi ($\sigma$):}
+% %             \[
+% %             \sigma = \sqrt{722.222.223.000} \approx 849.010
+% %             \]
+    
+% %             \item {Koefisien variasi (CV):}
+% %             \[
+% %             CV = \frac{849.010}{4.166.667} \approx 0.204 \text{ (20.4\%)}
+% %             \]
+% %         \end{enumerate}
+    
+% %         {Interpretasi nilai CV:}
+% %         \begin{itemize}
+% %             \item CV $<$ 0.1 $\rightarrow$ stabil (normal)
+% %             \item CV 0.1--0.3 $\rightarrow$ sedikit fluktuatif (perlu diperhatikan)
+% %             \item CV $>$ 0.3 $\rightarrow$ sangat fluktuatif (potensi anomali)
+% %         \end{itemize}
+    
+% %         \item {Jumlah unit yang disewa sekaligus}\\
+% %         Fitur ini menunjukkan berapa banyak unit disewa oleh satu penyewa pada tanggal yang sama. Jika seorang penyewa menyewa banyak unit sekaligus, ini bisa mencurigakan (misalnya, disewakan kembali secara ilegal).\\
+    
+% %         {Contoh:}
+% %         \begin{itemize}
+% %             \item Penyewa A menyewa 3 unit pada tanggal 10 Maret $\rightarrow$ nilai = 3
+% %             \item Penyewa biasa menyewa 1 unit $\rightarrow$ nilai $>$ 1 dapat dianggap \textit{outlier}
+% %         \end{itemize}
+
+% %         % \newpage
+% %         {Interpretasi:}
+% %         \begin{itemize}
+% %             \item Nilai = 1 $\rightarrow$ normal
+% %             \item Nilai 2--3 $\rightarrow$ perlu perhatian
+% %             \item Nilai $>$ 3 $\rightarrow$ investigasi mendalam
+% %         \end{itemize}
+    
+% %         \item {lama menginap rata-rata}\\
+% %         Fitur ini menghitung rata-rata jumlah malam setiap penyewa menginap dalam satu kunjungan. Durasi sangat pendek atau sangat panjang bisa mengindikasikan anomali.\\
+    
+% %         {Contoh data:}
+        
+% %         \begin{center}
+% %         \begin{tabular}{|c|c|}
+% %             \hline
+% %             Kunjungan & Durasi (malam) \\
+% %             \hline
+% %             1 & 3 malam \\
+% %             2 & 2 malam \\
+% %             3 & 5 malam \\
+% %             \hline
+% %         \end{tabular}
+% %         \end{center}
+
+% %         {Langkah-langkah perhitungan:}
+% %         \begin{enumerate}
+% %             \item {Jumlahkan semua durasi:}
+% %             \[
+% %             3 + 2 + 5 = 10 \text{ malam}
+% %             \]
+    
+% %             \item {Bagi dengan jumlah kunjungan:}
+% %             \[
+% %             \text{Rata-rata} = \frac{10}{3} = 3.33 \text{ malam}
+% %             \]
+% %         \end{enumerate}
+    
+% %         {Interpretasi:}
+% %         \begin{itemize}
+% %             \item Durasi $<$ 2 malam $\rightarrow$ potensi anomali (misalnya tamu ilegal atau sering ganti unit)
+% %             \item Durasi 2--7 malam $\rightarrow$ normal
+% %             \item Durasi $>$ 30 malam $\rightarrow$ modus tinggal tetap atau sewa jangka panjang
+% %         \end{itemize}
+% %     \end{enumerate}
+    
+% %     {Berikut adalah contoh implementasi {\it feature engineering} untuk penelitian deteksi perilaku penyewa di Rusunami The Jarrdin.}
+    
+% %     \begin{lstlisting}[language=Python]
+% %         # Hitung jumlah transaksi per bulan
+% %         df['bulan'] = df['tanggal_checkin'].dt.to_period('M')
+% %         transaksi_per_bulan = df.groupby(['penyewa_id', 'bulan'])['jumlah_transaksi'].sum().reset_index()
+% %     \end{lstlisting}
+% %     {Berikut penjelasannya.}
+% %     \begin{itemize}
+% %       \item \texttt{pandas} adalah pustaka Python untuk manipulasi data tabular.
+% %       \item \texttt{.dt.to\_period('M')} mengubah tipe data datetime menjadi periode bulanan.
+% %       \item \texttt{groupby()} mengelompokkan data berdasarkan \texttt{penyewa\_id} dan \texttt{bulan}.
+% %       \item \texttt{sum()} menjumlahkan nilai transaksi per kelompok.
+% %     \end{itemize}
+    
+% %     \begin{lstlisting}[language=Python]
+% %         # Hitung jumlah unit per hari (penyewa_id dan tanggal check-in)
+% %         df['tanggal'] = df['tanggal_checkin'].dt.date
+% %         unit_per_hari = df.groupby(['penyewa_id', 'tanggal'])['jumlah_unit'].sum().reset_index()
+        
+% %         # Hitung durasi rata-rata sewa per penyewa
+% %         durasi_rata2 = df.groupby('penyewa_id')['durasi_sewa'].mean().reset_index(name='durasi_rata_rata')
+% %     \end{lstlisting}
+% %     {Berikut penjelasannya.}
+% %     \begin{itemize}
+% %       \item \texttt{.dt.date} mengekstrak komponen tanggal dari datetime.
+% %       \item Data dikelompokkan berdasarkan \texttt{penyewa\_id} dan \texttt{tanggal}, kemudian jumlah unit dihitung.
+% %     \end{itemize}
+
+% %     \begin{lstlisting}[language=Python]
+% %         # Hitung durasi rata-rata sewa per penyewa
+% %         durasi_rata2 = df.groupby('penyewa_id')['durasi_sewa'].mean().reset_index(name='durasi_rata_rata')
+% %     \end{lstlisting}
+% %     {Berikut penjelasannya.}
+% %     \begin{itemize}
+% %       \item \texttt{mean()} menghitung rata-rata dari kolom \texttt{durasi\_sewa} per penyewa.
+% %       \item \texttt{reset\_index(name='durasi\_rata\_rata')} memberi nama kolom hasil rata-rata agar informatif.
+% %     \end{itemize}
+
+
+
+
+
+% \textit{Feature engineering} adalah proses membuat fitur-fitur (kolom data) baru atau mengubah fitur yang sudah ada agar lebih informatif untuk model \textit{machine learning}. Tujuannya adalah membantu komputer {belajar} dari data dan mengidentifikasi pola, termasuk pola yang menyimpang dari normal (anomali).
+
+% Berdasarkan kode implementasi sistem, \textit{feature engineering} dalam penelitian ini berfokus pada ekstraksi fitur temporal (waktu) untuk mendeteksi pola perilaku penyewa yang mencurigakan, seperti durasi sewa yang tidak wajar atau waktu \textit{check-in} yang tidak lazim. Berikut adalah fitur-fitur utama yang dikembangkan.
+
+% \begin{enumerate}
+%     \item \textbf{Durasi Sewa dalam Jam (\textit{Duration Hours})} \\
+%     Fitur ini menghitung total durasi penyewaan dalam satuan jam berdasarkan selisih antara waktu \textit{check-out} dan waktu \textit{check-in}. Fitur ini krusial untuk mendeteksi penyewa ``transit'' atau sewa jangka sangat pendek yang sering kali berindikasi pada aktivitas mencurigakan.
+    
+%     \textbf{Contoh Kasus:}
+%     \begin{center}
+%         \begin{tabular}{|c|c|c|}
+%             \hline
+%             \textbf{Waktu Check-in} & \textbf{Waktu Check-out} & \textbf{Durasi (Jam)} \\
+%             \hline
+%             2025-05-18 20:00:00 & 2025-05-18 23:00:00 & 3.0 \\
+%             \hline
+%             2025-05-19 14:00:00 & 2025-05-20 12:00:00 & 22.0 \\
+%             \hline
+%         \end{tabular}
+%     \end{center}
+    
+%     \textbf{Perhitungan:}
+%     \[
+%     \text{Duration Hours} = \frac{(\text{Check-out} - \text{Check-in})_{\text{detik}}}{3600}
+%     \]
+%     Jika hasil perhitungan negatif atau kosong (\textit{null}), nilai akan diatur menjadi 0 untuk menjaga konsistensi data.
+
+%     \item \textbf{Ekstraksi Waktu Check-in (\textit{Hour} \& \textit{Day of Week})} \\
+%     Fitur ini memecah informasi waktu \textit{check-in} menjadi komponen jam (\textit{hour}) dan hari dalam seminggu (\textit{day of week}). 
+%     \begin{itemize}
+%         \item \textbf{Check-in Hour:} Mengambil jam kedatangan (0--23). Kedatangan pada jam-jam tidak lazim (misalnya pukul 02.00 dini hari) dapat menjadi sinyal anomali.
+%         \item \textbf{Check-in DoW:} Mengonversi hari menjadi angka hari (0 = Senin, 6 = Minggu).
+%     \end{itemize}
+
+%     \item \textbf{Indikator Akhir Pekan (\textit{Is Weekend Check-in})} \\
+%     Fitur ini merupakan fitur biner (0 atau 1) yang menandai apakah penyewaan dilakukan pada akhir pekan (Sabtu atau Minggu). Pola penyewaan pada akhir pekan mungkin berbeda secara signifikan dengan hari kerja.
+% \end{enumerate}
+
+
+% Berikut adalah implementasi kode Python untuk proses \textit{feature engineering} tersebut, dimulai dari penggabungan kolom tanggal dan waktu hingga ekstraksi fitur turunan.
+
+% \begin{lstlisting}[language=Python, caption={Implementasi Feature Engineering}]
+%     # 1. Pastikan kolom tersedia
+%     cols_to_check = [
+%         'tanggal_checkin', 'waktu_checkin',
+%         'tanggal_checkout', 'waktu_checkout',
+%         'lama_menginap', 'lantai', 'tower',
+%         'status_kewarganegaraan', 'metode_pembayaran', 'jenis_sewa'
+%     ]
+    
+%     for col in cols_to_check:
+%         if col not in df.columns:
+%             df[col] = np.nan
+    
+%     # 2. Fungsi untuk menggabungkan Tanggal dan Waktu menjadi Datetime
+%     def combine_datetime(date_col, time_col):
+%         # Menggabungkan string tanggal dan waktu, lalu konversi ke objek datetime
+%         dt_str = df[date_col].astype(str).str.strip() + ' ' + df[time_col].astype(str).str.strip()
+%         return pd.to_datetime(dt_str, errors='coerce')
+    
+%     # Terapkan fungsi ke data check-in dan check-out
+%     df['checkin_dt'] = combine_datetime('tanggal_checkin', 'waktu_checkin')
+%     df['checkout_dt'] = combine_datetime('tanggal_checkout', 'waktu_checkout')
+    
+%     # 3. Hitung Durasi Sewa dalam Jam
+%     # Menghitung selisih detik dibagi 3600 untuk mendapatkan jam
+%     df['duration_hours'] = (df['checkout_dt'] - df['checkin_dt']).dt.total_seconds() / 3600
+    
+%     # Mengisi nilai kosong dengan 0 dan memastikan tidak ada nilai negatif
+%     df['duration_hours'] = df['duration_hours'].fillna(0).clip(lower=0)
+    
+%     # 4. Ekstraksi Fitur Waktu (Jam dan Hari)
+%     df['checkin_hour'] = df['checkin_dt'].dt.hour.fillna(0)      # Jam (0-23)
+%     df['checkout_hour'] = df['checkout_dt'].dt.hour.fillna(0)    # Jam (0-23)
+%     df['checkin_dow'] = df['checkin_dt'].dt.dayofweek.fillna(-1) # Hari (0=Senin, 6=Minggu)
+    
+%     # 5. Fitur Biner: Apakah Check-in saat Akhir Pekan?
+%     # Cek apakah hari adalah Sabtu (5) atau Minggu (6)
+%     df['is_weekend_checkin'] = df['checkin_dow'].isin([5, 6]).astype(int)
+    
+%     # 6. Normalisasi kolom lama_menginap
+%     df['lama_menginap'] = pd.to_numeric(df['lama_menginap'], errors='coerce').fillna(0)
+% \end{lstlisting}
+
+% \textbf{Penjelasan Kode:}
+% \begin{itemize}
+%     \item \texttt{combine\_datetime}: Digunakan karena data mentah memisahkan tanggal dan waktu dalam kolom berbeda (tipe string). Fungsi ini menggabungkannya menjadi objek \texttt{datetime} agar dapat dihitung selisihnya.
+%     \item \texttt{.dt.total\_seconds() / 3600}: Mengonversi selisih waktu (\textit{timedelta}) menjadi format numerik (jam) agar dapat diproses oleh algoritma \textit{machine learning}.
+%     \item \texttt{.clip(lower=0)}: Mencegah adanya durasi negatif akibat kesalahan input data (misalnya waktu \textit{check-out} lebih awal dari \textit{check-in}).
+%     \item \texttt{.dt.dayofweek}: Mengekstrak hari dalam bentuk angka untuk memungkinkan model mengenali pola mingguan.
+% \end{itemize}
+
+
+
+
+
+
+% % ========================================
+
+
+
+
+
+% \textit{Feature engineering} adalah proses membuat fitur-fitur (kolom data) baru atau mengubah fitur yang sudah ada agar representasi data menjadi lebih informatif bagi algoritma \textit{machine learning}. Menurut Kuhn dan Johnson (2019) dalam \textit{Feature Engineering and Selection: A Practical Approach for Predictive Models}, \textit{feature engineering} yang efektif sering kali menjadi faktor penentu utama keberhasilan sebuah model prediktif dikarenakan algoritma tidak dapat menemukan pola yang kompleks jika data mentahnya tidak merepresentasikan masalah dengan baik. Tujuannya adalah membantu komputer belajar dari data dan mengidentifikasi pola, termasuk pola yang menyimpang dari normal (anomali).
+
+% Berdasarkan kode implementasi sistem (lampiran), \textit{feature engineering} dalam penelitian ini berfokus pada ekstraksi fitur temporal (waktu) dan pemrosesan informasi kualitatif (teks) untuk mendeteksi pola perilaku penyewa yang mencurigakan. Berikut adalah fitur-fitur utama yang dikembangkan beserta urgensinya.
+
+% \begin{enumerate}
+%     \item {Indikator Pelanggaran Berdasarkan Komentar (\textit{Is Melanggar})} \\
+%     Dalam banyak sistem pencatatan operasional, anomali sering kali tidak tercatat dalam bentuk angka, melainkan melalui catatan bebas (\textit{free-text}) atau log laporan dari staf (Aggarwal, 2017). Fitur ini mengekstrak keberadaan teks pada kolom komentar. Jika kolom komentar pada data riwayat penyewa tidak kosong (\textit{not null}), maka sistem akan membuat fitur biner baru bernama ``melanggar'' dengan nilai \textit{True} (atau 1), dan sebaliknya \textit{False} (atau 0) jika kosong.
+
+%     \item {Durasi Sewa dalam Jam (\textit{Duration Hours})} \\
+%     Fitur ini menghitung total durasi penyewaan dalam satuan jam berdasarkan selisih antara waktu \textit{check-out} dan waktu \textit{check-in}. 
+    
+%     \textbf{Contoh kasus:}
+%     \begin{center}
+%         \begin{tabular}{|c|c|c|}
+%             \hline
+%             \textbf{Waktu Check-in} & \textbf{Waktu Check-out} \\
+%             \hline
+%             2025-05-18 20:00:00 & 2025-05-18 23:00:00\\
+%             \hline
+%             2025-05-19 14:00:00 & 2025-05-20 12:00:00\\
+%             \hline
+%         \end{tabular}
+%     \end{center}
+    
+%     {Maka, perhitungannya sebagai berikut.}
+%     \[
+%     \text{Duration Hours} = \frac{(\text{Check-out} - \text{Check-in})_{\text{detik}}}{3600}
+%     \]
+    
+%     \begin{itemize}
+%         \item {Kasus 1 (Penyewaan di hari yang sama):} \\
+%         Selisih waktu dari pukul 20:00:00 hingga 23:00:00 adalah 3 jam. Dalam satuan detik, durasi ini bernilai $3 \times 3600 = 10800$ detik.
+%         \[
+%         \text{Durasi}_1 = \frac{10800}{3600} = 3{,}0 \text{ jam}
+%         \]
+        
+%         \item {Kasus 2 (Penyewaan melintasi hari):} \\
+%         Selisih waktu dari tanggal 19 Mei pukul 14:00:00 hingga 20 Mei pukul 12:00:00 adalah 22 jam. Dalam satuan detik, durasi ini bernilai $22 \times 3600 = 79200$ detik.
+%         \[
+%         \text{Durasi}_2 = \frac{79.200}{3600} = 22{,}0 \text{ jam}
+%         \]
+%     \end{itemize}
+%      Fitur ini penting untuk mendeteksi penyewa ``transit'' atau penyewaan berjangka waktu sangat pendek. Dalam literatur deteksi anomali pada industri perhotelan dan sewa properti, durasi inap yang sangat singkat sering berkorelasi positif dengan aktivitas ilegal.
+
+
+
+
+
+
+
+
+%     \item \textbf{Durasi Sewa dalam Jam (\textit{Duration Hours})} \\
+%     Fitur ini menghitung total durasi penyewaan dalam satuan jam berdasarkan selisih antara waktu \textit{check-out} dan waktu \textit{check-in}. 
+    
+%     \textbf{Contoh kasus:}
+%     \begin{center}
+%         \begin{tabular}{|c|c|c|}
+%             \hline
+%             \textbf{Waktu Check-in} & \textbf{Waktu Check-out} \\
+%             \hline
+%             2025-05-18 20:00:00 & 2025-05-18 23:00:00\\
+%             \hline
+%             2025-05-19 14:00:00 & 2025-05-20 12:00:00\\
+%             \hline
+%         \end{tabular}
+%     \end{center}
+    
+%     Maka, perhitungannya sebagai berikut.
+%     \[
+%     \text{Duration Hours} = \frac{(\text{Check-out} - \text{Check-in})_{\text{detik}}}{3600}
+%     \]
+    
+%     \begin{itemize}
+%         \item \textbf{Kasus 1 (Penyewaan di hari yang sama):} \\
+%         Selisih waktu dari pukul 20:00:00 hingga 23:00:00 adalah 3 jam. Dalam satuan detik, durasi ini bernilai $3 \times 3600 = 10800$ detik.
+%         \[
+%         \text{Durasi}_1 = \frac{10800}{3600} = 3{,}0 \text{ jam}
+%         \]
+        
+%         \item \textbf{Kasus 2 (Penyewaan melintasi hari):} \\
+%         Selisih waktu dari tanggal 19 Mei pukul 14:00:00 hingga 20 Mei pukul 12:00:00 adalah 22 jam. Dalam satuan detik, durasi ini bernilai $22 \times 3600 = 79200$ detik.
+%         \[
+%         \text{Durasi}_2 = \frac{79200}{3600} = 22{,}0 \text{ jam}
+%         \]
+%     \end{itemize}
+
+
+%      Fitur ini sangat penting untuk mendeteksi penyewa ``transit'' atau penyewaan dengan jangka waktu yang sangat pendek. Menurut Baesens, Van Vlasselaer, dan Verbeke (2015) dalam buku \textit{Fraud Analytics Using Descriptive, Predictive, and Social Network Techniques}, ekstraksi fitur temporal---seperti durasi dan jarak waktu antar kejadian---merupakan salah satu teknik paling efektif dalam memodelkan sistem deteksi anomali. Hal ini dikarenakan pelaku penyimpangan umumnya memiliki pola waktu yang berbeda secara drastis dibandingkan penyewa normal. Sejalan dengan temuan tersebut, Gupta et al. (2014) dalam kajiannya mengenai \textit{Outlier Detection for Temporal Data} menyebutkan bahwa anomali temporal sering kali muncul dalam bentuk durasi kejadian yang terlampau singkat. Dalam konteks deteksi perilaku penyewa, durasi inap yang sangat pendek (\textit{micro-stays}) berkorelasi positif dengan aktivitas ilegal atau pelanggaran ketertiban. Oleh karena itu, pengubahan informasi waktu menjadi fitur numerik yang kontinu (\textit{duration hours}) akan sangat membantu algoritma \textit{machine learning} dalam memetakan batasan (\textit{threshold}) normalitas secara akurat.
+     
+
+%     \item {Ekstraksi Waktu Check-in (\textit{Hour} \& \textit{Day of Week})} \\
+%     Fitur ini memecah informasi waktu \textit{check-in} menjadi komponen jam (\textit{hour}) dan hari dalam seminggu (\textit{day of week}). 
+%     \begin{itemize}
+%         \item \textbf{Check-in Hour:} Mengambil jam kedatangan (0--23).
+%         \item \textbf{Check-in DoW:} Mengonversi hari menjadi angka hari (0 = Senin, 6 = Minggu).
+%     \end{itemize}
+%         Fitur ini penting dikarenakan perilaku manusia memiliki pola musiman dan temporal (Zheng et al., 2014). Kedatangan pada jam-jam tidak lazim (misalnya \textit{check-in} pada pukul 03.00 dini hari) dapat menjadi indikator awal (\textit{early warning}) dari profil anomali jika digabungkan dengan fitur durasi yang singkat.
+
+
+%     \item {Indikator Akhir Pekan (\textit{Is Weekend Check-in})} \\
+%     Fitur ini merupakan fitur biner (0 atau 1) yang menandai apakah penyewaan dilakukan pada akhir pekan (Sabtu atau Minggu). Fitur ini sangat penting dikarenakan pola aktivitas manusia, termasuk transaksi penyewaan properti, memiliki distribusi data yang berbeda secara signifikan antara akhir pekan dan hari kerja (\textit{weekdays}). Menurut Aggarwal (2017) dalam bukunya \textit{Outlier Analysis}, waktu merupakan salah satu atribut kontekstual (\textit{contextual attribute}) yang mendefinisikan batasan normalitas suatu data. Sebuah metrik penyewaan (seperti frekuensi atau durasi tertentu) mungkin dianggap sangat wajar pada akhir pekan, namun bisa menjadi sinyal mencurigakan jika terjadi di pertengahan minggu. Hal ini didukung oleh Chandola, Banerjee, dan Kumar (2009) dalam jurnal \textit{ACM Computing Surveys}, yang mendefinisikan fenomena ini sebagai anomali kontekstual (\textit{contextual anomaly}). Tanpa adanya fitur yang memisahkan konteks waktu ini, algoritma \textit{machine learning} cenderung akan mengklasifikasikan lonjakan penyewaan normal di akhir pekan sebagai sebuah penyimpangan. Oleh karena itu, penambahan indikator ini secara efektif membantu model memahami konteks temporal data, sehingga dapat meminimalkan kesalahan identifikasi atau alarm palsu (\textit{false positive}).
+% \end{enumerate}
+
+% Berikut adalah implementasi kode Python untuk proses \textit{feature engineering} tersebut.
+
+% \begin{lstlisting}[language=Python, caption={Implementasi Feature Engineering}]
+%     # 1. Pastikan kolom tersedia
+%     cols_to_check = [
+%         'tanggal_checkin', 'waktu_checkin',
+%         'tanggal_checkout', 'waktu_checkout',
+%         'lama_menginap', 'lantai', 'tower',
+%         'status_kewarganegaraan', 'metode_pembayaran', 'jenis_sewa',
+%         'komentar' 
+%     ]
+    
+%     for col in cols_to_check:
+%         if col not in df.columns:
+%             df[col] = np.nan
+            
+%     # 2. Fitur Indikator Pelanggaran (Berdasarkan Komentar)
+%     # Jika kolom komentar tidak null dan tidak kosong, maka True (1), else False (0)
+%     df['melanggar'] = df['komentar'].notna() & (df['komentar'].str.strip() != '')
+%     df['melanggar'] = df['melanggar'].astype(int)
+    
+%     # 3. Fungsi untuk menggabungkan Tanggal dan Waktu menjadi Datetime
+%     def combine_datetime(date_col, time_col):
+%         # Menggabungkan string tanggal dan waktu, lalu konversi ke objek datetime
+%         dt_str = df[date_col].astype(str).str.strip() + ' ' + df[time_col].astype(str).str.strip()
+%         return pd.to_datetime(dt_str, errors='coerce')
+    
+%     # Terapkan fungsi ke data check-in dan check-out
+%     df['checkin_dt'] = combine_datetime('tanggal_checkin', 'waktu_checkin')
+%     df['checkout_dt'] = combine_datetime('tanggal_checkout', 'waktu_checkout')
+    
+%     # 4. Hitung Durasi Sewa dalam Jam
+%     # Menghitung selisih detik dibagi 3600 untuk mendapatkan jam
+%     df['duration_hours'] = (df['checkout_dt'] - df['checkin_dt']).dt.total_seconds() / 3600
+    
+%     # Mengisi nilai kosong dengan 0 dan memastikan tidak ada nilai negatif
+%     df['duration_hours'] = df['duration_hours'].fillna(0).clip(lower=0)
+    
+%     # 5. Ekstraksi Fitur Waktu (Jam dan Hari)
+%     df['checkin_hour'] = df['checkin_dt'].dt.hour.fillna(0)      # Jam (0-23)
+%     df['checkout_hour'] = df['checkout_dt'].dt.hour.fillna(0)    # Jam (0-23)
+%     df['checkin_dow'] = df['checkin_dt'].dt.dayofweek.fillna(-1) # Hari (0=Senin, 6=Minggu)
+    
+%     # 6. Fitur Biner: Apakah Check-in saat Akhir Pekan?
+%     # Cek apakah hari adalah Sabtu (5) atau Minggu (6)
+%     df['is_weekend_checkin'] = df['checkin_dow'].isin([5, 6]).astype(int)
+    
+%     # 7. Normalisasi kolom lama_menginap
+%     df['lama_menginap'] = pd.to_numeric(df['lama_menginap'], errors='coerce').fillna(0)
+% \end{lstlisting}
+
+% \textbf{Penjelasan kode program:}
+% \begin{itemize}
+%     \item \texttt{df['komentar'].notna()}: Fungsi pandas untuk mendeteksi baris data yang memiliki nilai pada kolom komentar (bukan \textit{null} atau \textit{NaN}). Hasil \textit{boolean} diubah menjadi \textit{integer} (\texttt{astype(int)}) agar dapat diproses oleh model.
+%     \item \texttt{combine\_datetime}: Digunakan karena data mentah memisahkan tanggal dan waktu dalam kolom berbeda (tipe string). Fungsi ini menggabungkannya menjadi objek \texttt{datetime} agar dapat dihitung selisihnya.
+%     \item \texttt{.dt.total\_seconds() / 3600}: Mengonversi selisih waktu (\textit{timedelta}) menjadi format numerik (jam) agar dapat diproses oleh algoritma \textit{machine learning}.
+%     \item \texttt{.clip(lower=0)}: Mencegah adanya durasi negatif akibat kesalahan input data (misalnya waktu \textit{check-out} lebih awal dari \textit{check-in}).
+% \end{itemize}
+
+
+
+
+
+
+\section{Feature Engineering}
+
+\textit{Feature engineering} adalah proses membuat fitur-fitur (kolom data) baru atau mengubah fitur yang sudah ada agar representasi data menjadi lebih informatif bagi algoritma \textit{machine learning}. Menurut Kuhn dan Johnson (2019) dalam \textit{Feature Engineering and Selection: A Practical Approach for Predictive Models}, \textit{feature engineering} yang efektif sering kali menjadi faktor penentu utama keberhasilan sebuah model prediktif, dikarenakan algoritma tidak dapat menemukan pola yang kompleks jika data mentahnya tidak merepresentasikan masalah dengan baik. Tujuannya adalah membantu model untuk belajar dari data dan mengidentifikasi pola yang menyimpang dari kondisi normal (anomali).
+
+Berdasarkan data operasional sistem penyewaan, \textit{feature engineering} dalam penelitian ini berfokus pada ekstraksi fitur temporal (waktu) dan pemrosesan informasi kualitatif (teks) guna mendeteksi pola perilaku penyewa yang mencurigakan. Berikut adalah fitur-fitur utama yang dikembangkan beserta landasan teorinya.
+
+\begin{enumerate}
+    \item \textbf{Indikator Pelanggaran Berdasarkan Komentar (\textit{Is Melanggar})} \\
+    Dalam sistem pencatatan operasional, anomali sering kali tidak tercatat dalam bentuk metrik angka, melainkan melalui catatan bebas (\textit{free-text}) atau log laporan dari staf (Aggarwal, 2017). Jika kolom komentar pada riwayat penyewa tidak kosong (\textit{not null}), sistem akan menghasilkan fitur biner baru bernilai 1 (\textit{True}), dan 0 (\textit{False}) jika sebaliknya. Hal ini berfungsi sebagai sinyal kuat bagi algoritma mengenai riwayat pelanggaran tata tertib.
+
+    \item \textbf{Durasi Sewa dalam Jam (\textit{Duration Hours})} \\
+    Fitur ini menghitung total durasi penyewaan secara kontinu dalam satuan jam, berdasarkan selisih antara waktu \textit{check-out} dan waktu \textit{check-in}.
+    
+    {Contoh kasus perhitungan:}
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Waktu Check-in} & \textbf{Waktu Check-out} \\
+            \hline
+            2025-05-18 20:00:00 & 2025-05-18 23:00:00\\
+            \hline
+            2025-05-19 14:00:00 & 2025-05-20 12:00:00\\
+            \hline
+        \end{tabular}
+    \end{center}
+    
+    Persamaan umum yang digunakan adalah:
+    \[
+    \text{Duration Hours} = \frac{(\text{Check-out} - \text{Check-in})_{\text{detik}}}{3600}
+    \]
+    
+    \begin{itemize}
+        \item \textbf{Kasus 1 (Penyewaan di hari yang sama):} \\
+        Selisih waktu (20:00:00 hingga 23:00:00) adalah 3 jam. Dalam satuan detik bernilai $3 \times 3600 = 10.800$ detik.
+        \[
+        \text{Durasi}_1 = \frac{10.800}{3600} = 3{,}0 \text{ jam}
+        \]
+        \item \textbf{Kasus 2 (Penyewaan melintasi hari):} \\
+        Selisih waktu (19 Mei 14:00:00 hingga 20 Mei 12:00:00) adalah 22 jam. Dalam satuan detik bernilai $22 \times 3600 = 79.200$ detik.
+        \[
+        \text{Durasi}_2 = \frac{79.200}{3600} = 22{,}0 \text{ jam}
+        \]
+    \end{itemize}
+
+    Fitur ini krusial untuk mendeteksi penyewa ``transit''. Baesens, Van Vlasselaer, dan Verbeke (2015) menyatakan bahwa ekstraksi fitur temporal adalah teknik paling efektif dalam sistem deteksi anomali. Sejalan dengan temuan tersebut, Gupta et al. (2014) menegaskan bahwa anomali temporal sering muncul dalam bentuk durasi kejadian yang terlampau singkat. Dalam konteks sewa properti, durasi inap yang sangat pendek (\textit{micro-stays}) berkorelasi positif dengan aktivitas ilegal.
+
+    \item \textbf{Ekstraksi Waktu Check-in (\textit{Hour} \& \textit{Day of Week})} \\
+    Fitur ini memecah informasi waktu kedatangan menjadi komponen jam operasional (0--23) dan indeks hari dalam seminggu (0 = Senin, 6 = Minggu). Perilaku manusia memiliki pola musiman dan temporal yang dapat diprediksi (Zheng et al., 2014). Kedatangan pada jam tidak lazim (misalnya pukul 03.00 dini hari) dapat menjadi indikator awal (\textit{early warning}) dari profil anomali jika digabungkan dengan fitur durasi yang singkat.
+
+    \item \textbf{Indikator Akhir Pekan (\textit{Is Weekend Check-in})} \\
+    Fitur biner ini menandai apakah penyewaan dilakukan pada akhir pekan (Sabtu atau Minggu). Menurut Aggarwal (2017), waktu merupakan atribut kontekstual (\textit{contextual attribute}) yang mendefinisikan batasan normalitas suatu data. Lonjakan penyewaan di akhir pekan adalah hal wajar, namun bisa menjadi sinyal mencurigakan jika terjadi di pertengahan minggu kerja. Chandola, Banerjee, dan Kumar (2009) mendefinisikan fenomena ini sebagai anomali kontekstual. Fitur ini membantu model menghindari kesalahan klasifikasi (\textit{false positive}) dengan memberikan konteks waktu yang tepat.
+\end{enumerate}
+
+Berikut adalah implementasi kode Python menggunakan pustaka \texttt{pandas} untuk mengeksekusi proses \textit{feature engineering} tersebut.
+
+\begin{lstlisting}[language=Python, caption={Implementasi Feature Engineering Menggunakan Python}]
+# Pastikan kolom yang dibutuhkan tersedia di dataframe
+cols_to_check = [
+    'tanggal_checkin', 'waktu_checkin', 'tanggal_checkout', 'waktu_checkout',
+    'lama_menginap', 'lantai', 'tower', 'status_kewarganegaraan', 
+    'metode_pembayaran', 'jenis_sewa', 'komentar' 
+]
+
+for col in cols_to_check:
+    if col not in df.columns:
+        df[col] = np.nan
+        
+# Fitur Indikator Pelanggaran (Berdasarkan Komentar)
+# Menghasilkan nilai 1 (True) jika komentar ada dan bukan string kosong
+df['melanggar'] = df['komentar'].notna() & (df['komentar'].str.strip() != '')
+df['melanggar'] = df['melanggar'].astype(int)
+
+# Fungsi Penggabungan Tanggal dan Waktu
+def combine_datetime(date_col, time_col):
+    dt_str = df[date_col].astype(str).str.strip() + ' ' + df[time_col].astype(str).str.strip()
+    return pd.to_datetime(dt_str, errors='coerce')
+
+df['checkin_dt'] = combine_datetime('tanggal_checkin', 'waktu_checkin')
+df['checkout_dt'] = combine_datetime('tanggal_checkout', 'waktu_checkout')
+
+# Perhitungan Durasi Sewa dalam Jam (Duration Hours)
+df['duration_hours'] = (df['checkout_dt'] - df['checkin_dt']).dt.total_seconds() / 3600
+# Mengisi nilai kosong dengan 0 dan mencegah nilai negatif (kesalahan input)
+df['duration_hours'] = df['duration_hours'].fillna(0).clip(lower=0)
+
+# Ekstraksi Fitur Waktu (Jam dan Hari)
+df['checkin_hour'] = df['checkin_dt'].dt.hour.fillna(0)       # Jam (0-23)
+df['checkout_hour'] = df['checkout_dt'].dt.hour.fillna(0)     # Jam (0-23)
+df['checkin_dow'] = df['checkin_dt'].dt.dayofweek.fillna(-1)  # Hari (0=Senin, 6=Minggu)
+
+# Fitur Biner Akhir Pekan
+df['is_weekend_checkin'] = df['checkin_dow'].isin([5, 6]).astype(int)
+
+# Normalisasi Tipe Data
+df['lama_menginap'] = pd.to_numeric(df['lama_menginap'], errors='coerce').fillna(0)
+\end{lstlisting}
+
+\textbf{Penjelasan Kode Program:}
+\begin{itemize}
+    \item \texttt{df['komentar'].notna()}: Fungsi untuk mendeteksi baris data yang memiliki entri kualitatif (bukan \textit{null} atau \textit{NaN}). Hasil logika \textit{boolean} kemudian dikonversi menjadi numerik melalui \texttt{astype(int)} agar kompatibel dengan model \textit{machine learning}.
+    \item \texttt{combine\_datetime()}: Menggabungkan variabel tanggal dan waktu yang awalnya terpisah (bertipe \textit{string}) menjadi satu objek tipe \texttt{datetime} terpadu untuk operasi matematika waktu.
+    \item \texttt{.dt.total\_seconds() / 3600}: Mengonversi nilai \textit{timedelta} (selisih waktu absolut) menjadi representasi numerik desimal dalam satuan jam (\textit{hours}).
+    \item \texttt{.clip(lower=0)}: Sebuah fungsi proteksi untuk membatasi batas bawah matriks menjadi nol, guna mencegah kemunculan durasi negatif akibat anomali kesalahan ketik saat staf memasukkan data \textit{check-in} dan \textit{check-out}.
+\end{itemize}

@@ -1,0 +1,422 @@
+%_____________________________________________________________________________
+%=============================================================================
+% data.tex v11 (24-07-2020) dibuat oleh Lionov - Informatika FTIS UNPAR
+%
+% Perubahan pada versi 11 (24-07-2020)
+%	- Penambahan enumitem dan nosep untuk semua list, untuk menghemat kertas
+%   - Bagian V: penambahan opsi Daftar Kode Program dan Daftar Notasi
+%   - Bagian XIV: menjadi Bagian XVI
+%   - Bagian XV: menjadi Bagian XVII
+%   - Bagian XIV yang baru: untuk pilihan jenis tanda tangan mahasiswa
+%   - Bagian XV yang baru: untuk pilihan munculnya tanda tangan digital untuk
+%     dosen/pejabat
+%_____________________________________________________________________________
+%=============================================================================
+
+%=============================================================================
+% 								PETUNJUK
+%=============================================================================
+% Ini adalah file data (data.tex)
+% Masukkan ke dalam file ini, data-data yang diperlukan oleh template ini
+% Cara memasukkan data dijelaskan di setiap bagian
+% Data yang WAJIB dan HARUS diisi dengan baik dan benar adalah SELURUHNYA !!
+% Hilangkan tanda << dan >> jika anda menemukannya
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN 0
+%=============================================================================
+% Entri untuk memperbaiki posisi "DAFTAR ISI" jika tidak berada di bagian 
+% tengah halaman. Sayangnya setiap sistem menghasilkan posisi yang berbeda.
+% Isilah dengan 0 atau 1 (e.g. \daftarIsiError{1}). 
+% Pemilihan 0 atau 1 silahkan disesuaikan dengan hasil PDF yang dihasilkan.
+%=============================================================================
+\daftarIsiError{0}
+%\daftarIsiError{1}   
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN I
+%=============================================================================
+% Tambahkan package2 lain yang anda butuhkan di sini
+%=============================================================================
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{todo}
+\usepackage{verbatim} 		%multiline comment
+\usepackage{pgfplots}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{subcaption}
+\usepackage{pgffor}
+
+%\overfullrule=3mm % memperlihatkan overfull 
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN II
+%=============================================================================
+% Mode dokumen: menentukan halaman depan dari dokumen, apakah harus mengandung 
+% prakata/pernyataan/abstrak dll (termasuk daftar gambar/tabel/isi) ?
+% - final 		: hanya untuk buku skripsi, dicetak lengkap: judul ina/eng, 
+%   			  pengesahan, pernyataan, abstrak ina/eng, untuk, kata 
+%				  pengantar, daftar isi (daftar tabel dan gambar tetap 
+%				  opsional dan dapat diatur), seluruh bab dan lampiran.
+%				  Otomatis tidak ada nomor baris dan singlespacing
+% - sidangakhir	: buku sidang akhir = buku final - (pengesahan + pernyataan +
+%   			  untuk + kata pengantar)
+%				  Otomatis ada nomor baris dan onehalfspacing 
+% - sidang 		: untuk sidang 1, buku sidang = buku sidang akhir - (judul 
+%				  eng + abstrak ina/eng)
+%				  Otomatis ada nomor baris dan onehalfspacing
+% - bimbingan	: untuk keperluan bimbingan, hanya terdapat bab dan lampiran
+%   			  saja, bab dan lampiran yang hendak dicetak dapat ditentukan 
+%				  sendiri (nomor baris dan spacing dapat diatur sendiri)
+% Mode default adalah 'template' yang menghasilkan isian berwarna merah, 
+% aktifkan salah satu mode di bawah ini :
+%=============================================================================
+%\mode{bimbingan} 		% untuk keperluan bimbingan
+%\mode{sidang} 			% untuk sidang 1
+%\mode{sidangakhir} 	% untuk sidang 2 / sidang pada Skripsi 2(IF)
+%\mode{final} 			% untuk mencetak buku skripsi 
+%=============================================================================
+\mode{final}
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN III
+%=============================================================================
+% Line numbering: penomoran setiap baris, nomor baris otomatis di-reset ke 1
+% setiap berganti halaman.
+% Sudah dikonfigurasi otomatis untuk mode final (tidak ada), mode sidang (ada)
+% dan mode sidangakhir (ada).
+% Untuk mode bimbingan, defaultnya ada (\linenumber{yes}), jika ingin 
+% dihilangkan, isi dengan "no" (i.e.: \linenumber{no})
+% Catatan:
+% - jika nomor baris tidak kembali ke 1 di halaman berikutnya, compile kembali
+%   dokumen latex anda
+% - bagian ini hanya bisa diatur di mode bimbingan
+%=============================================================================
+%\linenumber{no} 
+\linenumber{yes}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN IV
+%=============================================================================
+% Linespacing: jarak antara baris 
+% - single	: otomatis jika ingin mencetak buku skripsi, opsi yang 
+%			     disediakan untuk bimbingan, jika pembimbing tidak keberatan 
+%			     (untuk menghemat kertas)
+% - onehalf	: otomatis jika ingin mencetak dokumen untuk sidang
+% - double 	: jarak yang lebih lebar lagi, jika pembimbing berniat memberi 
+%             catatan yg banyak di antara baris (dianjurkan untuk bimbingan)
+% Catatan: bagian ini hanya bisa diatur di mode bimbingan
+%=============================================================================
+\linespacing{single}
+%\linespacing{onehalf}
+%\linespacing{double}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN V
+%=============================================================================
+% Tidak semua skripsi memuat gambar, tabel, kode program, dan/atau notasi. 
+% Untuk skripsi yang tidak memuat hal-hal tersebut, maka tidak diperlukan 
+% Daftar Gambar, Daftar Tabel, Daftar Kode Program, dan/atau Daftar Notasi. 
+% Sayangnya hal tsb sulit dilakukan secara manual karena membutuhkan 
+% kedisiplinan pengguna template.  
+% Jika tidak ingin menampilkan satu/lebih daftar-daftar tersebut (misalnya 
+% untuk bimbingan), isi dengan "no" (e.g. \gambar{no})
+%=============================================================================
+\gambar{yes}
+%\gambar{no}
+%\tabel{yes}
+\tabel{no}
+%\kode{yes}
+\kode{no}
+%\notasi{yes}
+\notasi{no}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN VI
+%=============================================================================
+% Pada mode final, sidang da sidangkahir, seluruh bab yang ada di folder "Bab"
+% dengan nama file bab1.tex, bab2.tex s.d. bab9.tex akan dicetak terurut, 
+% apapun isi dari perintah \bab.
+% Pada mode bimbingan, jika ingin:
+% - mencetak seluruh bab, isi dengan 'all' (i.e. \bab{all})
+% - mencetak beberapa bab saja, isi dengan angka, pisahkan dengan ',' 
+%   dan bab akan dicetak terurut sesuai urutan penulisan (e.g. \bab{1,3,2}). 
+% Catatan: Jika ingin menambahkan bab ke-3 s.d. ke-9, tambahkan file 
+% bab3.tex, bab4.tex, dst di folder "Bab". Untuk bab ke-10 dan 
+% seterusnya, harus dilakukan secara manual dengan mengubah file skripsi.tex
+% Catatan: bagian ini hanya bisa diatur di mode bimbingan
+%=============================================================================
+\bab{all}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN VII
+%=============================================================================
+% Pada mode final, sidang dan sidangkhir, seluruh lampiran yang ada di folder 
+% "Lampiran" dengan nama file lampA.tex, lampB.tex s.d. lampJ.tex akan dicetak 
+% terurut, apapun isi dari perintah \lampiran.
+% Pada mode bimbingan, jika ingin:
+% - mencetak seluruh lampiran, isi dengan 'all' (i.e. \lampiran{all})
+% - mencetak beberapa lampiran saja, isi dengan huruf, pisahkan dengan ',' 
+%   dan lampiran akan dicetak terurut sesuai urutan (e.g. \lampiran{A,E,C}). 
+% - tidak mencetak lampiran apapun, isi dengan "none" (i.e. \lampiran{none})
+% Catatan: Jika ingin menambahkan lampiran ke-C s.d. ke-I, tambahkan file 
+% lampC.tex, lampD.tex, dst di folder Lampiran. Untuk lampiran ke-J dan 
+% seterusnya, harus dilakukan secara manual dengan mengubah file skripsi.tex
+% Catatan: bagian ini hanya bisa diatur di mode bimbingan
+%=============================================================================
+\lampiran{all}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN VIII
+%=============================================================================
+% Data diri dan skripsi/tugas akhir
+% - namanpm		: Nama dan NPM anda, penggunaan huruf besar untuk nama harus 
+%				  benar dan gunakan 10 digit npm UNPAR, PASTIKAN BAHWA 
+%				  BENAR !!! (e.g. \namanpm{Jane Doe}{1992710001}
+% - judul 		: Dalam bahasa Indonesia, perhatikan penggunaan huruf besar, 
+%				  judul tidak menggunakan huruf besar seluruhnya !!! 
+% - tanggal 	: isi dengan {tangga}{bulan}{tahun} dalam angka numerik, 
+%				  jangan menuliskan kata (e.g. AGUSTUS) dalam isian bulan.
+%			  	  Tanggal ini adalah tanggal dimana anda akan melaksanakan 
+%				  sidang ujian akhir skripsi/tugas akhir
+% - pembimbing	: pembimbing anda, lihat daftar dosen di file dosen.tex
+%				  jika pembimbing hanya 1, kosongkan parameter kedua 
+%				  (e.g. \pembimbing{\JND}{} ), \JND adalah kode dosen
+% - penguji 	: para penguji anda, lihat daftar dosen di file dosen.tex
+%				  (e.g. \penguji{\JHD}{\JCD} )
+% !!Lihat singkatan pembimbing dan penguji anda di file dosen.tex!!
+% Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda
+%=============================================================================
+\namanpm{Steffi Widjaya}{6182101054}
+\tanggal{20}{10}{2025}         %isi bulan dengan angka
+\pembimbing{\GDK}{}
+\penguji{\MTA}{\KAL} %dosen penguji 
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN IX
+%=============================================================================
+% Judul dan title : judul bhs indonesia dan inggris
+% - judulINA: judul dalam bahasa indonesia
+% - judulENG: title in english
+% Petunjuk: 
+% - hilangkan tanda << & >>, dan isi sesuai dengan data anda
+% - langsung mulai setelah '{' awal, jangan mulai menulis di baris bawahnya
+% - gunakan \texorpdfstring{\\}{} untuk pindah ke baris baru
+% - judul TIDAK ditulis dengan menggunakan huruf besar seluruhnya !!
+%=============================================================================
+\judulINA{DETEKSI PERILAKU PENYEWA RUSUNAMI THE JARRDIN CIHAMPELAS}
+\judulENG{DETECTING THE BEHAVIOR OF RUSUNAMI TENANTS AT THE JARRDIN CIHAMPELAS}
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN X
+%=============================================================================
+% Abstrak dan abstract : abstrak bhs indonesia dan inggris
+% - abstrakINA: abstrak bahasa indonesia
+% - abstrakENG: abstract in english 
+% Petunjuk: 
+% - hilangkan tanda << & >>, dan isi sesuai dengan data anda
+% - langsung mulai setelah '{' awal, jangan mulai menulis di baris bawahnya
+%=============================================================================
+\abstrakINA{
+Rusunami The Jarrdin Cihampelas (RTJC) merupakan hunian vertikal dengan tingkat mobilitas penyewa yang tinggi dan sistem penyewaan yang fleksibel, sehingga berpotensi menimbulkan berbagai aktivitas ilegal yang sulit terdeteksi melalui pengawasan manual. Sepanjang tahun 2024 tercatat beberapa kasus penyalahgunaan unit seperti prostitusi terselubung, penggunaan narkoba, serta tindakan kriminal lainnya. Kondisi ini menunjukkan perlunya pendekatan berbasis data yang mampu mengidentifikasi pola perilaku penyewa mencurigakan secara dini. Penelitian ini mengusulkan pembangunan sistem deteksi penyewa berisiko menggunakan pendekatan \textit{supervised machine learning} dengan memanfaatkan data penyewa yang telah diberi label (normal dan tidak normal). Beberapa algoritma klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost} diuji untuk menentukan model terbaik berdasarkan metrik evaluasi pada data yang tidak seimbang.
+
+Selain pengembangan model klasifikasi, penelitian ini juga membangun sistem berbasis Node.js guna mengotomatisasi proses input data penyewa serta menampilkan hasil klasifikasi secara {\it real-time} kepada ketua agen, PKJ, P3SRS, dan para agen. Hasil penelitian menunjukkan bahwa model klasifikasi yang dikembangkan mampu mengenali pola perilaku penyewa berisiko dengan tingkat akurasi dan presisi yang cukup baik. Sistem yang dihasilkan juga mendukung proses pemantauan penyewa secara lebih cepat, transparan, dan efisien. Dengan demikian, solusi ini berpotensi menjadi alat bantu proaktif dalam meningkatkan keamanan lingkungan hunian vertikal RTJC.
+}
+
+\abstrakENG{
+Rusunami The Jarrdin Cihampelas (RTJC) is a vertical residence with a high level of tenant mobility and a flexible rental system, thereby creating the potential for various illegal activities that are difficult to detect through manual supervision. Throughout 2024, several cases of unit misuse were recorded, such as covert prostitution, drug use, and other criminal acts. This condition demonstrates the need for a data-driven approach capable of identifying suspicious tenant behavior patterns at an early stage. This research proposes the development of a risky tenant detection system using a {supervised machine learning} approach by utilizing tenant data that has been labeled (normal and abnormal). Several classification algorithms such as {Decision Tree}, {Random Forest}, {Support Vector Machine}, {K-Nearest Neighbors}, and {XGBoost} were tested to determine the best model based on evaluation metrics on imbalanced data.
+
+In addition to the development of the classification model, this research also builds a Node.js-based system to automate the tenant data input process as well as displaying classification results in { real-time} to the head agent, PKJ, P3SRS, and the agents. The research results indicate that the developed classification model is capable of recognizing risky tenant behavior patterns with a quite good level of accuracy and precision. The resulting system also supports a faster, more transparent, and efficient tenant monitoring process. Thus, this solution has the potential to become a proactive tool in enhancing the security of the RTJC vertical residential environment.
+
+}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XI
+%=============================================================================
+% Kata-kata kunci dan keywords : diletakkan di bawah abstrak (ina dan eng)
+% - kunciINA: kata-kata kunci dalam bahasa indonesia
+% - kunciENG: keywords in english
+% Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
+%=============================================================================
+\kunciINA{model klasifikasi, penyewa mencurigakan, \textit{supervised machine learning}, rusunami, Node.js}
+\kunciENG{classification model, suspicious tenant, {supervised machine learning}, rusunami, Node.js}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XII
+%=============================================================================
+% Persembahan : kepada siapa anda mempersembahkan skripsi ini ...
+% Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
+%=============================================================================
+\untuk{Kedua orang tua, adik, serta para sahabat tercinta sebagai sumber dukungan dan doa yang tiada henti; dosen pembimbing dan para penguji atas bimbingan, arahan, dan masukan yang berharga;  
+serta rekan-rekan di The Jarrdin Cihampelas yang telah memberi dorongan dan bantuan.  
+
+Karya ini juga saya persembahkan bagi para peneliti, pengembang, dan mahasiswa yang tertarik pada studi klasifikasi dengan data tidak seimbang, dengan harapan skripsi ini dapat menjadi preseden atau contoh dalam perancangan, implementasi, dan pengujian sistem serupa di masa mendatang.}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XIII
+%=============================================================================
+% Kata Pengantar: tempat anda menuliskan kata pengantar dan ucapan terima 
+% kasih kepada yang telah membantu anda bla bla bla ....  
+% Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
+%=============================================================================
+\prakata{
+Puji dan syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas berkat dan rahmat-Nya, sehingga penulis dapat menyelesaikan tugas akhir yang berjudul \textit{"Deteksi Perilaku Penyewa Rusunami The Jarrdin Cihampelas"} dengan baik. Tugas akhir ini disusun sebagai salah satu syarat untuk memperoleh gelar Sarjana pada Program Studi Informatika, Universitas Katolik Parahyangan.
+
+Penelitian ini dilatarbelakangi oleh kebutuhan akan sistem pendukung keamanan hunian vertikal yang mampu mendeteksi perilaku penyewa berisiko secara lebih cepat, akurat, dan berbasis data. Tingginya mobilitas penyewa serta fleksibilitas pola penyewaan di Rusunami The Jarrdin Cihampelas menimbulkan tantangan tersendiri dalam proses pengawasan. Oleh karena itu, tugas akhir ini mengusulkan pemanfaatan metode \textit{supervised machine learning} untuk membangun model klasifikasi perilaku penyewa mencurigakan, serta pengembangan sistem berbasis Node.js untuk mengotomatiskan proses identifikasi dan penyampaian informasi para kepada pemangku kepentingan.
+
+Penyusunan laporan tugas akhir ini tidak terlepas dari dukungan, bimbingan, dan bantuan dari berbagai pihak. Oleh karena itu, penulis menyampaikan terima kasih kepada:
+\begin{enumerate}
+\item Tuhan Yang Maha Esa, atas rahmat dan penyertaan-Nya selama proses penyusunan tugas akhir ini.
+\item Kedua orang tua dan keluarga, atas doa, dukungan moral, dan motivasi yang tiada henti.
+\item Bapak \GDK{} selaku dosen pembimbing yang telah memberikan arahan, masukan, dan bimbingan secara berkesinambungan.
+\item Ibu \MTA{} selaku penguji satu dan Bapak \KAL{} selaku penguji dua yang telah memberikan kritik dan masukan berharga untuk penyempurnaan laporan ini.
+\item Rekan-rekan di The Jarrdin Cihampelas yang telah memberikan dorongan, diskusi, serta bantuan konsultasi selama proses pengembangan dan penyusunan laporan.
+\end{enumerate}
+
+Penulis menyadari bahwa laporan ini masih memiliki keterbatasan. Oleh karena itu, kritik dan saran yang membangun sangat diharapkan demi penyempurnaan karya ini. Semoga tugas akhir ini dapat memberikan manfaat bagi pengembangan ilmu pengetahuan serta penerapan teknologi, khususnya dalam bidang klasifikasi data tidak seimbang, keamanan hunian, dan pengembangan sistem informasi pada lingkungan rumah susun.
+
+ }
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XIV
+%=============================================================================
+% Jenis tandatangan di lembar pernyataan mahasiswa tentang plagiarisme.
+% Ada 4 pilihan:
+%   - digital   : diisi menggunakan digital signature (menggunakan pengolah
+%                 pdf seperti Adobe Acrobat Reader DC).
+%   - gambar    : diisi dengan gambar tandatangan mahasiswa (file tandatangan
+%                 bertipe pdf/png/jpg). Dianjukan menggunakan warna biru.
+%                 Letakkan gambar di folder "Gambar" dengan nama ttd.jpg/
+%                 ttd.png/ttd.pdf (tergantung jenis file. Hapus file ttd.jpg
+%                 yang digunakan sebagai contoh
+%   - materai   : khusus bagi yang ingin mencetak buku dan menandatangani di 
+%                 atas materai. Sama dengan pilihan ``digital'' dan dicetak.
+%   - kosong    : tempat kosong ini bisa diisi dengan tanda tangan yang
+%                 digambar langsung di atas pdf (fill&sign via acrobat, tanda
+%                 tangan dapat dibuat dengan mouse atau stylus)
+%=============================================================================
+%\ttd{digital}
+%\ttd{gambar}
+%\ttd{materai}
+%\ttd{kosong}
+%=============================================================================
+\ttd{gambar}
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XV
+%=============================================================================
+% Pilihan tanda tangan digital untuk dosen/pejabat:
+%   - no    : pdf TIDAK dapat ditandatangani secara digital, mengakomodasi 
+%             yang akan menandatangani via ``menulis'' di file pdf
+%   - yes   : pdf dapat ditandatangani secara digital
+% 
+% PERHATIAN: perubahan ini harus ditanyakan ke kaprodi/dosen koordinator, 
+% apakah harus mengisi ``no" atau ``yes". Default = no 
+% Untuk mahasiswa Informatika = yes
+%=============================================================================
+%\ttddosen{yes}
+%=============================================================================
+\ttddosen{yes}
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XVI
+%=============================================================================
+% Tambahkan hyphen (pemenggalan kata) yang anda butuhkan di sini 
+%=============================================================================
+\hyphenation{ma-te-ma-ti-ka}
+\hyphenation{fi-si-ka}
+\hyphenation{tek-nik}
+\hyphenation{in-for-ma-ti-ka}
+%=============================================================================
+
+%_____________________________________________________________________________
+%=============================================================================
+% 								BAGIAN XVII
+%=============================================================================
+% Tambahkan perintah yang anda buat sendiri di sini 
+%=============================================================================
+\renewcommand{\vtemplateauthor}{lionov}
+\pgfplotsset{compat=newest}
+\setlist{nosep}
+% Definisi warna opsional
+\definecolor{jsonkey}{rgb}{0.6,0,0}        % warna key
+\definecolor{jsonstring}{rgb}{0,0.5,0}     % warna string
+
+% Definisi bahasa JSON untuk listings
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    literate=
+     *{0}{{{\color{blue}0}}}{1}
+      {1}{{{\color{blue}1}}}{1}
+      {2}{{{\color{blue}2}}}{1}
+      {3}{{{\color{blue}3}}}{1}
+      {4}{{{\color{blue}4}}}{1}
+      {5}{{{\color{blue}5}}}{1}
+      {6}{{{\color{blue}6}}}{1}
+      {7}{{{\color{blue}7}}}{1}
+      {8}{{{\color{blue}8}}}{1}
+      {9}{{{\color{blue}9}}}{1}
+      {:}{{{\color{black}{:}}}}{1}
+      {,}{{{\color{black}{,}}}}{1}
+      {"}{{{\color{black}{"}}}}{1}
+      {\{}{{{\color{black}{\{}}}}{1}
+      {\}}{{{\color{black}{\}}}}}{1}
+      [{{{\color{black}{[}}}}{1}
+      ]{{{\color{black}{]}}}}{1},
+    morestring=[b]",
+    morecomment=[l]{//},
+    commentstyle=\color{gray},
+    stringstyle=\color{jsonstring},
+    keywordstyle=\color{jsonkey}
+}
+
+\lstdefinelanguage{nginx}{
+    morekeywords={server,listen,ssl_certificate,ssl_certificate_key,server_name,
+    root,index,location,proxy_pass,proxy_http_version,proxy_set_header,
+    proxy_pass_request_headers,proxy_max_temp_file_size,proxy_connect_timeout,
+    proxy_send_timeout,proxy_read_timeout,proxy_buffer_size,proxy_buffers,
+    proxy_busy_buffers_size,proxy_temp_file_write_size,if,rewrite,allow,auth_basic},
+    sensitive=true,
+    morecomment=[l]{\#},
+    morestring=[b]",
+}
+
+%=============================================================================

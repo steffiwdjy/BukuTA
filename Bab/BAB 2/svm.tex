@@ -1,0 +1,29 @@
+\section{{\it Support Vector Machine} (SVM)}
+
+{\it Support Vector Machine} (SVM) merupakan algoritma klasifikasi biner yang bertujuan mencari {\it hyperplane} terbaik yang memisahkan dua kelas data dengan margin maksimum. SVM bekerja dengan mencari garis (dalam dua dimensi) atau bidang (dalam dimensi lebih tinggi) yang memaksimalkan jarak antara dua kelas data yang berbeda (Cortes \& Vapnik, 1995). Dalam praktiknya, SVM efektif digunakan untuk klasifikasi data linier maupun nonlinier melalui fungsi kernel, seperti \textit{Radial Basis Function} (RBF), polinomial, dan sigmoid (Hastie, Tibshirani, \& Friedman, 2009).
+    
+    Secara matematis, fungsi pemisah pada SVM ditentukan oleh:
+    \[
+    f(x) = \text{sign}(w^T x + b)
+    \]
+    dengan \( w \) adalah vektor bobot, \( x \) adalah vektor fitur input, dan \( b \) adalah bias. Model SVM mencari nilai \( w \) dan \( b \) sedemikian, sehingga margin antar dua kelas maksimum, yang dirumuskan sebagai:
+    \[
+    \min \frac{1}{2} \|w\|^2 \quad \text{dengan syarat } y_i (w^T x_i + b) \geq 1
+    \]
+    untuk semua data \( i \), di mana \( y_i \in \{-1, +1\} \) adalah label kelas. Pada kasus data yang tidak dapat dipisahkan secara sempurna, SVM menggunakan {\it soft margin} dengan fungsi kerugian:
+    \[
+    \min \frac{1}{2} \|w\|^2 + C \sum_{i=1}^{n} \xi_i
+    \]
+    yang mana \( \xi_i \) adalah {\it slack variable} yang mengizinkan kesalahan klasifikasi, dan \( C \) adalah parameter regulasi.
+    
+    Sebagai contoh, misalkan terdapat dua fitur dari data penyewa, yaitu lama menginap dan waktu check-in (pagi/sore/malam), serta label kelas normal (1) atau mencurigakan (–1). Setelah dilakukan transformasi ke bentuk vektor dan pelatihan model, SVM menghasilkan fungsi keputusan:
+    \[
+    f(x) = 2x_1 + 3x_2 - 5
+    \]
+    Jika suatu penyewa baru memiliki nilai fitur \( x_1 = 1 \) dan \( x_2 = 2 \), maka:
+    \[
+    f(x) = 2(1) + 3(2) - 5 = 2 + 6 - 5 = 3
+    \]
+    Karena hasilnya positif (lebih besar dari 0), maka model memutuskan bahwa penyewa termasuk kelas normal. Jika hasilnya < 0, maka penyewa diklasifikasikan sebagai mencurigakan. Semakin jauh nilai dari 0, semakin tinggi keyakinan model terhadap klasifikasinya, sedangkan nilai mendekati 0 menunjukkan prediksi yang lemah dan berada di dekat batas margin.
+    
+    SVM dikenal sangat kuat untuk data berdimensi tinggi dan situasi di mana jumlah fitur lebih banyak daripada jumlah sampel. Selain itu, SVM relatif tahan terhadap {\it overfitting}, terutama pada dataset yang memiliki {\it noise} kecil. Karena sifatnya yang mendefinisikan batas keputusan eksplisit, SVM banyak digunakan dalam bidang deteksi intrusi, identifikasi penipuan, dan klasifikasi risiko, termasuk dalam pengawasan properti berbasis data (Sch\"{o}lkopf \& Smola, 2002).

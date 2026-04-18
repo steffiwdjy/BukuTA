@@ -1,0 +1,75 @@
+\section{\it Decision Tree}
+
+{\it Decision Tree} merupakan salah satu algoritma klasifikasi berbasis pohon keputusan yang digunakan untuk memetakan data ke dalam kelas berdasarkan urutan aturan keputusan yang bersifat jika-maka (Tan, Steinbach, \& Kumar, 2019). Algoritma ini bekerja dengan cara membagi dataset ke dalam subset-subset yang lebih homogen berdasarkan fitur tertentu yang memberikan informasi paling tinggi dalam membedakan kelas. Proses pembagian tersebut dilakukan secara rekursif hingga kriteria penghentian tertentu terpenuhi, misalnya ketika seluruh data dalam satu node memiliki label kelas yang sama atau jumlah data terlalu sedikit untuk dibagi lebih lanjut (Han, Pei, \& Kamber, 2011).
+
+Pemilihan fitur pada setiap node dilakukan menggunakan ukuran impuritas atau ketidakmurnian, seperti \textit{information gain}, \textit{Gini index}, atau \textit{gain ratio}. Untuk \textit{Information Gain}, berikut adalah rumus yang digunakan.
+    
+\[
+IG(S, A) = Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} \cdot Entropy(S_v)
+\]  
+dengan \( Entropy(S) = - \sum_{i=1}^{c} p_i \log_2 p_i \), di mana \( p_i \) adalah proporsi data dalam kelas ke-\( i \). Entropi mengukur ketidakpastian dalam suatu himpunan, dan \textit{Information Gain} menyatakan penurunan ketidakpastian setelah pemisahan berdasarkan fitur \( A \) (Quinlan, 1986).
+
+Sebagai contoh, misalkan terdapat data 6 penyewa (\(S\)) dengan fitur metode pembayaran (Tunai/Kartu) dan lama menginap, serta label yang menunjukkan apakah penyewa tersebut mencurigakan atau normal. Dari total data tersebut, kondisinya seimbang yaitu 3 penyewa berlabel normal dan 3 mencurigakan. Pemilihan atribut terbaik untuk membagi data dilakukan dengan menghitung \textit{Information Gain} (IG) yang didasarkan pada perhitungan entropi.
+\begin{itemize}
+    
+    \item{Menghitung ketidakpastian awal (entropi \(S\))} \\
+    Kondisi awal data sangat seimbang yang mana merepresentasikan tingkat ketidakpastian (entropi) maksimal. Entropi awal dari himpunan data \(S\) dihitung sebagai berikut.
+    \[
+    Entropy(S) = - \left(\frac{3}{6} \log_2 \frac{3}{6}\right) - \left(\frac{3}{6} \log_2 \frac{3}{6}\right) = 1
+    \]
+    
+    \item {Memecah data berdasarkan fitur ''Metode Pembayaran``} \\
+    Selanjutnya, himpunan data \(S\) dibagi berdasarkan fitur ''Metode Pembayaran`` ke dalam dua kelompok sebagai berikut.
+    \begin{itemize}
+        \item {Kelompok Tunai (4 penyewa)} yang terdiri dari 1 Normal dan 3 Mencurigakan. Tingkat ketidakpastiannya sebagai berikut.
+        \[
+        Entropy(Tunai) = - \left(\frac{1}{4} \log_2 \frac{1}{4}\right) - \left(\frac{3}{4} \log_2 \frac{3}{4}\right) \approx 0{,}811
+        \]
+        \item {Kelompok Kartu (2 penyewa)} yang terdiri dari 2 Normal dan 0 Mencurigakan. Oleh karena seluruh kelasnya seragam (murni), maka tingkat ketidakpastiannya adalah nol.
+        \[
+        Entropy(Kartu) = - \left(\frac{2}{2} \log_2 \frac{2}{2}\right) - 0 = 0
+        \]
+    \end{itemize}
+    
+    \item{Menghitung \textit{Information Gain}} \\
+    Langkah terakhir adalah menghitung seberapa besar pengurangan ketidakpastian setelah data dibagi menggunakan metode pembayaran. Perhitungan dilakukan dengan mengurangkan entropi awal dengan rata-rata tertimbang (\textit{weighted average}) dari entropi masing-masing kelompok baru:
+    \[
+    IG(S, Metode) = Entropy(S) - \left( \frac{|\text{Tunai}|}{|S|} \times Entropy(Tunai) \right) - \left( \frac{|\text{Kartu}|}{|S|} \times Entropy(Kartu) \right)
+    \]
+    \[
+    IG(S, Metode) = 1 - \left( \frac{4}{6} \times 0{,}811 \right) - \left( \frac{2}{6} \times 0 \right)
+    \]
+    \[
+    IG(S, Metode) = 1 - 0{,}541 - 0 = 0{,}459
+    \]
+\end{itemize}
+
+
+Setelah mengetahui nilai dari fitur Metode Pembayaran, kita melakukan perhitungan yang sama untuk fitur kandidat lainnya, yaitu ``Lama Menginap''. Misalkan fitur ini membagi data ke dalam dua kelompok: ``1--2 malam'' dan ``$\geq$ 3 malam''. 
+
+\begin{itemize}
+    \item {Memecah data berdasarkan fitur ``Lama Menginap''} \\
+    Dari total 6 himpunan data $S$, distribusinya adalah sebagai berikut:
+    \begin{itemize}
+        \item {{Kelompok 1--2 malam (5 penyewa)}} yang terdiri dari 2 Normal dan 3 Mencurigakan. Tingkat ketidakpastiannya dihitung sebagai berikut.
+        $$Entropy(1\text{--}2\text{ malam}) = - \left(\frac{2}{5} \log_2 \frac{2}{5}\right) - \left(\frac{3}{5} \log_2 \frac{3}{5}\right) \approx 0{,}971$$
+        
+        \item {{Kelompok $\geq$ 3 malam (1 penyewa)}} yang terdiri dari 1 Normal dan 0 Mencurigakan. Dikarenakan hanya berisi satu kelas (murni), maka tingkat ketidakpastiannya adalah nol.
+        $$Entropy(\geq3\text{ malam}) = - \left(\frac{1}{1} \log_2 \frac{1}{1}\right) - 0 = 0$$
+    \end{itemize}
+    
+    \item{Menghitung \textit{Information Gain} untuk Lama Menginap} \\
+    Setelah entropi dari masing-masing kelompok didapatkan, nilai \textit{Information Gain} dihitung dengan mengurangkan entropi awal $S$ (yaitu 1) dengan rata-rata tertimbang dari kelompok baru sebagai berikut.
+    $$IG(S, Lama) = Entropy(S) - \left( \frac{|1\text{--}2\text{ malam}|}{|S|} \times Entropy(1\text{--}2\text{ malam}) \right) - \left( \frac{|\geq3\text{ malam}|}{|S|} \times Entropy(\geq3\text{ malam}) \right)$$
+    $$IG(S, Lama) = 1 - \left( \frac{5}{6} \times 0{,}971 \right) - \left( \frac{1}{6} \times 0 \right)$$
+    $$IG(S, Lama) = 1 - 0{,}809 - 0 = 0{,}191$$
+\end{itemize}
+
+Dari kedua perhitungan di atas, pemisahan data menggunakan fitur Metode Pembayaran menghasilkan \textit{Information Gain} sebesar 0,459, sedangkan fitur Lama Menginap hanya menghasilkan 0,191.  Karena fitur Metode Pembayaran memberikan tingkat pengurangan ketidakpastian yang paling tinggi ($0{,}459 > 0{,}191$), maka fitur \textbf{Metode Pembayaran} secara otomatis dipilih sebagai pembagi pertama (\textit{root node}) dalam pembentukan pohon keputusan (\textit{decision tree}).
+
+
+Setelah fitur pembagi ditentukan, pohon akan terus dikembangkan dengan pembagian berdasarkan fitur berikutnya hingga semua data pada setiap cabang (daun) memiliki label yang sama. Hasil akhir dari model {\it Decision Tree} berupa label kelas yang diprediksi untuk data baru berdasarkan jalur keputusan yang dilewati. Misalnya, jika penyewa memiliki metode pembayaran kartu dan lama menginap 1 malam, maka ia mengikuti cabang tertentu dalam pohon yang mungkin berakhir pada prediksi mencurigakan. Jika semua contoh data yang sampai di satu daun adalah 100\% kelas mencurigakan, maka interpretasi hasil adalah keyakinan penuh terhadap label tersebut.
+
+Semakin ``murni'' node akhir (semakin sedikit variasi kelas di dalamnya), semakin tinggi kepercayaan hasil klasifikasi. Namun, dalam praktiknya model biasanya menggunakan probabilitas distribusi kelas di setiap daun sebagai prediksi. Sebagai contoh, jika suatu daun memuat 8 data, dengan 6 normal dan 2 mencurigakan, maka probabilitas diklasifikasikan sebagai normal adalah 75\% yang mana dapat digunakan sebagai dasar ambang batas (\textit{threshold}) interpretasi untuk pengambilan keputusan manajerial (misalnya waspada jika probabilitas mencurigakan > 30\%).
+
+Interpretasi hasil dari model {\it Decision Tree} dapat divisualisasikan dalam bentuk struktur pohon, di mana setiap cabang merepresentasikan kondisi pengambilan keputusan, dan setiap daun (\textit{leaf}) menunjukkan hasil klasifikasi. Keunggulan utama dari algoritma ini adalah kemudahannya untuk diinterpretasi dan dijelaskan kepada pengguna non-teknis, karena alur keputusannya menyerupai logika manusia (Loh, 2011).

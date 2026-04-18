@@ -1,0 +1,274 @@
+
+
+\section{Feature Selection}
+
+Proses \textit{feature selection} bertujuan untuk memilih subset fitur yang paling relevan terhadap label target guna meningkatkan akurasi, mengurangi kompleksitas komputasi, dan menghindari \textit{overfitting}. Secara umum, metode seleksi fitur dibagi menjadi pendekatan berdasarkan pengetahuan pakar (\textit{domain knowledge}), pendekatan statistik (\textit{filter methods}), dan pendekatan heuristik (\textit{wrapper methods}).
+
+\subsection{Pendekatan Pengetahuan Pakar (\textit{Domain Knowledge})}
+Sebelum menerapkan metode seleksi fitur berbasis komputasi, tahapan awal yang krusial dalam pemodelan \textit{machine learning} adalah ekstraksi dan seleksi fitur berdasarkan pengetahuan pakar (\textit{domain knowledge}). Pendekatan ini melibatkan identifikasi variabel-variabel yang diyakini memiliki relevansi kuat terhadap target prediksi berdasarkan pemahaman teoritis, aturan bisnis, atau pengalaman praktis di lapangan, misalnya melalui wawancara mendalam dengan pengelola unit atau petugas keamanan.
+
+Menurut Kuhn dan Johnson (2013), pemanfaatan pengetahuan domain sering kali lebih penting daripada teknik pemilihan fitur otomatis mana pun. Hal ini dikarenakan algoritma seleksi fitur murni secara matematis berpotensi memilih variabel yang hanya memiliki korelasi kebetulan (\textit{spurious correlation}) tanpa adanya dasar hubungan sebab-akibat yang logis. Dalam konteks deteksi perilaku penyewa, wawasan dari pakar dapat membantu memformulasikan fitur-fitur spesifik---seperti ada tidaknya riwayat pelanggaran pada kolom komentar, atau kewajaran durasi dan waktu \textit{check-in}---sebagai sinyal kuat (\textit{strong signal}) yang mengindikasikan perilaku anomali dari penyewa.
+
+\subsection{Metode Statistik (Filter Methods)}
+Setelah kandidat fitur didapatkan, metode statistik digunakan untuk mengevaluasi kekuatan hubungan antara fitur dan label secara matematis.
+    
+\begin{enumerate}
+    \item \textbf{Chi-Square Test} \\
+    Chi-Square ($\chi^2$) digunakan untuk mengukur kekuatan hubungan antara dua variabel kategori, misalnya fitur ($X$) dan target ($Y$). Cocok digunakan untuk klasifikasi dengan fitur diskret. Berikut rumusnya.
+    \[
+    \chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}
+    \]
+    dengan:
+    \begin{itemize}
+        \item $O_i$ : nilai observasi,
+        \item $E_i$ : nilai harapan.
+    \end{itemize}
+
+    Misalkan fitur metode pembayaran (tunai/kartu) dan target status penyewa (normal/tidak normal).
+
+    \begin{table}[H]
+    \centering
+    \caption{Tabel Kontingensi Metode Pembayaran dan Status Penyewa}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \textbf{Metode Pembayaran} & \textbf{Normal} & \textbf{Tidak normal} & \textbf{Total} \\
+            \hline
+            Tunai & 30 & 10 & 40 \\
+            Kartu & 20 & 40 & 60 \\
+            \hline
+            Total & 50 & 50 & 100 \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    Langkah-langkah perhitungannya:
+    \[
+    E_{ij} = \frac{\text{(Total Baris)} \times \text{(Total Kolom)}}{\text{Grand Total}}
+    \]
+    Misalnya:
+    \[
+    E_{\text{Tunai, Normal}} = \frac{40 \times 50}{100} = 20
+    \]
+
+    Perhitungan $\chi^2$:
+    \[
+    \chi^2 = \frac{(30 - 20)^2}{20} + \frac{(10 - 20)^2}{20} + \frac{(20 - 30)^2}{30} + \frac{(40 - 30)^2}{30} = 25
+    \]
+
+    Semakin tinggi nilai $\chi^2$, semakin besar hubungan fitur dengan label. Nilai $p$ dapat digunakan untuk menguji signifikansi statistik.
+
+    \item \textbf{Korelasi Pearson} \\
+    Digunakan untuk fitur numerik dan target numerik atau biner. Mengukur hubungan linier antara dua variabel. Berikut rumusnya.
+    \[
+    r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}, \quad r \in [-1,1]
+    \]
+    
+    \newpage
+    Misalnya:
+    \begin{table}[H]
+    \centering
+    \caption{Data Lama Menginap dan Status}
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Lama Menginap} ($x$) & \textbf{Status} ($y$) \\
+    \hline
+    1 & 1 \\
+    2 & 0 \\
+    5 & 0 \\
+    10 & 1 \\
+    3 & 0 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \begin{enumerate}
+        \item Hitung rata-rata:
+        \[
+        \bar{x} = \frac{1 + 2 + 5 + 10 + 3}{5} = \frac{21}{5} = 4.2, \quad
+        \bar{y} = \frac{1 + 0 + 0 + 1 + 0}{5} = \frac{2}{5} = 0.4
+        \]
+    
+        \item Hitung selisih, kuadrat selisih, dan produk selisih:
+        \begin{table}[H]
+        \centering
+        \caption{Perhitungan Komponen Korelasi Pearson}
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        $x_i$ & $y_i$ & $x_i - \bar{x}$ & $y_i - \bar{y}$ & $(x_i - \bar{x})^2$ & $(y_i - \bar{y})^2$ & $(x_i - \bar{x})(y_i - \bar{y})$ \\
+        \hline
+        1 & 1 & -3.2 & 0.6 & 10.24 & 0.36 & -1.92 \\
+        2 & 0 & -2.2 & -0.4 & 4.84 & 0.16 & 0.88 \\
+        5 & 0 & 0.8 & -0.4 & 0.64 & 0.16 & -0.32 \\
+        10 & 1 & 5.8 & 0.6 & 33.64 & 0.36 & 3.48 \\
+        3 & 0 & -1.2 & -0.4 & 1.44 & 0.16 & 0.48 \\
+        \hline
+        \multicolumn{4}{|c|}{\textbf{Total}} & 50.80 & 1.20 & 2.60 \\
+        \hline
+        \end{tabular}
+        \end{table}
+    
+        \item Hitung nilai Pearson $r$:
+        \[
+        r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \cdot \sum (y_i - \bar{y})^2}} =
+        \frac{2.60}{\sqrt{50.80 \times 1.20}} = \frac{2.60}{\sqrt{60.96}} \approx \frac{2.60}{7.80} \approx 0.333
+        \]
+    \end{enumerate}
+    
+    Nilai $r = 0{,}33$ menunjukkan korelasi positif sedang antara lama menginap dan status tidak normal. Artinya, semakin lama penyewa menginap, kecenderungan status tidak normal meningkat, meskipun hubungan tersebut tidak terlalu kuat.
+    
+    % \newpage
+    \item \textbf{Mutual Information (MI)} \\
+    MI mengukur ketergantungan antara suatu fitur dan label, baik dalam hubungan linier maupun non-linier. Cocok digunakan untuk fitur numerik yang telah dikelompokkan (diskret) serta label kategorikal (normal/tidak normal). Berikut rumusnya.
+    
+    \[
+    I(X;Y) = \sum_{x \in X} \sum_{y \in Y} p(x,y) \cdot \log_2 \left( \frac{p(x,y)}{p(x)p(y)} \right)
+    \]
+    
+    dengan:
+    \begin{itemize}
+        \item $p(x,y)$ : distribusi gabungan fitur dan label,
+        \item $p(x), p(y)$ : distribusi marginal.
+    \end{itemize}
+    
+    \textbf{Fitur:} lama menginap (kelompok: $\le$ 2 hari, 3--5 hari, $>$ 5 hari) \\
+    \textbf{Target:} Status penyewa (normal/tidak normal)
+    
+    \begin{table}[H]
+    \centering
+    \caption{Frekuensi Gabungan Lama Menginap dan Status Penyewa}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Lama menginap} & \textbf{Status} & \textbf{Frekuensi} \\
+    \hline
+    $\leq$ 2 hari & Normal & 10 \\
+    $\leq$ 2 hari & Tidak normal & 30 \\
+    3--5 hari & Normal & 20 \\
+    3--5 hari & Tidak normal & 10 \\
+    $>$ 5 hari & Normal & 10 \\
+    $>$ 5 hari & Tidak normal & 20 \\
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Total}} & 100 \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \begin{enumerate}
+        \item Hitung probabilitas gabungan $p(x, y)$:
+        \[
+        \begin{aligned}
+        p(\leq2, \text{Normal}) &= 0.10, \quad &p(\leq2, \text{Tidak normal}) &= 0.30 \\
+        p(3{-}5, \text{Normal}) &= 0.20, \quad &p(3{-}5, \text{Tidak normal}) &= 0.10 \\
+        p(>5, \text{Normal}) &= 0.10, \quad &p(>5, \text{Tidak normal}) &= 0.20
+        \end{aligned}
+        \]
+    
+        \item Hitung probabilitas marginal:
+        \[
+        \begin{aligned}
+        p(\leq2) &= 0.40, \quad p(3{-}5) = 0.30, \quad p(>5) = 0.30 \\
+        p(\text{Normal}) &= 0.40, \quad p(\text{Tidak normal}) = 0.60
+        \end{aligned}
+        \]
+    
+        \item Hitung nilai MI tiap kombinasi:
+        \[
+        \begin{aligned}
+        &0.10 \cdot \log_2 \left( \frac{0.10}{0.40 \cdot 0.40} \right) \approx -0.068 \\
+        &0.30 \cdot \log_2 \left( \frac{0.30}{0.40 \cdot 0.60} \right) \approx 0.097 \\
+        &0.20 \cdot \log_2 \left( \frac{0.20}{0.30 \cdot 0.40} \right) \approx 0.147 \\
+        &0.10 \cdot \log_2 \left( \frac{0.10}{0.30 \cdot 0.60} \right) \approx -0.085 \\
+        &0.10 \cdot \log_2 \left( \frac{0.10}{0.30 \cdot 0.40} \right) \approx -0.026 \\
+        &0.20 \cdot \log_2 \left( \frac{0.20}{0.30 \cdot 0.60} \right) \approx 0.030
+        \end{aligned}
+        \]
+    
+        \item Hitung total MI:
+        \[
+        MI = -0.068 + 0.097 + 0.147 - 0.085 - 0.026 + 0.030 = 0.095
+        \]
+    \end{enumerate}
+    
+    Nilai MI sebesar 0.095 menunjukkan bahwa fitur lama menginap memberikan informasi terhadap label status, meskipun kontribusinya tidak terlalu besar.
+
+    \vspace{0.5cm}
+    
+    Berikut adalah contoh implementasi kode Python dari ketiga metode {\it feature selection} statistik yang dijelaskan sebelumnya.
+    
+        \begin{enumerate}
+            \item {Import {\it library} yang dibutuhkan}
+            \begin{lstlisting}[language=Python]
+                from sklearn.feature_selection import chi2, mutual_info_classif
+                from sklearn.preprocessing import LabelEncoder
+                from scipy.stats import pearsonr
+            \end{lstlisting}
+        
+            Berikut penjelasannya.
+            \begin{itemize}
+                \item \texttt{chi2}: Menghitung skor chi-square dan p-value antara fitur kategorikal dan label klasifikasi.
+                \item \texttt{mutual\_info\_classif}: Mengukur mutual information antara fitur dan target klasifikasi.
+                \item \texttt{LabelEncoder}: Mengubah fitur kategorikal menjadi numerik (untuk keperluan \texttt{chi2}).
+                \item \texttt{pearsonr}: Menghitung korelasi Pearson antara dua variabel numerik.
+            \end{itemize}
+        
+            \item {Preprocessing: encoding fitur kategorikal}
+            \begin{lstlisting}[language=Python]
+                df['metode_bayar_enc'] = LabelEncoder().fit_transform(df['metode_bayar'])
+            \end{lstlisting}
+            Kolom \texttt{metode\_bayar} diubah menjadi numerik dan disimpan di kolom baru \texttt{metode\_bayar\_enc}.
+        
+            \item {Uji Chi-Square (untuk fitur kategorikal)}
+            \begin{lstlisting}[language=Python]
+                chi_scores, p_values = chi2(df[['metode_bayar_enc']], df['status'])
+            \end{lstlisting}
+            Jika skor chi-square yang besar dan p-value kecil (misalnya < 0.05) menunjukkan bahwa fitur memiliki pengaruh signifikan terhadap label.
+
+            % \newpage
+            \item {Uji korelasi Pearson (untuk fitur numerik)}
+            \begin{lstlisting}[language=Python]
+                r, p_corr = pearsonr(df['durasi_sewa'], df['status'])
+            \end{lstlisting}
+            {Berikut interpretasinya.}
+            \begin{itemize}
+                \item Nilai \(|r|\) mendekati 1 artinya  hubungan linier yang kuat.
+                \item p-value < 0.05 artinya hubungan signifikan secara statistik.
+            \end{itemize}
+        
+            \item {Uji Mutual Information (untuk hubungan linier/non-linier)}
+            \begin{lstlisting}[language=Python]
+                mi = mutual_info_classif(df[['durasi_sewa']], df['status'])
+            \end{lstlisting}
+            Jika nilai MI yang tinggi menunjukkan bahwa fitur mengandung banyak informasi terhadap label, bahkan jika hubungan bersifat non-linier.
+        
+            \item {Menampilkan hasil evaluasi}
+            \begin{lstlisting}[language=Python]
+                print(f"Chi-square score: {chi_scores[0]:.2f}, p-value: {p_values[0]:.4f}")
+                print(f"Pearson correlation: {r:.2f}, p-value: {p_corr:.4f}")
+                print(f"Mutual Information: {mi[0]:.2f}")
+            \end{lstlisting}
+        \end{enumerate}
+\end{enumerate}
+
+\subsection{Metode Heuristik (Wrapper Methods)}
+Selain metode statistik, seleksi fitur juga dapat dilakukan menggunakan pendekatan heuristik. Pendekatan ini diperlukan karena pencarian kombinasi fitur secara menyeluruh (\textit{exhaustive search}) pada dataset berdimensi tinggi membutuhkan biaya komputasi yang sangat besar ($2^n$ kombinasi). Metode heuristik mencari subset fitur yang mendekati optimal dengan menggunakan ``aturan praktis'' atau algoritma optimasi untuk memandu pencarian (Tan, Steinbach, Karpatne, \& Kumar, 2019).
+
+Berbeda dengan metode statistik yang menilai fitur secara individu, metode heuristik mengevaluasi himpunan fitur (\textit{feature subset}) dengan mengukur performa model \textit{machine learning} secara langsung. Beberapa teknik heuristik yang umum digunakan dalam literatur terkini antara lain sebagai berikut.
+
+\begin{enumerate}
+    \item \textbf{Sequential Forward Selection (SFS)} \\ 
+    Metode ini dimulai dengan himpunan fitur kosong, kemudian secara iteratif menambahkan satu fitur yang memberikan peningkatan kinerja terbaik pada model. Proses ini berlanjut hingga penambahan fitur baru tidak lagi memberikan peningkatan performa yang signifikan. SFS efektif untuk mengurangi dimensi, namun memiliki kelemahan tidak dapat menghapus fitur yang sudah terpilih jika di kemudian hari fitur tersebut menjadi redundan (Zaki \& Meira, 2020).
+
+    \item \textbf{Sequential Backward Elimination (SBE)} \\
+    Merupakan kebalikan dari SFS, metode ini dimulai dengan menggunakan seluruh fitur yang tersedia. Pada setiap iterasi, fitur yang memberikan kontribusi paling kecil terhadap kinerja model akan dihapus. SBE cenderung lebih baik dalam menangkap interaksi antar fitur dibandingkan SFS, namun membutuhkan biaya komputasi yang lebih tinggi di awal proses (Kelleher, Mac Namee, \& D'Arcy, 2020).
+
+    \item \textbf{Evolutionary Algorithms} \\
+    Pendekatan ini menggunakan algoritma optimasi berbasis populasi, seperti \textit{Genetic Algorithm} (GA) atau \textit{Particle Swarm Optimization} (PSO). Algoritma ini meniru proses evolusi biologi untuk mengeksplorasi ruang kombinasi fitur secara stokastik. Keunggulan metode ini adalah kemampuannya untuk menghindari jebakan optimum lokal yang sering terjadi pada metode \textit{greedy} seperti SFS dan SBE, sehingga lebih berpeluang menemukan subset fitur global terbaik (Xue, Zhang, \& Browne, 2020).
+\end{enumerate}
+
+% \vspace{0.5cm}
+
+Secara keseluruhan, penelitian ini menggunakan pendekatan gabungan terstruktur untuk menyeleksi fitur. Tahapan awal dimulai dengan ekstraksi kandidat fitur berdasarkan \textit{domain knowledge} yakni hasil wawancara untuk menyesuaikan dengan keadaan di dunia nyata. Selanjutnya, kandidat fitur tersebut disaring menggunakan metode statistik untuk evaluasi awal dan divalidasi lebih lanjut menggunakan metode heuristik untuk penentuan subset akhir. 
+
+
+
+
+

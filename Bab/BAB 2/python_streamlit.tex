@@ -1,0 +1,63 @@
+% \newpage
+
+\section{Python dan Streamlit}
+
+{Python} merupakan bahasa pemrograman tingkat tinggi yang sangat populer dalam pengembangan aplikasi {\it data science}, termasuk untuk implementasi {\it machine learning} dan visualisasi data interaktif. Dengan ekosistem pustaka yang kaya seperti {\it pandas, scikit-learn, matplotlib}, dan {\it seaborn}, {Python} memungkinkan pengguna untuk melakukan {\it preprocessing data}, membangun model deteksi anomali, serta melakukan evaluasi performa model secara efisien.
+
+    Untuk kebutuhan visualisasi dan interaksi antarmuka pengguna, Streamlit menjadi solusi ringan dan efisien. Streamlit adalah {\it framework} berbasis {Python} yang memungkinkan pembuatan antarmuka web interaktif untuk aplikasi {\it machine learning} hanya dengan beberapa baris kode. Dengan Streamlit, pengguna dapat membangun sistem {\it front-end} secara cepat untuk menginput data, menampilkan hasil analisis, serta memberikan interaksi langsung seperti unggah data, filter, dan visualisasi hasil model jika diperlukan.
+    
+    Keunggulan utama kombinasi {Python} dan Streamlit dalam konteks penelitian ini adalah kemudahan integrasi antara logika {\it backend} dan {\it frontend} untuk interaksi pengguna. Streamlit juga mendukung proses {\it deployment} yang mudah melalui layanan seperti Streamlit Community Cloud, tanpa perlu pengaturan server manual. Ini sangat sesuai untuk sistem skala kecil hingga menengah, seperti sistem pemantauan perilaku penyewa di rusunami. Keunggulan {Python} dalam pemrosesan data dan algoritma {\it machine learning}, ditambah dengan kemampuan visualisasi interaktif dari Streamlit, membuatnya ideal digunakan dalam deteksi perilaku di hunian vertikal seperti rusunami. Berikut langkah-langkah implementasi {Python} untuk implementasi model {\it machine learning}.
+    
+    \begin{enumerate}
+        \item {Persiapan data}
+        \begin{enumerate}
+            \item Mengumpulkan data penyewa yang meliputi identitas, metode pembayaran, waktu {\it check-in/out}, dan durasi menginap.
+            \item Membersihkan data dengan pandas:
+                \begin{lstlisting}[language=Python]
+    import pandas as pd
+    data = pd.read_csv("data_capture.csv")
+    data.dropna(inplace=True)
+                \end{lstlisting}
+            \item Melakukan normalisasi data
+                \begin{lstlisting}[language=Python]
+    from sklearn.preprocessing import StandardScaler
+    scaler = StandardScaler()
+    data_scaled = scaler.fit_transform(data)
+                \end{lstlisting}
+        \end{enumerate}
+    
+        \item {Pengembangan model {\it machine learning}}
+            \begin{enumerate}
+                \item Import pustaka dan bagi data menjadi {\it training set} dan {\it tes set}:
+                    \begin{lstlisting}[language=Python]
+    from sklearn.ensemble import IsolationForest
+    from sklearn.svm import OneClassSVM
+    from sklearn.model_selection import train_test_split
+    
+    X_train, X_test = train_test_split(data_scaled, test_size=0.2, random_state=42)
+                    \end{lstlisting}
+        
+                \item Melatih model
+                    \begin{lstlisting}[language=Python]
+    model_if = IsolationForest(n_estimators=100, contamination=0.1)
+    model_if.fit(X_train)
+    
+    model_svm = OneClassSVM(kernel='rbf', gamma='auto')
+    model_svm.fit(X_train)
+                    \end{lstlisting}
+            \end{enumerate}
+    
+        \item {Evaluasi model}\\
+             Prediksi dan evaluasi model:
+                \begin{lstlisting}[language=Python]
+    y_pred_if = model_if.predict(X_test)
+    y_pred_svm = model_svm.predict(X_test)
+    
+    from sklearn.metrics import classification_report
+    print(classification_report(y_pred_if, y_pred_if))  
+    print(classification_report(y_pred_svm, y_pred_svm))
+                \end{lstlisting}
+           
+    \end{enumerate}
+    
+    Sistem di-{\it deploy} ke Streamlit Cloud yang mana mendukung {\it hosting} {\it framework} Streamlit secara gratis dan memungkinkan sistem dapat diakses secara {\it online} di mana pun.

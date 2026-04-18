@@ -1,0 +1,18 @@
+\section{\textit{Feature Engineering}}
+
+\subsection{Fitur Transaksional Temporal}
+Fitur ini diekstrak dari kolom waktu untuk menangkap pola perilaku sewa:
+\begin{itemize}
+    \item \textbf{Durasi sewa (\texttt{duration\_hours}):} menghitung total durasi sewa dalam satuan jam. 
+    \[
+    \text{Duration Hours} = \frac{(\text{Check-out} - \text{Check-in})_{\text{detik}}}{3600}
+    \]
+    Fitur ini krusial untuk mendeteksi penyewaan jangka sangat pendek (transit) yang sering berkorelasi dengan aktivitas mencurigakan.
+    
+    \item \textbf{Waktu check-in (\texttt{checkin\_hour}):} Mengambil jam kedatangan (0--23). Kedatangan pada jam-jam tidak lazim (misalnya dini hari) menjadi indikator anomali.
+    
+    \item \textbf{Indikator akhir pekan (\texttt{is\_weekend\_checkin}):} Fitur biner yang menandai apakah check-in dilakukan pada hari Sabtu atau Minggu, mengingat pola keramaian dan pengawasan berbeda di akhir pekan.
+\end{itemize}
+
+\subsection{Persiapan dan Transformasi Fitur}
+Guna memaksimalkan informasi yang dapat dipelajari oleh model, seluruh atribut relevan yang tersedia dalam dataset digunakan sebagai fitur input, dengan pengecualian pada kolom target dan data tanggal mentah. Terhadap kolom bertipe kategorikal seperti \texttt{metode\_pembayaran} dan \texttt{jenis\_sewa}, dilakukan konversi menjadi representasi numerik menggunakan teknik \textit{Label Encoding} agar data tersebut dapat diproses secara matematis oleh algoritma.
