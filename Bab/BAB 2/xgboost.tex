@@ -2,84 +2,86 @@
 
 {\it Extreme Gradient Boosting} (XGBoost) merupakan algoritma klasifikasi berbasis pohon keputusan yang dikembangkan dari metode {\it Gradient Boosting Machine} (GBM) dan dioptimalkan untuk efisiensi, skalabilitas, serta akurasi (Chen \& Guestrin, 2016). XGBoost bekerja dengan cara membangun model secara bertahap melalui penambahan pohon-pohon keputusan secara berurutan untuk memperbaiki kesalahan prediksi dari model sebelumnya. Pada setiap iterasi, model baru dilatih untuk meminimalkan fungsi kerugian yang dikombinasikan dengan regularisasi guna mencegah {\it overfitting} (Friedman, 2001).
 
-    Fungsi objektif pada XGBoost dirumuskan sebagai berikut:
-    \[
+    Secara matematis, tujuan utama dari algoritma XGBoost dirumuskan sebagai berikut.
+    $$
     \mathcal{L}(\phi) = \sum_{i=1}^{n} l(\hat{y}_i, y_i) + \sum_{k=1}^{K} \Omega(f_k)
-    \]
-    dengan \(\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2\),  
-    di mana \(l\) adalah fungsi kerugian (misalnya log-loss), \(\Omega\) adalah fungsi regularisasi, dan \(T\) adalah jumlah daun pada pohon, dan \(w_j\) bobot pada daun ke-$j$. Tujuan dari XGBoost adalah meminimalkan fungsi \(\mathcal{L}\), sehingga model menjadi akurat dan tidak terlalu kompleks.
+    $$
+    dengan $\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2$.
     
-    Misalkan terdapat tiga data penyewa untuk pelatihan:
+    Di dalam rumus ini, $l$ mewakili tingkat kesalahan (kerugian) antara tebakan sistem dan data aslinya. Sedangkan $\Omega$ berfungsi sebagai ``rem'' (regularisasi) agar aturan keputusan yang dibentuk tidak terlalu rumit atau sekadar menghafal data. Simbol $T$ menunjukkan jumlah ujung cabang (daun) pada pohon, dan $w_j$ adalah nilai bobot di ujung cabang ke-$j$. Intinya, XGBoost berusaha menekan tingkat kesalahan $\mathcal{L}$ sekecil mungkin agar tebakannya akurat, namun tetap menjaga bentuk pohon se-sederhana mungkin.
+    
+    Sebagai ilustrasi komputasional dari cara kerjanya, simulasi perhitungan berikut diadaptasi dari kerangka algoritma matematis yang dijabarkan pada literatur asli XGBoost (Chen \& Guestrin, 2016) serta formulasi \textit{boosting} dalam buku \textit{The Elements of Statistical Learning} (Hastie, Tibshirani, \& Friedman, 2009), yang kemudian diterapkan ke dalam konteks data penyewa pada penelitian ini. Misalkan kita memiliki tiga data penyewa untuk dilatih:
     \begin{itemize}
-        \item Data 1: (lama menginap = 2 hari, check-in = 22.00) $\rightarrow$ label: 0 (normal)
-        \item Data 2: (lama menginap = 1 hari, check-in = 00.00) $\rightarrow$ label: 1 (mencurigakan)
-        \item Data 3: (lama menginap = 3 hari, check-in = 20.00) $\rightarrow$ label: 0 (normal)
+        \item Data 1: (lama menginap = 2 hari, check-in = 14.00) $\rightarrow$ label: 0 (kelas normal)
+        \item Data 2: (lama menginap = 1 hari, check-in = 00.00) $\rightarrow$ label: 1 (kelas tidak normal)
+        \item Data 3: (lama menginap = 3 hari, check-in = 20.00) $\rightarrow$ label: 0 (kelas normal)
     \end{itemize}
     
-    Asumsikan prediksi awal (\(\hat{y}_i\)) untuk semua data adalah 0.5, maka residu dihitung menggunakan derivatif pertama dari log-loss.
-    \[
+    Pada tahap awal, sistem belum memiliki dasar pembelajaran sehingga diasumsikan peluang tebakan awal ($\hat{y}_i$) untuk semua penyewa adalah 0,5 (50\%). Selanjutnya, sistem menghitung seberapa jauh tebakan awal ini meleset dari kenyataan aslinya, yang disebut sebagai residu (selisih). Perhitungannya menggunakan turunan pertama dari fungsi kerugian:
+    $$
     g_i = \hat{y}_i - y_i
-    \] maka: 
-    \[
-    \text{Data 1: } g_1 = 0{.}5 - 0 = 0{.}5,\quad 
-    \text{Data 2: } g_2 = 0{.}5 - 1 = -0{.}5,\quad 
-    \text{Data 3: } g_3 = 0{.}5 - 0 = 0{.}5
-    \]
+    $$ 
+    sehingga selisih kesalahannya adalah: 
+    $$
+    \text{Data 1: } g_1 = 0{,}5 - 0 = 0{,}5,\quad 
+    \text{Data 2: } g_2 = 0{,}5 - 1 = -0{,}5,\quad 
+    \text{Data 3: } g_3 = 0{,}5 - 0 = 0{,}5
+    $$
     
-    Kemudian pohon pertama dibentuk berdasarkan {\it gradient} tersebut. Misalkan pohon tersebut membagi data berdasarkan \textit{check-in}:
+    Berdasarkan selisih kesalahan tersebut, sistem mulai menyusun pohon pertama untuk memilah penyewa. Misalkan sistem memutuskan untuk memecah data berdasarkan fitur \textit{lama menginap}:
     \begin{itemize}
-      \item jika \textit{check-in} $>$ 21.00 $\rightarrow$ ke daun A
-      \item jika \textit{check-in} $\leq$ 21.00 $\rightarrow$ ke daun B
+      \item Jika \textit{lama menginap} $< 3$ $\rightarrow$ masuk ke daun A
+      \item Jika \textit{lama menginap} $\geq 3$ $\rightarrow$ masuk ke daun B
     \end{itemize}
     
-    maka:
+    Berdasarkan aturan tersebut:
     \begin{itemize}
-      \item data 1 dan 2 masuk daun A
-      \item data 3 masuk daun B
+      \item Data 1 dan 2 masuk ke daun A
+      \item Data 3 masuk ke daun B
     \end{itemize}
     
-    Langkah selanjutnya adalah menghitung nilai bobot prediksi di tiap daun menggunakan rumus berikut.
-    \[
+    Langkah berikutnya adalah menghitung bobot perbaikan tebakan di setiap ujung cabang (daun). Sesuai dengan pembuktian matematis XGBoost (Chen \& Guestrin, 2016), bobot pembaruan daun ($w_j$) dikalkulasi menggunakan persamaan Newton-Raphson sebagai berikut.
+    $$
     w_j = -\frac{\sum g_i}{\sum h_i + \lambda}
-    \]
-    Dengan \(g_i\) adalah {\it gradient} dan \(h_i = \hat{y}_i (1 - \hat{y}_i)\) adalah {\it hessian} (turunan kedua dari log-loss). Misal \(\lambda = 1\), dan semua \(h_i = 0{,}5 \cdot 0{,}5 = 0{,}25\).
+    $$
+    Pada rumus ini, $g_i$ adalah total selisih kesalahan, dan $h_i$ (disebut {\it hessian}) pada dasarnya mewakili tingkat keraguan dari tebakan sebelumnya (dihitung dari turunan kedua fungsi kerugian, yakni $\hat{y}_i (1 - \hat{y}_i)$). Kita misalkan angka penyeimbang regularisasi $\lambda = 1$, dan tingkat keraguan semua data adalah $h_i = 0{,}5 \cdot 0{,}5 = 0{,}25$.
     
-    Untuk daun A (Data 1 dan 2):
-    \[
-    \sum g_i = 0{.}5 + (-0{.}5) = 0,\quad
-    \sum h_i = 0{.}25 + 0{.}25 = 0{.}5
-    \Rightarrow w_A = -\frac{0}{0{.}5 + 1} = 0
-    \]
+    Untuk daun A (berisi Data 1 dan 2):
+    $$
+    \sum g_i = 0{,}5 + (-0{,}5) = 0,\quad
+    \sum h_i = 0{,}25 + 0{,}25 = 0{,}5
+    $$
+    $$
+    w_A = -\frac{0}{0{,}5 + 1} = 0
+    $$
     
-    Untuk daun B (Data 3):
-    \[
-    \sum g_i = 0{.}5,\quad
-    \sum h_i = 0{.}25
-    \Rightarrow w_B = -\frac{0{.}5}{0{.}25 + 1} = -\frac{0{.}5}{1{.}25} = -0{.}4
-    \]
-    % \newpage
-    Pohon ini kemudian akan memberikan nilai output:
+    Untuk daun B (berisi Data 3):
+    $$
+    \sum g_i = 0{,}5,\quad
+    \sum h_i = 0{,}25
+    $$
+    $$
+    w_B = -\frac{0{,}5}{0{,}25 + 1} = -\frac{0{,}5}{1{,}25} = -0{,}4
+    $$
+    
+    Pohon keputusan pertama ini akhirnya memberikan angka perbaikan:
     \begin{itemize}
       \item Untuk daun A: $0$
-      \item Untuk daun B: $-0{.}4$
+      \item Untuk daun B: $-0{,}4$
     \end{itemize}
     
+    Angka perbaikan ini tidak langsung dijumlahkan, melainkan digabungkan ke dalam bentuk skor mentah (ruang {\it log-odds}). Untuk peluang awal 50\%, skor mentah basisnya ($F_0$) bernilai $\ln(\frac{0{,}5}{1-0{,}5}) = 0$. Model lalu menerapkan kecepatan belajar atau {\it learning rate} ($\eta$) untuk memperbarui tebakan. Peluang tebakan baru ($\hat{y}_{baru}$) dihitung menggunakan fungsi pengubah (\textit{sigmoid}/$\sigma$):
+    $$
+    \hat{y}_{baru} = \sigma(F_0 + \eta \cdot w_j) \quad \text{dengan} \quad \sigma(z) = \frac{1}{1 + e^{-z}}
+    $$
+    Misalkan ditetapkan kecepatan belajar ($\eta$) sebesar 0,3. Maka proses pembaruan untuk Data 3 (yang masuk ke daun B) adalah:
+    $$
+    z = 0 + (0{,}3 \cdot -0{,}4) = -0{,}12
+    $$
+    $$
+    \hat{y}_{baru} = \frac{1}{1 + e^{-(-0{,}12)}} = \frac{1}{1 + e^{0{,}12}} \approx \frac{1}{1 + 1{,}127} \approx 0{,}47
+    $$
     
-    Output tersebut dijumlahkan dengan prediksi sebelumnya (0{.}5) untuk mendapatkan prediksi baru menggunakan fungsi logit:
-    \[
-    \hat{y}_{baru} = \sigma(\hat{y}_{lama} + \eta \cdot w_j)
-    \]
-    Dengan \(\eta =\) {\it learning rate} (misal 0{.}3) dan \(\sigma\) adalah sigmoid:
-    \[
-    \sigma(z) = \frac{1}{1 + e^{-z}}
-    \]
-    
-    Untuk Data 3:
-    \[
-    z = 0{,}5 + (0{,}3 \cdot -0{,}4) = 0{,}5 - 0{,}12 = 0{,}38
-    \Rightarrow \hat{y} = \frac{1}{1 + e^{-0{,}38}} \approx 0{,}594
-    \]
-    
-    Dikarenakan prediksi masih di bawah batas klasifikasi 0{.}60, maka penyewa diklasifikasikan sebagai normal. Jika nilai akhir $\geq$ 0{.}60, maka akan diklasifikasikan sebagai mencurigakan. Model akan melanjutkan iterasi dengan membentuk pohon-pohon tambahan untuk terus memperbaiki kesalahan prediksi sebelumnya.
-    
-    Keunggulan XGBoost terletak pada kemampuannya menangani data tidak seimbang menggunakan parameter seperti {\tt scale\_pos\_weight}, serta mendukung evaluasi pentingnya fitur melalui teknik {\it feature importance}. Hal ini menjadikannya sangat cocok untuk aplikasi yang menuntut akurasi tinggi serta kemampuan interpretasi terhadap pola perilaku, seperti pada sistem pengawasan penyewa mencurigakan (Kou et al., 2021).
+    Dapat dilihat bahwa persentase probabilitas Data 3 kini turun menjadi 0,47 (lebih rendah dari tebakan awal 0,5). Karena nilainya semakin menjauhi batas kecurigaan (misalnya ditetapkan batas klasifikasi 0,60), sistem menjadi semakin yakin bahwa Data 3 adalah penyewa kelas normal (0). Algoritma ini tidak berhenti di sini; algoritma ini akan terus mengulang proses yang sama, membentuk pohon-pohon tambahan secara berurutan untuk menekan sisa {\it error} prediksi tersebut (dari 0,47 agar semakin mendekati target aslinya yakni 0).
+
+    Keunggulan XGBoost terletak pada kemampuannya menangani data tidak seimbang menggunakan parameter seperti {\tt scale\_pos\_weight}, serta mendukung evaluasi pentingnya fitur melalui teknik {\it feature importance}. Hal ini menjadikannya sangat cocok untuk aplikasi yang menuntut akurasi tinggi serta kemampuan interpretasi terhadap pola perilaku, seperti pada deteksi penyewa tidak normal (Kou et al., 2021).

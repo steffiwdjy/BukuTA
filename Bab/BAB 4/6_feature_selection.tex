@@ -1,0 +1,34 @@
+\section{Seleksi Fitur (\textit{Feature Selection})}
+
+Sesuai dengan pembahasan pada Subbab~\ref{sec:feature_selection}, pemilihan atribut terbaik (\textit{feature selection}) terbukti membuat algoritma terhindar dari proses perhitungan yang terlalu berat dan mengabaikan informasi yang tidak relevan (\textit{noise}). Evaluasi fitur ini dilakukan setelah data dipisahkan menjadi data latih dan data uji (\textit{train-test split}). Tujuannya adalah untuk mencegah kebocoran informasi dari data uji ke dalam proses pelatihan model (\textit{data leakage}). Metode yang digunakan pada tahap ini adalah teknik penyaringan (\textit{filter method}):
+\begin{enumerate}
+    \item \textbf{Uji Chi-Square (\textit{SelectKBest}):} mengevaluasi seberapa kuat hubungan antara setiap variabel kategori dengan target klasifikasi secara independen.
+    \item \textbf{Uji \textit{Mutual Information}:} mengukur seberapa besar suatu fitur mampu memberikan petunjuk tambahan untuk mengurangi ketidakpastian sistem dalam menentukan kelas penyewa.
+    \item \textbf{Korelasi Pearson:} mengukur kekuatan hubungan garis lurus (linear) antara fitur numerik dengan target klasifikasi, yang tingkat signifikansinya dinilai berdasarkan nilai mutlak dari rentangnya.
+\end{enumerate}
+
+Ketiga hasil pengujian variabel tersebut kemudian disamakan batas rentang nilainya menjadi skala standar antara 0 hingga 1 menggunakan algoritma \texttt{MinMaxScaler}. Rata-rata dari ketiga nilai yang telah diseragamkan tersebut kemudian diakumulasikan untuk menghasilkan satu skor akhir terpadu (\textit{Total Score}). Berdasarkan hasil eksekusi program pada tahap seleksi fitur, sistem mengkalkulasi dan mengurutkan seluruh variabel berdasarkan skor total tertinggi. Hasil keluaran (\textit{output}) komputasi menunjukkan bahwa sistem memilih empat fitur terbaik, yaitu \texttt{lama\_menginap}, \texttt{checkin\_hour}, \texttt{checkout\_hour}, dan \texttt{jenis\_sewa}. Pemilihan keempat fitur ini sesuai dengan temuan awal pada tahap \textit{Exploratory Data Analysis} (EDA) yang mana durasi sewa (jangka pendek) dan waktu transaksi kedatangan (jam-jam sepi) menjadi faktor untuk mendeteksi penyewa yang bermasalah. Keempat fitur terpilih ini yang kemudian diteruskan ke tahap pelatihan algoritma, sehingga model dapat bekerja dengan lebih efisien.
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Seleksi Fitur (\textit{Feature Selection})}
+
+Sesuai dengan pembahasan pada Subbab~\ref{sec:feature_selection}, tahapan pemilihan atribut terbaik (\textit{feature selection}) diimplementasikan untuk mengurangi beban komputasi algoritma dan mengabaikan informasi yang tidak relevan (\textit{noise}). Evaluasi fitur ini dijalankan setelah himpunan data dipisahkan menjadi data latih dan data uji (\textit{train-test split}). Pendekatan ini bertujuan untuk menutup celah kebocoran informasi dari data uji ke dalam proses evaluasi fitur (\textit{data leakage}). Berikut metode yang diterapkan.
+\begin{enumerate}
+    \item \textbf{Uji Chi-Square (\textit{SelectKBest}):} mengevaluasi seberapa kuat dependensi antara setiap variabel kategori dengan target klasifikasi secara independen.
+    \item \textbf{Uji \textit{Mutual Information}:} mengukur seberapa besar suatu fitur mampu memberikan petunjuk tambahan atau mengurangi tingkat ketidakpastian sistem dalam memprediksi kelas penyewa.
+    \item \textbf{Korelasi Pearson:} mengukur kekuatan hubungan garis lurus (linear) antara fitur numerik dengan target klasifikasi, yang mana tingkat signifikansinya dinilai berdasarkan nilai absolut (\textit{absolute value}) dari koefisien korelasi.
+\end{enumerate}
+
+Untuk mengintegrasikan hasil dari tiga metrik tersebut, setiap nilai uji dinormalisasi menjadi rentang standar antara 0 hingga 1 menggunakan fungsi algoritma \texttt{MinMaxScaler}. Rata-rata dari ketiga nilai yang telah dinormalisasi kemudian dikalkulasi untuk menghasilkan satu skor akhir terpadu (\textit{Total Score}). Berdasarkan hasil eksekusi program (\textit{log output}) pada tahap seleksi fitur untuk data riil, sistem melakukan pemeringkatan seluruh variabel berdasarkan skor total tertinggi. Mengacu pada \textit{output} \texttt{Fitur yang dipilih (4 terbaik)}, yaitu \texttt{lama\_menginap}, \texttt{status\_pasutri}, \texttt{checkout\_hour}, dan \texttt{checkin\_hour}. 
+
+Berbeda dengan data sintetis sebelumnya, fitur \texttt{jenis\_sewa} terpilih sebagai salah satu prediktor utama. Namun, pada operasional data riil, variabel tersebut tersingkir karena seluruh transaksi murni berjenis harian (tidak ada variansi informasi baru). Sebaliknya, sistem secara adaptif menaikkan peringkat fitur demografis seperti \texttt{status\_pasutri}, mendampingi fitur temporal (\texttt{lama\_menginap}, \texttt{checkin\_hour}, dan \texttt{checkout\_hour}) yang konsisten terbukti krusial sesuai dengan temuan korelasi pada tahap \textit{Exploratory Data Analysis} (EDA). Keempat fitur riil terpilih inilah yang kemudian dipakai untuk ke tahap pelatihan algoritma agar model dapat bekerja dengan tingkat komputasi yang lebih efisien serta terhindar dari bias informasi yang tidak relevan.

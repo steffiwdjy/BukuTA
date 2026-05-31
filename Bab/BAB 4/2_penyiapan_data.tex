@@ -1,0 +1,19 @@
+\section{Penyiapan Data dan Pelabelan}
+
+Tahap penyiapan data berfokus pada pembersihan data awal dan pemberian label (\textit{labeling}) untuk pengelompokan data. Label sangat penting untuk melatih algoritma pembelajaran (\textit{supervised learning}) seperti yang dibahas pada Subbab~\ref{sec:machine_learning}. Dalam sistem ini, data penyewa yang telah dikumpulkan akan diseragamkan terlebih dahulu menjadi huruf kecil (lowercasing) dan dihilangkan spasi berlebihnya (stripping). Setelah itu, data akan diberikan nilai berupa angka 0 atau 1 (skor biner). Nilai ini ditentukan secara otomatis dari ada atau tidaknya catatan pelanggaran pada kolom komentar, dengan aturan matematis sebagai berikut.
+
+\[
+Label(x) =
+\begin{cases}
+0, & \text{jika } komentar \in \{ \text{kosong, ``nan'', ``na'', ``null'', ``-'', ``0'', ``tidak ada'', ``none'', spasi} \} \\
+1, & \text{lainnya (terdapat catatan pelanggaran)}
+\end{cases}
+\]
+
+Pendekatan ini memisahkan penyewa ke dalam dua kelompok utama:
+\begin{itemize}
+    \item \textbf{Kelas Normal (0):} penyewa yang mematuhi aturan dan riwayat catatannya bersih dari pelanggaran.
+    \item \textbf{Kelas Tidak Normal (1):} penyewa yang terindikasi melanggar aturan dan menimbulkan kerugian bagi pihak pengelola.
+\end{itemize}
+
+Melalui proses penyiapan data dan pelabelan ini, model algoritma dapat menggunakan angka 0 dan 1 tersebut sebagai patokan dasar. Tujuannya adalah agar sistem mampu mengenali pola kebiasaan yang tidak wajar (\textit{anomali}) berdasarkan informasi transaksi penyewa lainnya.

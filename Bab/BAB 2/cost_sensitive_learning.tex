@@ -1,0 +1,48 @@
+\section{\textit{Cost-Sensitive Learning}}
+
+\textit{Cost-Sensitive Learning} adalah metode penanganan ketidakseimbangan kelas (\textit{class imbalance}) yang bekerja dengan cara memberikan hukuman (penalti) atau bobot kesalahan yang lebih besar saat model gagal mendeteksi kelas minoritas. Berbeda dengan teknik memanipulasi jumlah data (seperti menggandakan atau menghapus baris data asli), metode ini langsung mengubah cara algoritma belajar sehingga keaslian pola data tetap terjaga (He \& Garcia, 2009).
+
+Pada sistem klasifikasi standar, semua kesalahan dianggap memiliki tingkat kerugian yang sama—baik itu salah memprediksi penyewa normal (0) sebagai tidak normal (1), maupun sebaliknya. Namun, di dunia nyata, gagal mendeteksi penyewa yang bermasalah (\textit{false negative}) membawa risiko bahaya dan kerugian finansial yang jauh lebih besar. Sebaliknya, salah mencurigai penyewa yang sebenarnya normal (\textit{false positive}) umumnya hanya sebatas memunculkan peringatan palsu yang mudah diverifikasi (Elkan, 2001).
+
+Secara matematis, pendekatan ini menggunakan matriks biaya (\textit{cost matrix}) $C$, di mana $C(i, j)$ adalah skor kerugian jika model memprediksi kelas $i$ padahal data aslinya adalah kelas $j$. Jika prediksi model benar, maka tidak ada kerugian yang dihitung ($C(i, i) = 0$). Perhitungan kerugian yang diharapkan (\textit{expected cost}) dari sebuah data $x$ jika diprediksi sebagai kelas $i$ dirumuskan sebagai berikut:
+$$
+L(x, i) = \sum_{j} P(j \mid x) C(i, j)
+$$
+dengan $P(j \mid x)$ adalah probabilitas (peluang) bahwa data $x$ sesungguhnya adalah kelas $j$ berdasarkan perhitungan model. Model kemudian akan memilih prediksi kelas yang menghasilkan total kerugian $L(x, i)$ paling kecil.
+
+Sebagai contoh perhitungan, misalkan ditetapkan matriks biaya sebagai berikut:
+\begin{itemize}
+    \item Biaya salah memprediksi Normal padahal aslinya Tidak Normal: $C(0, 1) = 5$ (kerugian besar).
+    \item Biaya salah memprediksi Tidak Normal padahal aslinya Normal: $C(1, 0) = 1$ (kerugian kecil).
+\end{itemize}
+
+Suatu saat, model mendeteksi profil penyewa baru dan menghasilkan probabilitas dasar 70\% kemungkinan ia adalah penyewa Normal ($P(0 \mid x) = 0{,}7$) dan 30\% kemungkinan ia Tidak Normal ($P(1 \mid x) = 0{,}3$).
+Model akan menghitung kerugian dari masing-masing pilihan keputusan:
+\begin{itemize}
+    \item Jika model memutuskan memprediksi \textbf{Normal (0)}:
+    $$
+    L(x, 0) = (P(0 \mid x) \times C(0, 0)) + (P(1 \mid x) \times C(0, 1))
+    $$
+    $$
+    L(x, 0) = (0{,}7 \times 0) + (0{,}3 \times 5) = 1{,}5
+    $$
+    
+    \item Jika model memutuskan memprediksi \textbf{Tidak Normal (1)}:
+    $$
+    L(x, 1) = (P(0 \mid x) \times C(1, 0)) + (P(1 \mid x) \times C(1, 1))
+    $$
+    $$
+    L(x, 1) = (0{,}7 \times 1) + (0{,}3 \times 0) = 0{,}7
+    $$
+\end{itemize}
+
+Karena kerugian memprediksi Tidak Normal lebih kecil ($0{,}7 < 1{,}5$), maka algoritma akan mengeluarkan \textit{output} \textbf{Tidak Normal (1)}. Contoh ini membuktikan bahwa meskipun secara probabilitas dasar penyewa tersebut lebih condong ke arah Normal (70\%), model tetap memilih klasifikasi Tidak Normal demi menghindari risiko fatal dari kesalahan deteksi. 
+
+Dalam penerapannya pada program \textit{machine learning} saat ini, matriks biaya tersebut diterapkan secara praktis ke dalam bentuk rasio pembobotan kelas (\texttt{class\_weight}). Penentuan besaran angka bobot ini tidak dilakukan secara acak, melainkan dihitung secara matematis agar mencerminkan perbandingan terbalik dari jumlah distribusi masing-masing kelas target di dalam \textit{dataset} (Sun et al., 2009). Secara sistematis, formula untuk mendapatkan rasio bobot yang seimbang tersebut dirumuskan sebagai berikut.
+$$
+\text{Bobot Kelas} = \frac{\text{Total Label Data}}{2 \times \text{Jumlah Data pada Kelas Tersebut}}
+$$
+
+Sebagai contoh, misalkan sistem dilatih menggunakan 1.000 data riwayat penyewa, yang terdiri atas 800 data penyewa normal (mayoritas, bernilai 0) dan 200 data penyewa bermasalah (minoritas, bernilai 1). Menggunakan rumus di atas, algoritma akan menghasilkan nilai pembobotan sebesar 0,625 untuk kelas normal dan 2,5 untuk kelas bermasalah (\texttt{class\_weight=\{0:0{,}625, 1:2{,}5\}}). Secara proporsi matematis, perbandingan antara 0,625 dan 2,5 adalah selaras dengan rasio satu berbanding empat ($1:4$). Hal ini memberikan instruksi kepada model bahwa jika sistem sampai gagal mendeteksi satu saja penyewa bermasalah (\textit{false negative}), hukuman (penalti) yang diberikan pada proses perhitungannya adalah empat kali lipat lebih besar dibandingkan jika sistem keliru mencurigai penyewa normal (\textit{false positive}).
+
+Pada beberapa algoritma modern seperti \textit{Extreme Gradient Boosting} (XGBoost), mekanisme penalti berbobot ini disederhanakan kembali ke dalam satu pengaturan parameter fungsional, yaitu skala rasio positif (\texttt{scale\_pos\_weight}). Nilai parameter ini didapatkan cukup dengan membagi total data kelas mayoritas dengan total data kelas minoritas. Keunggulan utama dari penerapan \textit{Cost-Sensitive Learning} melalui penyesuaian bobot matematis ini adalah kemurnian struktur dan pola (\textit{pattern}) asli dari \textit{dataset} tetap terjaga tanpa terdistorsi. Hal ini berbeda dengan metode penyeimbangan lain (seperti menggandakan atau memotong jumlah baris data) yang dapat merusak keaslian informasi dan sangat membebani memori komputer saat proses pelatihan berlangsung.

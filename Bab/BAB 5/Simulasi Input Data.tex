@@ -1,0 +1,76 @@
+\section{Simulasi Input Data}
+
+Subbab ini menguraikan simulasi penggunaan aplikasi saat pengguna memasukkan data penyewa ke dalam aplikasi. Untuk membuktikan kapabilitas model klasifikasi yang telah diintegrasikan, pemaparan pada bagian ini difokuskan pada dua skenario utama, yakni simulasi \textit{input} profil data penyewa normal (aman) dan simulasi \textit{input} data penyewa tidak normal (berpotensi melanggar). Secara keseluruhan, simulasi ini ditampilkan untuk memperlihatkan tahapan pengisian formulir pendataan sewa hingga munculnya respons prediksi dari aplikasi sesaat setelah pengguna menyimpan data.
+
+\subsection{Skenario Input Data Penyewa Normal}
+Skenario pertama mendemonstrasikan proses pendataan untuk penyewa yang memiliki profil dan pola transaksi wajar. Pada tahap ini, pengguna memasukkan identitas penyewa beserta data pendukung terkait transaksi penyewaan.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Gambar/simulasi_input_normal1.png}
+        \caption{Bagian 1}
+        \label{fig:sim_input_normal1}
+    \end{subfigure}
+    \vspace{0.5cm} 
+    
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Gambar/simulasi_input_normal2.png}
+        \caption{Bagian 2}
+        \label{fig:sim_input_normal2}
+    \end{subfigure}
+    \vspace{0.5cm}
+    
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Gambar/simulasi_input_normal3.png}
+        \caption{Bagian 3}
+        \label{fig:sim_input_normal3}
+    \end{subfigure}
+    
+    \caption{Simulasi Input Data Penyewa Normal}
+    \label{fig:sim_input_normal}
+\end{figure}
+
+Gambar~\ref{fig:sim_input_normal} memperlihatkan pengisian data dengan karakteristik penyewa normal. Parameter yang diinputkan merepresentasikan ciri transaksi yang minim risiko, seperti pemilihan durasi menginap jangka menengah hingga panjang serta kedatangan pada rentang waktu operasional yang wajar. Setelah seluruh kolom formulir dipastikan terisi dengan lengkap, pengguna klik tombol \textit{Simpan Data}. Aplikasi kemudian mengeksekusi data tersebut ke dalam model klasifikasi. Karena profil transaksi yang dikirimkan terindikasi aman (terklasifikasi ke dalam kelas 0), aplikasi memproses dan menyimpan data tersebut langsung ke dalam basis data, tanpa memunculkan notifikasi peringatan apa pun pada layar antarmuka pengguna.
+
+\subsection{Skenario Input Data Penyewa Tidak Normal}
+Skenario kedua mendemonstrasikan pengisian formulir untuk profil penyewa yang terindikasi memiliki potensi pelanggaran aturan. Sama halnya dengan skenario sebelumnya, pengguna menginputkan informasi identitas dan detail transaksi ke dalam formulir pendataan.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Gambar/simulasi_input_tidak_normal1.png}
+        \caption{Bagian 1}
+        \label{fig:sim_input_tidak_normal1}
+    \end{subfigure}
+    \vspace{0.5cm} 
+    
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Gambar/simulasi_input_tidak_normal2.png}
+        \caption{Bagian 2}
+        \label{fig:sim_input_tidak_normal2}
+    \end{subfigure}
+    \vspace{0.5cm}
+    
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{Gambar/simulasi_input_tidak_normal3.png}
+        \caption{Bagian 3}
+        \label{fig:sim_input_tidak_normal3}
+    \end{subfigure}
+    
+    \caption{Simulasi Input Data Penyewa Tidak Normal (Berpotensi Melanggar)}
+    \label{fig:sim_input_tidak_normal}
+\end{figure}
+
+Gambar~\ref{fig:sim_input_tidak_normal} memperlihatkan simulasi masukan data yang mengandung pola anomali. Penekanan pengisian difokuskan pada kombinasi atribut yang secara empiris menjadi karakteristik utama penyewa bermasalah pada tahapan analisis sebelumnya, seperti pemilihan jenis sewa harian yang dipadukan dengan durasi menginap yang sangat singkat (berkisar antara 0 hingga 1 hari). Setelah pengguna klik tombol \textit{Simpan Data}, aplikasi secara \textit{real-time} mentransmisikan sekumpulan data tersebut ke dalam model klasifikasi. Karena profil tersebut terdeteksi menyerupai karakteristik riwayat pelanggaran (terklasifikasi ke dalam kelas 1), maka aplikasi memberikan notifikasi berbunyi ``⚠️Penyewa Berpotensi Melakukan Pelanggaran!''. Peringatan ini bertujuan untuk langsung meningkatkan kewaspadaan Pengelola maupun Pelaku Komersil terhadap penyewa yang bersangkutan.
+
+
+
+\subsection{Kesimpulan Simulasi}
+Berdasarkan kedua skenario pengujian di atas, dapat disimpulkan bahwa integrasi antara antarmuka aplikasi dan model prediktif telah berjalan dengan baik. Aplikasi mampu membaca, mengekstraksi, dan memproses setiap atribut data masukan pengguna secara \textit{real-time} untuk kemudian dianalisis oleh model klasifikasi. Perbedaan respons aplikasi yang presisi—berupa penyimpanan operasional yang mulus untuk profil aman dan intervensi notifikasi seketika untuk profil berisiko—membuktikan bahwa fitur pendeteksi dini (\textit{early warning system}) pada aplikasi \textit{Data Capture} telah berfungsi secara efektif sebagai instrumen pengawasan preventif operasional penyewaan unit.

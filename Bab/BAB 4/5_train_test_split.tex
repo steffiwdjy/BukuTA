@@ -1,0 +1,35 @@
+\section{Pembagian Data (\textit{Train-Test Split})}
+
+Untuk memastikan algoritma tidak sekadar menghafal sekumpulan data historis melainkan benar-benar mampu mengenali pola perilaku secara umum (\textit{generalisasi}), seluruh himpunan data dipisahkan ke dalam dua bagian utama, yaitu data latih (\textit{train}) dan data uji (\textit{test}). Pembagian dilakukan dengan rasio 80\% alokasi untuk proses pelatihan model dan 20\% sisanya untuk pengujian akhir. Mengacu pada total 541 catatan riwayat penyewaan nyata di lapangan, pembagian ini menghasilkan alokasi sebanyak 432 data untuk tahap pelatihan dan 109 data sebagai parameter pengujian. 
+
+Implementasi pembagian ini tidak dilakukan secara acak, melainkan menggunakan mekanisme pembagian (\textit{stratify}). Fungsi fundamental dari penggunaan \textit{stratify} adalah untuk menjamin agar proporsi persentase antara penyewa normal (aman) dan penyewa tidak normal (melanggar) terdistribusi dengan rasio yang identik, baik di dalam ruang data latih maupun data uji. Mengingat kondisi faktual dataset operasional yang sangat tidak seimbang (\textit{imbalanced data})—di mana jumlah kasus penyewa melanggar sangat minoritas—pemisahan data secara acak konvensional berisiko tinggi menyebabkan hilangnya data minoritas tersebut, atau menyebabkannya menumpuk hanya di salah satu partisi (misalnya, masuk seluruhnya ke data latih dan kosong di data uji). Jika anomali pemisahan itu terjadi, hasil evaluasi kemampuan deteksi algoritma akan cacat, bias, dan gagal mempresentasikan kondisi nyata.
+
+\section{Pembagian Data (\textit{Train-Test Split})}
+
+Untuk memastikan algoritma tidak sekadar menghafal sekumpulan data historis melainkan benar-benar mampu mengenali pola perilaku secara umum (\textit{generalisasi}), seluruh himpunan data operasional dipisahkan ke dalam dua bagian utama, yaitu data latih (\textit{train}) dan data uji (\textit{test}). Berdasarkan pengaturan pada sistem, pembagian dilakukan dengan rasio 80\% alokasi untuk proses pelatihan model, dan 20\% sisanya dikunci khusus untuk pengujian akhir. Data uji sebesar 20\% ini dipisahkan secara ketat sejak awal dan tidak diikutsertakan dalam tahap pelatihan apa pun, sehingga akurasi serta performa model dapat dievaluasi secara murni menggunakan \textit{unseen data} (data yang belum pernah dipelajari sebelumnya). Mengacu pada total 541 catatan riwayat penyewaan nyata di lapangan, pembagian ini menghasilkan alokasi sebanyak 432 data untuk tahap pelatihan dan 109 data sebagai parameter pengujian.
+
+Implementasi pembagian ini tidak dilakukan secara acak murni, melainkan menggunakan mekanisme pembagian bertingkat (\textit{stratify}). Fungsi fundamental dari penggunaan \textit{stratify} adalah untuk menjamin agar proporsi persentase antara penyewa normal (aman) dan penyewa tidak normal (melanggar) terdistribusi dengan rasio yang identik, baik di dalam ruang data latih maupun data uji. 
+
+Mengingat kondisi faktual dataset operasional yang sangat tidak seimbang (\textit{imbalanced data})—di mana jumlah kasus penyewa melanggar sangat minoritas—pemisahan data secara acak konvensional berisiko tinggi menyebabkan hilangnya data minoritas tersebut, atau menyebabkannya menumpuk hanya di salah satu partisi (misalnya, masuk seluruhnya ke data latih dan kosong di data uji). Jika anomali pemisahan itu terjadi, hasil evaluasi kemampuan deteksi algoritma akan cacat, bias, dan gagal mempresentasikan kondisi nyata.
+
+Dengan penerapan parameter \textit{stratify}, komposisi kelas target berhasil dijaga secara presisi untuk konsisten mengikuti proporsi aslinya. Bukti konkret dari keberhasilan stratifikasi ini dapat diamati secara langsung pada \textit{Classification Report} hasil pengujian model. Sebagai representasi, Tabel~\ref{tab:knn_report} memperlihatkan contoh cuplikan hasil pengujian dari algoritma \textit{K-Nearest Neighbors} (KNN) setelah melewati tahapan \textit{hyperparameter tuning} pada data riil.
+
+\begin{table}[H]
+\centering
+\caption{Cuplikan \textit{Classification Report} Model KNN (\textit{Tuned}) pada Data Riil}
+\label{tab:knn_report}
+\begin{tabular}{rcccc}
+\toprule
+\textbf{Kelas Target} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Support} \\
+\midrule
+0 (Aman) & 1.0000 & 0.9560 & 0.9775 & 91 \\
+1 (Melanggar) & 0.8182 & 1.0000 & 0.9000 & 18 \\
+\midrule
+\textbf{Accuracy} & & & \textbf{0.9633} & \textbf{109} \\
+\textbf{Macro Avg} & 0.9091 & 0.9780 & 0.9388 & 109 \\
+\textbf{Weighted Avg} & 0.9700 & 0.9633 & 0.9647 & 109 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Berdasarkan cuplikan Tabel~\ref{tab:knn_report} di atas, nilai total pada kolom \textit{support} adalah 109 data uji. Data tersebut terbagi secara proporsional menjadi 91 data untuk kelas normal (label 0) dan 18 data untuk kelas melanggar (label 1). Rasio pembagian 20\% ini merepresentasikan secara presisi kondisi populasi awal yang berjumlah 541 data (453 data normal dan 88 data melanggar). Distribusi representatif inilah yang memastikan bahwa nilai evaluasi seperti \textit{precision}, \textit{recall}, dan \textit{f1-score} dapat diandalkan keabsahannya dan tidak bias terhadap kelas mayoritas.

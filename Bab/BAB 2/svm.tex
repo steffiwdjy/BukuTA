@@ -1,29 +1,39 @@
 \section{{\it Support Vector Machine} (SVM)}
 
-{\it Support Vector Machine} (SVM) merupakan algoritma klasifikasi biner yang bertujuan mencari {\it hyperplane} terbaik yang memisahkan dua kelas data dengan margin maksimum. SVM bekerja dengan mencari garis (dalam dua dimensi) atau bidang (dalam dimensi lebih tinggi) yang memaksimalkan jarak antara dua kelas data yang berbeda (Cortes \& Vapnik, 1995). Dalam praktiknya, SVM efektif digunakan untuk klasifikasi data linier maupun nonlinier melalui fungsi kernel, seperti \textit{Radial Basis Function} (RBF), polinomial, dan sigmoid (Hastie, Tibshirani, \& Friedman, 2009).
+{\it Support Vector Machine} (SVM) merupakan algoritma klasifikasi yang bertugas mencari batas pemisah ({\it hyperplane}) paling optimal untuk membedakan dua kelompok data. SVM bekerja dengan mencari garis (dalam dua dimensi) atau bidang (dalam dimensi lebih tinggi) yang memaksimalkan jarak antara dua kelas data yang berbeda (Cortes \& Vapnik, 1995). Dalam praktiknya, SVM efektif digunakan untuk klasifikasi data linier maupun nonlinier melalui fungsi kernel, seperti \textit{Radial Basis Function} (RBF), polinomial, dan sigmoid (Hastie, Tibshirani, \& Friedman, 2009).
     
-    Secara matematis, fungsi pemisah pada SVM ditentukan oleh:
-    \[
+    Secara matematis, penentuan batas pemisah pada algoritma SVM dirumuskan sebagai berikut.
+    $$
     f(x) = \text{sign}(w^T x + b)
-    \]
-    dengan \( w \) adalah vektor bobot, \( x \) adalah vektor fitur input, dan \( b \) adalah bias. Model SVM mencari nilai \( w \) dan \( b \) sedemikian, sehingga margin antar dua kelas maksimum, yang dirumuskan sebagai:
-    \[
+    $$
+    Dalam rumus ini, $w$ merupakan bobot yang menentukan seberapa penting suatu informasi, $x$ adalah data atau fitur yang dimasukkan, dan $b$ adalah nilai penyesuaian (bias). Tujuan utama model SVM adalah mencari kombinasi nilai $w$ dan $b$ yang menghasilkan jarak pemisah paling lebar antar kelas, yang dirumuskan:
+    $$
     \min \frac{1}{2} \|w\|^2 \quad \text{dengan syarat } y_i (w^T x_i + b) \geq 1
-    \]
-    untuk semua data \( i \), di mana \( y_i \in \{-1, +1\} \) adalah label kelas. Pada kasus data yang tidak dapat dipisahkan secara sempurna, SVM menggunakan {\it soft margin} dengan fungsi kerugian:
-    \[
+    $$
+    untuk setiap data $i$. Di sini, $y_i \in \{-1, +1\}$ adalah penanda kelas data (dalam penelitian ini, nilai $-1$ berarti kelas normal (0) dan $+1$ berarti kelas tidak normal (1)). 
+    
+    Namun, di dunia nyata sering kali ada data yang posisinya tumpang tindih dan tidak bisa dipisahkan dengan garis batas yang sempurna. Untuk mengatasi ini, SVM menggunakan konsep batas toleransi ({\it soft margin}) dengan perhitungan kerugian sebagai berikut.
+    $$
     \min \frac{1}{2} \|w\|^2 + C \sum_{i=1}^{n} \xi_i
-    \]
-    yang mana \( \xi_i \) adalah {\it slack variable} yang mengizinkan kesalahan klasifikasi, dan \( C \) adalah parameter regulasi.
+    $$
+    Simbol $\xi_i$ mewakili tingkat kelonggaran ({\it slack variable}) yang memperbolehkan sistem sesekali melakukan toleransi kesalahan batas pemisahan, sedangkan $C$ adalah parameter pengatur ketatnya toleransi tersebut. Mengingat pada pengawasan penyewa ini data kelas tidak normal (1) jumlahnya sangat sedikit dibandingkan penyewa normal (0), model rentan ``menebak aman'' dengan menganggap semua orang adalah penyewa normal. Untuk mencegah bias tersebut, SVM menerapkan sistem denda bersyarat (\textit{cost-sensitive learning}). Parameter batas toleransi $C$ dipecah sedemikian rupa sehingga jika sistem salah mengenali penyewa bermasalah (kelas minoritas), denda penalti yang diberikan ($C_1$) akan jauh lebih berat dibandingkan jika salah mengenali penyewa normal ($C_0$).
     
-    Sebagai contoh, misalkan terdapat dua fitur dari data penyewa, yaitu lama menginap dan waktu check-in (pagi/sore/malam), serta label kelas normal (1) atau mencurigakan (–1). Setelah dilakukan transformasi ke bentuk vektor dan pelatihan model, SVM menghasilkan fungsi keputusan:
-    \[
+    Sebagai ilustrasi, simulasi penentuan batas keputusan berikut diadaptasi dari formulasi \textit{optimal separating hyperplane} yang dijabarkan dalam literatur \textit{The Elements of Statistical Learning} (Hastie, Tibshirani, \& Friedman, 2009), yang kemudian diaplikasikan pada konteks data penyewa. Misalkan terdapat dua fitur penyewa yang dinilai: lama menginap ($x_1$) dan waktu \textit{check-in} yang sudah diubah menjadi angka ($x_2$, misalnya pagi = 0, sore = 1, malam = 2). Setelah model dilatih dan bobot kepentingannya ($w$) serta nilai biasnya ($b$) disesuaikan oleh algoritma, sistem menemukan rumus keputusan batas sebagai berikut.
+    $$
     f(x) = 2x_1 + 3x_2 - 5
-    \]
-    Jika suatu penyewa baru memiliki nilai fitur \( x_1 = 1 \) dan \( x_2 = 2 \), maka:
-    \[
-    f(x) = 2(1) + 3(2) - 5 = 2 + 6 - 5 = 3
-    \]
-    Karena hasilnya positif (lebih besar dari 0), maka model memutuskan bahwa penyewa termasuk kelas normal. Jika hasilnya < 0, maka penyewa diklasifikasikan sebagai mencurigakan. Semakin jauh nilai dari 0, semakin tinggi keyakinan model terhadap klasifikasinya, sedangkan nilai mendekati 0 menunjukkan prediksi yang lemah dan berada di dekat batas margin.
+    $$
+    Misalkan ada penyewa baru yang menginap selama 3 hari ($x_1 = 3$) dan \textit{check-in} pada malam hari ($x_2 = 2$). Jika nilai tersebut dimasukkan ke dalam rumus linier di atas, perhitungannya menjadi:
+    $$
+    f(x) = 2(3) + 3(2) - 5 = 6 + 6 - 5 = 7
+    $$
+    Karena hasil akhirnya adalah angka positif (lebih besar dari 0), model akan menyimpulkan bahwa penyewa ini berada di wilayah kelas tidak normal (1). Sebaliknya, jika hasilnya berupa angka negatif ($< 0$), penyewa akan dianggap normal (0). Semakin besar angka yang dihasilkan (menjauhi nol), semakin yakin sistem terhadap tebakannya. Jika angkanya sangat mendekati nol, berarti posisi penyewa tersebut berada tepat di pinggir garis batas keraguan.
     
-    SVM dikenal sangat kuat untuk data berdimensi tinggi dan situasi di mana jumlah fitur lebih banyak daripada jumlah sampel. Selain itu, SVM relatif tahan terhadap {\it overfitting}, terutama pada dataset yang memiliki {\it noise} kecil. Karena sifatnya yang mendefinisikan batas keputusan eksplisit, SVM banyak digunakan dalam bidang deteksi intrusi, identifikasi penipuan, dan klasifikasi risiko, termasuk dalam pengawasan properti berbasis data (Sch\"{o}lkopf \& Smola, 2002).
+    Pada kenyataannya, banyak data di dunia nyata memiliki pola perilaku yang rumit sehingga tidak bisa dipisahkan hanya dengan sebuah garis pemisah yang lurus (linier). Untuk mengatasi hambatan tersebut, SVM mengandalkan sebuah strategi matematis berjuluk ``Trik Kernel'' (\textit{Kernel Trick}). Fungsi kernel memanipulasi rentang batas fitur yang saling bertumpuk di ruang dimensi asalnya, memproyeksikannya secara otomatis ke sebuah ruang khayal berdimensi jauh lebih tinggi, sehingga dapat diiris dengan sempurna membentang lurus oleh batas keputusan (Sch\"{o}lkopf \& Smola, 2002).
+
+    Salah satu fungsi kernel yang paling dapat diandalkan dan luas penerapannya adalah \textit{Radial Basis Function} (RBF). Secara matematis, tingkat kemiripan atau keterkaitan (\textit{similarity}) antara dua buah titik data awal ($x_i$ dan $x_j$) menggunakan fungsi RBF dirumuskan dalam persamaan berikut (Hastie, Tibshirani, \& Friedman, 2009).
+    $$
+    K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)
+    $$
+    Pada rumus tersebut, simbol $\gamma$ (gamma) berfungsi sebagai pengatur seberapa ketat atau melengkung batas pengelompokan yang akan dibuat, sedangkan simbol $\|x_i - x_j\|^2$ menunjukkan jarak lurus (\textit{Euclidean distance}) antara dua titik data.  Secara sederhana, apabila dua data memiliki karakteristik yang sangat mirip atau posisinya saling berdekatan, maka hasil perhitungan dari rumus ini akan bernilai mendekati angka 1 ($\exp(0) = 1$). Sebaliknya, jika kedua data tersebut sangat berbeda atau posisinya saling berjauhan, maka nilainya akan mendekati angka 0. Kemampuan RBF dalam membungkus data berbentuk sebaran kurva geometris melingkar, menjadikannya senjata mumpuni bagi SVM saat memilah distribusi sebaran data rentan (\textit{non-linear}) tanpa memaksa para analis repot memikirkan rekayasa rumusnya secara manual (Burges, 1998).
+    
+    Algoritma SVM dikenal sangat tangguh untuk memproses data yang memiliki banyak kolom fitur. Selain itu, SVM juga cukup kebal terhadap kecenderungan menghafal data secara berlebihan ({\it overfitting}), terutama pada dataset yang minim gangguan ({\it noise}). Karena sifatnya yang mendefinisikan batas keputusan eksplisit, SVM banyak digunakan dalam bidang deteksi intrusi, identifikasi penipuan, dan klasifikasi risiko, termasuk dalam pengawasan properti berbasis data (Sch\"{o}lkopf \& Smola, 2002).

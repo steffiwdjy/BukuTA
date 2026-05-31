@@ -3,7 +3,7 @@
 
 Seperti telah dijelaskan pada Subbab~\ref{sec:1:latar_belakang}, lingkungan Rusunami The Jarrdin Cihampelas memiliki tingkat mobilitas penyewa yang tinggi serta variasi pola penyewaan yang cukup dinamis. Hal ini menimbulkan tantangan dalam mendeteksi potensi perilaku penyewa mencurigakan, terutama karena sistem pengawasan yang masih manual dan tidak terintegrasi di satu basis data. Dengan tersedianya data historis penyewa yang telah diberi label, pendekatan berbasis \textit{machine learning}—khususnya klasifikasi—dapat dimanfaatkan untuk mempelajari pola perilaku penyewa berisiko dan memberikan rekomendasi secara otomatis. Untuk mendukung pengembangan solusi tersebut, bab ini menyajikan kajian teori dan eksplorasi teknologi yang relevan. Pembahasan dimulai dari teori mengenai hunian vertikal dan sistem pengelolaan penyewa di lingkungan rumah susun, termasuk dinamika penyewaan dan potensi risiko yang sering muncul.
 
-Selanjutnya, teori terkait \textit{machine learning} akan dibahas, meliputi konsep \textit{supervised learning}, tahapan pemrosesan data, pembersihan dan transformasi data, teknik seleksi fitur, serta berbagai algoritma klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost}. Aspek penting dalam penelitian ini, yaitu penanganan \textit{imbalanced dataset}, juga diuraikan mencakup teknik \textit{undersampling}, \textit{oversampling}, metode SMOTE, serta penyesuaian ambang keputusan (\textit{threshold tuning}). Selain itu, teori mengenai metrik evaluasi model seperti \textit{precision}, \textit{recall}, \textit{F1-score}, dan \textit{confusion matrix} turut dijelaskan sebagai dasar pemilihan model terbaik. Dengan demikian, teori dan teknologi yang dipaparkan pada bab ini menjadi dasar konseptual yang digunakan dalam analisis, perancangan, implementasi, dan evaluasi sistem deteksi perilaku penyewa mencurigakan di Rusunami The Jarrdin Cihampelas.
+Selanjutnya, teori terkait \textit{machine learning} akan dibahas, meliputi konsep \textit{supervised learning}, tahapan pemrosesan data, pembersihan dan transformasi data, teknik seleksi fitur, serta berbagai algoritma klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost}. Aspek penting dalam penelitian ini, yaitu penanganan \textit{imbalanced dataset}, juga diuraikan mencakup teknik \textit{cost-sensitive learning} dan penyesuaian ambang keputusan (\textit{threshold tuning}). Selain itu, teori mengenai metrik evaluasi model seperti \textit{precision}, \textit{recall}, \textit{F1-score}, dan \textit{confusion matrix} turut dijelaskan sebagai dasar pemilihan model terbaik. Dengan demikian, teori dan teknologi yang dipaparkan pada bab ini menjadi dasar konseptual yang digunakan dalam analisis, perancangan, implementasi, dan evaluasi sistem deteksi perilaku penyewa tidak normal di Rusunami The Jarrdin Cihampelas.
 
  
 
@@ -40,16 +40,19 @@ Selanjutnya, teori terkait \textit{machine learning} akan dibahas, meliputi kons
 % Sub-bab 2.11 xgboost
 \input{Bab/BAB 2/xgboost}
 
-% Sub-bab 2.12 evaluasi_model
+% Sub-bab 2.12 cost sensitive learning
+\input{Bab/BAB 2/cost_sensitive_learning}
+
+% Sub-bab 2.13 evaluasi_model
 \input{Bab/BAB 2/evaluasi_model}
 
-% Sub-bab 2.13 gcp
+% Sub-bab 2.14 gcp
 \input{Bab/BAB 2/gcp}
 
-% Sub-bab 2.14 python_streamlit
+% Sub-bab 2.15 python_streamlit
 \input{Bab/BAB 2/python_streamlit}
 
-% Sub-bab 2.15 node js
+% Sub-bab 2.16 node js
 \input{Bab/BAB 2/node_js}
 
 

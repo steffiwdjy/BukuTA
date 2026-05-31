@@ -1,0 +1,32 @@
+\section{Pengumpulan Data}
+
+Sumber data utama dalam penelitian ini mengacu pada skema basis data \texttt{rentals} dari sistem pencatatan penyewaan unit di lingkungan Rusunami The Jarrdin Cihampelas (RTJC). Secara operasional, data ini dikumpulkan secara langsung melalui aplikasi {Data Capture} yang dapat diakses melalui tautan \texttt{visitor.thejarrdin.com}. Melalui aplikasi tersebut, sistem mencatat riwayat kedatangan penyewa beserta rekam jejak pelanggarannya secara terpusat. Data operasional ini kemudian diekstrak ke dalam beberapa berkas (\textit{dataset}), yakni \texttt{rentals.csv}, \texttt{rental\_logs.csv}, \texttt{units.csv}, dan \texttt{violations.csv}. Nama kolom pada seluruh berkas tersebut diseragamkan menggunakan format huruf kecil (\textit{lowercasing}) untuk mempermudah tahapan pemrosesan.
+
+Pada tahapan awal, penelitian ini menggunakan dataset sintetis karena sistem belum memiliki data historis riil untuk pelatihan \textit{machine learning}. Karakteristik, distribusi, dan anomali data disimulasikan menggunakan \textit{seeder} (berupa \texttt{index.js} dan skema injeksi \texttt{seeder.sql}) serta pustaka \texttt{Faker} untuk menjamin variasi data identitas yang disesuaikan dengan kondisi faktual berdasarkan hasil wawancara narasumber. 
+
+Namun pada tahap revisi dan operasional saat ini, penelitian telah sepenuhnya menggunakan dataset riil yang diekstrak langsung dari kegiatan operasional harian sistem penyewaan RTJC. Mengingat sistem telah berjalan dan berhasil menghimpun data historis riil dalam jumlah yang cukup untuk pelatihan \textit{machine learning}, dataset ini secara langsung merepresentasikan karakteristik, distribusi, dan kejadian anomali yang faktual terjadi di lapangan. Proses perolehan data tidak lagi bergantung pada pustaka \texttt{Faker} atau \textit{seeder}, melainkan murni bersumber dari rekaman aktivitas nyata para penyewa.
+
+Dalam pengumpulan data riil ini jika ditemukan indikasi pelanggaran, maka petugas pengelola secara langsung dengan melakukan input ``komentar''. Penyewa yang menyalahgunakan unit untuk tujuan ``transit'' akan tercatat di dalam sistem dengan pola yang khas, seperti durasi sewa yang sangat pendek serta waktu \textit{check-in} pada jam-jam yang tidak lazim.
+
+Informasi (atribut) di dalam kumpulan data tersebut kemudian disaring untuk mengambil kolom yang paling relevan. Data yang merangkum pola perilaku penyewa ini disatukan ke dalam satu struktur tabel dengan rincian sebagai berikut.
+\begin{itemize}
+    \item \textbf{Identitas penyewa:} mencakup atribut NIK (Nomor Induk Kependudukan) dan nama untuk memastikan serta melacak profil penyewa.
+    \item \textbf{Profil demografis:}
+    \begin{itemize}
+        \item \texttt{status\_pasutri}: menandakan status pernikahan (`Menikah' atau `Belum Menikah'). Informasi ini krusial untuk mendeteksi potensi pelanggaran aturan terkait norma sosial atau asusila.
+        \item \texttt{status\_kewarganegaraan}: membedakan asal negara penyewa, yakni `WNI' atau `WNA'.
+    \end{itemize}
+    \item \textbf{Detail transaksi sewa:}
+    \begin{itemize}
+        \item \texttt{jenis\_sewa}: kategori masa sewa (`Harian', `Mingguan', atau `Bulanan').
+        \item \texttt{metode\_pembayaran}: mekanisme pembayaran yang dipilih oleh penyewa (Tunai, Kartu Debit, dan sebagainya). 
+    \end{itemize}
+    \item \textbf{Data temporal (waktu):}
+    \begin{itemize}
+        \item \texttt{tanggal\_checkin} dan \texttt{waktu\_checkin}: informasi penanda hari dan jam kedatangan penyewa.
+        \item \texttt{tanggal\_checkout} dan \texttt{waktu\_checkout}: informasi penanda hari dan jam batas akhir penyewaan.
+        \item \texttt{lama\_menginap}: total durasi atau lamanya penyewa menetap di dalam unit.
+    \end{itemize}
+\end{itemize}
+
+Seluruh kumpulan informasi ini memegang peran esensial sebagai fondasi awal bagi model \textit{machine learning} untuk mengidentifikasi kebiasaan penyewa. Melalui rekaman pola-pola tersebut, sistem mampu memprediksi profil penyewa yang memiliki kecenderungan untuk melakukan pelanggaran tata tertib di kemudian hari.

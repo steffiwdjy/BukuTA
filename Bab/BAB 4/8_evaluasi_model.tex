@@ -1,0 +1,153 @@
+\section{Evaluasi Model}
+
+Tahapan evaluasi dilakukan untuk mengukur kemampuan model dalam memprediksi himpunan data uji (\textit{X\_test}) yang belum pernah dipelajari sebelumnya. Kinerja setiap model dianalisis secara komprehensif melalui metrik \textit{Classification Report} guna meninjau pencapaian nilai \textit{Precision}, \textit{Recall}, serta \textit{F1-Score}. Rincian mengenai distribusi hasil prediksi klasifikasi divisualisasikan melalui \textit{Confusion Matrix}. Mengingat tujuan utama dari arsitektur sistem ini adalah untuk mendeteksi penyewa bermasalah (kelas 1), fokus evaluasi difokuskan pada metrik performa terhadap kelas minoritas agar model tidak menghasilkan peringatan keliru (\textit{false alarm}) yang pada sistem.
+
+\subsection{Analisis Pengaruh Seleksi Fitur}
+Sebelum membandingkan performa akhir tiap model secara spesifik, evaluasi dilakukan terhadap efektivitas jumlah fitur yang dilibatkan dalam fase pelatihan. Berdasarkan serangkaian pengujian komparatif, diperoleh kesimpulan analitis sebagai berikut.
+\begin{enumerate}
+    \item \textbf{Kestabilan Skenario Simulasi vs. Sensitivitas Data Riil}\\ Pada pengujian menggunakan data sintetis sebelumnya, model berbasis pohon keputusan (seperti \textit{Decision Tree}, \textit{Random Forest}, dan \textit{XGBoost}) menunjukkan performa yang sangat stabil dan tidak terpengaruh oleh reduksi dimensi fitur dengan tingkat akurasi konstan di rentang 98,30\% hingga 98,35\%. Namun, pada data riil, karakteristik tersebut memudar akibat variasi informasi yang tidak sebanyak data sintetis. Oleh karena itu, tahapan seleksi fitur—terutama penghapusan atribut statis seperti \texttt{jenis\_sewa} dan \texttt{status\_pasutri}—menjadi langkah penting guna menghindari beban \textit{noise} yang dapat merusak akurasi komputasi model.
+    \item \textbf{Titik Optimal Fitur (\textit{Sweet Spot})}\\ Mengacu pada hasil keluaran seleksi fitur, penggunaan empat fitur terpilih (\texttt{lama\_menginap}, \texttt{status\_pasutri}, \texttt{checkout\_hour}, dan \texttt{checkin\_hour}) terbukti memberikan kinerja yang optimal. Saat dikombinasikan dengan fungsi optimasi pada model misalnya KNN, susunan atribut ini berhasil membuat model berhasil mengidentifikasi 100\% kasus pelanggaran secara absolut pada himpunan data uji (dengan nilai \textit{Recall} 1,0000). Hal ini mengonfirmasi bahwa kombinasi informasi temporal dan demografis tersebut berguna untuk mendeteksi anomali tanpa membebani pemrosesan atau memicu risiko \textit{overfitting}.
+\end{enumerate}
+
+\subsection{Analisis Pengaruh \textit{Hyperparameter Tuning}}
+Selain penyesuaian jumlah fitur, proses pencarian parameter optimal (\textit{hyperparameter tuning}) juga memberikan pola yang bervariasi terhadap karakteristik tiap model pada data riil. Berikut adalah penjabaran hasil analisisnya.
+\begin{enumerate}
+    \item \textbf{Dampak Positif pada Model Berbasis Jarak}\\ Proses penyesuaian parameter terbukti memberikan peningkatan performa yang signifikan, khususnya pada model \textit{K-Nearest Neighbors} (KNN). Optimasi rentang jarak dan bobot tetangga mampu menaikkan nilai \textit{F1-Score} kelas minoritas dari 0,8780 (versi \textit{default}) menjadi 0,9000 (versi \textit{tuned}). Lebih lanjut, KNN \textit{tuned} sukses mengeliminasi rasio kegagalan deteksi (\textit{False Negative}) sepenuhnya—dari 0\% menjadi \textit{Recall} 1,0000—dan hanya menyisakan 4 kasus (\textit{False Positive}). Peningkatan juga terjadi pada model SVM RBF yang berhasil mencapai nilai \textit{Recall} sempurna meskipun masih diiringi oleh tingkat peringatan keliru yang relatif tinggi.
+    \item \textbf{Dampak Stagnan pada Model Berbasis Pohon}\\ Berbanding terbalik dengan kelompok model berbasis jarak, kinerja \textit{Decision Tree}, \textit{Random Forest}, dan \textit{XGBoost} pada data riil tidak memperlihatkan peningkatan performa. Tingkat akurasi pada \textit{Decision Tree} (95,41\%), \textit{Random Forest} (95,41\%), dan \textit{XGBoost} (95,41\%) tetap stagnan dan sama persis dengan performa konfigurasi model versi \textit{default}. Kelompok model berbasis pohon ini tidak mampu mengekstraksi kompleksitas pola operasional riil lebih dalam melalui \textit{tuning}, dan tertahan pada angka (\textit{False Positive}) sebanyak 4 hingga 5 kasus.
+\end{enumerate}
+
+\subsection{Hasil Akhir Evaluasi dan Pemilihan Model Terbaik}
+Kelima model klasifikasi dievaluasi kinerjanya dalam dua skenario utama, yakni pengujian menggunakan model tanpa (\textit{tuning}) dan model dengan penyesuaian parameter tingkat lanjut (\textit{hyperparameter tuning}). Pengujian final ini dieksekusi menggunakan empat fitur terpilih, yaitu (\texttt{lama\_menginap}, \texttt{status\_pasutri}, \texttt{checkout\_hour}, dan \texttt{checkin\_hour}). Seluruh hasil pengujian yang mencakup nilai \textit{Precision}, \textit{Recall}, dan \textit{F1-Score} dari masing-masing model—baik untuk deteksi kelas 0 (Normal) maupun kelas 1 (Melanggar) dapat dilihat pada Tabel~\ref{tab:model_comparison}.
+
+\begin{table}[H]
+\centering
+\caption{Perbandingan Performa Keseluruhan Model pada Data Riil: Tanpa Tuning dan Dengan Tuning}
+\label{tab:model_comparison}
+\resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|l|c|c|c|c|c|c|c|}
+    \hline
+    \multirow{2}{*}{\textbf{Model}} & \multirow{2}{*}{\textbf{Kondisi}} & \multicolumn{3}{c|}{\textbf{Kelas 0 (Normal)}} & \multicolumn{3}{c|}{\textbf{Kelas 1 (Melanggar)}} & \multirow{2}{*}{\textbf{Akurasi}} \\ \cline{3-8}
+    & & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \\
+    \hline
+    \multirow{2}{*}{Decision Tree} 
+    & Tanpa Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\ \cline{2-9}
+    & Dengan Tuning & 0.9886 & 0.9560 & 0.9721 & 0.8095 & 0.9444 & 0.8718 & 0.9541 \\
+    \hline
+    \multirow{2}{*}{Random Forest} 
+    & Tanpa Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\ \cline{2-9}
+    & Dengan Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\
+    \hline
+    \multirow{2}{*}{\textbf{KNN}} 
+    & Tanpa Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\ \cline{2-9}
+    & \textbf{Dengan Tuning} & \textbf{1.0000} & \textbf{0.9560} & \textbf{0.9775} & \textbf{0.8182} & \textbf{1.0000} & \textbf{0.9000} & \textbf{0.9633} \\
+    \hline
+    \multirow{2}{*}{SVM (RBF)} 
+    & Tanpa Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\ \cline{2-9}
+    & Dengan Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\
+    \hline
+    \multirow{2}{*}{XGBoost} 
+    & Tanpa Tuning & 1.0000 & 0.9451 & 0.9718 & 0.7826 & 1.0000 & 0.8780 & 0.9541 \\ \cline{2-9}
+    & Dengan Tuning & 0.9886 & 0.9560 & 0.9721 & 0.8095 & 0.9444 & 0.8718 & 0.9541 \\
+    \hline
+    \end{tabular}
+}
+\end{table}
+                         
+Berdasarkan tabel~\ref{tab:model_comparison} terbukti bahwa metode \textit{hyperparameter tuning} pada data riil hanya memberikan peningkatan yang signifikan pada model \textit{K-Nearest Neighbors} (KNN). Evaluasi ini memperlihatkan bahwa KNN versi \textit{tuned} sukses mengatasi stagnasi performa yang dialami oleh model versi \textit{default}. Model KNN dengan \textit{hyperparameter tuning} berhasil mencapai puncak performa dengan tingkat akurasi tertinggi (\textbf{96,33\%}), menjadikannya jauh lebih unggul dibandingkan \textit{Random Forest} maupun \textit{Decision Tree} (yang tertahan pada angka akurasi 95,41\%) pada versi tanpa \textit{tuning} maunpun dengan \textit{hyperparameter tuning}. Selain itu, KNN \textit{tuned} mampu mereduksi risiko kesalahan klasifikasi terhadap kelas minoritas secara sempurna (\textit{Recall} \textbf{1,0000}) dan tetap mempertahankan presisi yang stabil di angka 0,8182. Rincian perbedaan distribusi prediksi secara menyeluruh untuk setiap model—baik sebelum maupun sesudah dilakukan optimasi parameter—dapat dilihat melalui visualisasi \textit{Confusion Matrix} berikut.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_DT_Tanpa_Tuning.png}
+        \caption{Tanpa Tuning}
+        \label{fig:cm_dt_tanpa_tuning}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_DT_Tuned.png}
+        \caption{Dengan Tuning}
+        \label{fig:cm_dt_tuned}
+    \end{subfigure}
+    \caption{Perbandingan \textit{Confusion Matrix} Model \textit{Decision Tree} (Data Riil)}
+    \label{fig:cm_comparison_dt}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_RF_Tanpa_Tuning.png}
+        \caption{Tanpa Tuning}
+        \label{fig:cm_rf_tanpa_tuning}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_RF_Tuned.png}
+        \caption{Dengan Tuning}
+        \label{fig:cm_rf_tuned}
+    \end{subfigure}
+    \caption{Perbandingan \textit{Confusion Matrix} Model \textit{Random Forest} (Data Riil)}
+    \label{fig:cm_comparison_rf}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_KNN_Tanpa_Tuning.png}
+        \caption{Tanpa Tuning}
+        \label{fig:cm_knn_tanpa_tuning}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_KNN_Tuned.png}
+        \caption{Dengan Tuning}
+        \label{fig:cm_knn_tuned}
+    \end{subfigure}
+    \caption{Perbandingan \textit{Confusion Matrix} Model \textit{K-Nearest Neighbors} / KNN (Data Riil)}
+    \label{fig:cm_comparison_knn}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_SVM_Tanpa_Tuning.png}
+        \caption{Tanpa Tuning}
+        \label{fig:cm_svm_tanpa_tuning}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_SVM_Tuned.png}
+        \caption{Dengan Tuning}
+        \label{fig:cm_svm_tuned}
+    \end{subfigure}
+    \caption{Perbandingan \textit{Confusion Matrix} Model \textit{Support Vector Machine} / SVM (Data Riil)}
+    \label{fig:cm_comparison_svm}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_XGBoost_Tanpa_Tuning.png}
+        \caption{Tanpa Tuning}
+        \label{fig:cm_xgboost_tanpa_tuning}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Gambar/CM_Riil_XGBoost_Tuned.png}
+        \caption{Dengan Tuning}
+        \label{fig:cm_xgboost_tuned}
+    \end{subfigure}
+    \caption{Perbandingan \textit{Confusion Matrix} Model \textit{XGBoost} (Data Riil)}
+    \label{fig:cm_comparison_xgboost}
+\end{figure}
+
+Berdasarkan pemaparan di atas, maka model \textbf{\textit{K-Nearest Neighbors} (KNN) dengan \textit{hyperparameter tuning}} ditetapkan secara sebagai arsitektur klasifikasi yang akan diimplementasikan pada sistem. Penyesuaian keputusan ini—beralih dari rancangan awal yang menggunakan model \textit{Random Forest} pada data sintetis—didasarkan sepenuhnya pada \textbf{pencapaian komputasi empiris} model di lingkungan riil yang sesungguhnya. Kombinasi parameter optimal pada KNN terbukti paling presisi dalam menangani skala persebaran jarak pada data riil. Konfigurasi KNN \textit{tuned} ini juga menunjukkan efisiensi yang tinggi dalam menekan metrik \textit{False Positive} (berkurang dari 5 menjadi 4 kasus) tanpa mengorbankan ketajaman model dalam mendeteksi anomali pelanggaran (\textit{Recall} tetap berada pada angka absolut 1,0000).
