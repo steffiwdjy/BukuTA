@@ -3,11 +3,11 @@
 Pada bab ini akan membahas antarmuka pengguna (\textit{user interface}) dari aplikasi {Data Capture}. Aplikasi ini dirancang untuk memfasilitasi proses pencatatan data penyewa, peninjauan data yang telah tersimpan, serta pembaruan informasi secara dinamis. Hak akses aplikasi dibedakan menjadi dua peran (\textit{role}) utama, yaitu Pengelola dan Pelaku Komersil. Rincian fungsionalitas dan tampilan dari setiap halaman aplikasi dipaparkan sebagai berikut.
 
 \subsection{Halaman \textit{Login}}
-Halaman {login} berfungsi sebagai antarmuka autentikasi awal bagi seluruh pengguna. Pada tahap ini, pengguna diwajibkan untuk memasukkan {e-mail} dan kata sandi (\textit{password}).
+Halaman {login} berfungsi sebagai antarmuka autentikasi awal bagi seluruh pengguna. Pada tahap ini, pengguna diwajibkan untuk memasukkan {email} dan kata sandi (\textit{password}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/login (sementara).png}
+    \includegraphics[width=0.85\textwidth]{Gambar/UI_Login.png}
     \caption{Tampilan Halaman \textit{Login}}
     \label{fig:ui_login}
 \end{figure}
@@ -17,12 +17,12 @@ Halaman pendaftaran (\textit{register}) disediakan secara khusus bagi pengguna d
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/daftar (sementara).png}
+    \includegraphics[width=0.85\textwidth]{Gambar/UI_Daftar.png}
     \caption{Tampilan Halaman Pendaftaran Akun}
     \label{fig:ui_daftar}
 \end{figure}
 
-\subsection{Halaman \textit{Dashboard}}
+\subsection{Halaman {Dashboard}}
 Halaman {dashboard} merupakan antarmuka utama yang ditampilkan setelah pengguna berhasil masuk (\textit{login}) ke dalam aplikasi. Tampilan dan informasi pada halaman ini disesuaikan dengan hak akses dari masing-masing peran pengguna.
 
 Bagi pengguna dengan peran Pengelola, halaman {dashboard} menyajikan data statistik penyewa secara keseluruhan, mencangkup seluruh aktivitas transaksi yang dilakukan oleh semua Pelaku Komersil. Selain itu, Pengelola juga memiliki wewenang khusus untuk mengunggah atau melakukan perubahan terhadap Laporan Pelanggaran mencangkup foto dan deskripsi pelanggarannya. Laporan yang telah diunggah tersebut kemudian dapat dilihat oleh seluruh pengguna aplikasi.
@@ -31,42 +31,43 @@ Sementara itu, bagi pengguna dengan peran Pelaku Komersil, data statistik yang d
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/dashboard sesudah.png}
-    \caption{Tampilan Halaman {Dashboard}}
-    \label{fig:ui_dashboard}
+    \includegraphics[width=0.7\textwidth]{Gambar/UI_Dashboard_Pengelola.png}
+    \caption{Tampilan Halaman {Dashboard} Pengelola}
+    \label{fig:ui_dashboard_Pengelola}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Gambar/UI_Dashboard_Pelaku_Komersil.png}
+    \caption{Tampilan Halaman {Dashboard} Pelaku Komersil}
+    \label{fig:ui_dashboard_Pelaku_Komersil}
+\end{figure}
 
+\newpage
 \subsection{Halaman Input}
 Halaman \textit{input} didesain untuk mengakomodasi proses rekam data penyewa baru ke dalam basis data aplikasi. Struktur antarmuka pada halaman ini bersifat seragam untuk kedua peran pengguna. Fokus fungsionalitasnya ditujukan untuk mengumpulkan formulir yang mencakup informasi profil identitas penyewa beserta rincian detail transaksi sewanya.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/input sesudah.png}
+    \includegraphics[width=0.7\textwidth]{Gambar/UI_Input_Data.png}
     \caption{Tampilan Halaman Input Pengelola}
-    \label{fig:ui_input_Pengelola}
+    \label{fig:ui_input}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/input sesudah.png}
-    \caption{Tampilan Halaman Input Pelaku Komersil}
-    \label{fig:ui_input_Pelaku_Komersil}
-\end{figure}
-
+\newpage
 \subsection{Halaman Lihat / Edit Data}
-Halaman ini memungkinkan pengguna meninjau ulang riwayat data penyewa yang telah tersimpan, sekaligus melakukan pencatatan informasi pelengkap seperti pencatatan waktu keluar (\textit{check-out}) atau modifikasi metode pembayaran dan jenis sewa. Berikut antarmuka yang dibedakan berdasarkan peran yang diembannya.
+Halaman ini memungkinkan pengguna meninjau ulang riwayat data penyewa yang telah tersimpan, sekaligus melakukan pencatatan informasi pelengkap seperti pencatatan waktu keluar (\textit{check-out}) atau modifikasi metode pembayaran dan jenis sewa. Berikut antarmuka yang dibedakan berdasarkan peran yang dimiliki.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/lihat edit data sesudah.png}
+    \includegraphics[width=0.85\textwidth]{Gambar/lihat edit data Pengelola.png}
     \caption{Tampilan Halaman Lihat / Edit Data Pengelola}
     \label{fig:ui_lihat_edit_data_Pengelola}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/lihat edit data sesudah.png}
+    \includegraphics[width=0.85\textwidth]{Gambar/lihat edit data Pelaku_Komersil.png}
     \caption{Tampilan Halaman Lihat / Edit Data Pelaku Komersil}
     \label{fig:ui_lihat_edit_data_Pelaku_Komersil}
 \end{figure}
@@ -83,7 +84,7 @@ Halaman Manajemen Unit difungsikan sebagai pusat pengelolaan data untuk menambah
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Gambar/manajemen unit sesudah.png}
+    \includegraphics[width=0.85\textwidth]{Gambar/manajemen unit.png}
     \caption{Tampilan Halaman Manajemen Unit}
     \label{fig:ui_manajemen_unit}
 \end{figure}

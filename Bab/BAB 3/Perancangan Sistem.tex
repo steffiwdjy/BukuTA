@@ -2,15 +2,15 @@
 
 Berdasarkan hasil analisis sistem dan wawancara dengan pihak terkait, sistem dirancang untuk mendigitalkan proses pencatatan yang sebelumnya manual dan belum terintegrasi, sekaligus untuk mendeteksi penyewa yang berpotensi melakukan pelanggaran. Pendekatan ini berfokus pada integritas data, keamanan akses, dan kemudahan pemantauan melalui notifikasi jika data yang diinput merupakan penyewa yang berpotensi melakukan pelanggaran.
 
-Informasi yang diperoleh melalui observasi lapangan, studi dokumentasi, serta wawancara dengan pengelola apartemen menjadi masukan penting dalam penyusunan arsitektur sistem. Misalnya, saat Pelaku Komersil hendak mendaftar harus input NIB (Nomor Induk Berusaha) agar jika suatu saat Pelaku Komersil melakukan pelanggaran akan lebih mudah untuk diproses hukum. Selain itu, sistem perlu memperhatikan bahwa pola penyewaan jangka pendek seperti harian atau mingguan dapat berbeda secara perilaku dari penyewaan bulanan. Oleh karena itu, sistem dikembangkan dengan mempertimbangkan fleksibilitas input jenis sewa. Selain pencatatan data utama, sistem juga mencatat seluruh aktivitas perubahan data yang dilakukan oleh Pelaku Komersil dalam bentuk \textit{log history}, sebagai jejak digital yang bisa digunakan untuk audit atau konfirmasi jika terjadi ketidaksesuaian data.
+Informasi yang diperoleh melalui observasi lapangan, studi dokumentasi, serta wawancara dengan Pengelola apartemen menjadi masukan penting dalam penyusunan arsitektur sistem. Misalnya, saat Pelaku Komersil hendak mendaftar harus input NIB (Nomor Induk Berusaha) agar jika suatu saat Pelaku Komersil melakukan pelanggaran akan lebih mudah untuk diproses hukum. Selain itu, sistem perlu memperhatikan bahwa pola penyewaan jangka pendek seperti harian atau mingguan dapat berbeda secara perilaku dari penyewaan bulanan. Oleh karena itu, sistem dikembangkan dengan mempertimbangkan fleksibilitas input jenis sewa. Selain pencatatan data utama, sistem juga mencatat seluruh aktivitas perubahan data yang dilakukan oleh Pelaku Komersil dalam bentuk \textit{log history}, sebagai jejak digital yang bisa digunakan untuk audit atau konfirmasi jika terjadi ketidaksesuaian data.
 
-\newpage
+% \newpage
 \subsection{Arsitektur Sistem}
 Sejalan dengan landasan teori mengenai teknologi web yang telah diuraikan pada Subbab~\ref{sec:node_js}, sistem {data capture} ini dibangun menggunakan arsitektur \textit{client-server}. Spesifikasi teknis dari komponen arsitektur tersebut disesuaikan dengan kebutuhan integrasi dan efisiensi sistem sebagai berikut.
 
 \begin{itemize}
-    \item \textbf{Antarmuka Pengguna (\textit{Frontend}):} Dibangun menggunakan pustaka \textbf{React.js} dan perkakas \textit{build} \textbf{Vite} untuk menghasilkan antarmuka web interaktif (\textit{Single Page Application}). Pertukaran data dengan server ditangani oleh \textbf{Axios}.
-    \item \textbf{Sistem \textit{Backend}:} Sebagaimana teknologi yang dipelajari pada Subbab~\ref{sec:node_js}, bagian ini dibangun menggunakan \textbf{Node.js} dengan kerangka kerja \textbf{Express.js} untuk memproses logika bisnis dan menyediakan layanan \textit{RESTful API} secara asinkronus.
+    \item \textbf{Antarmuka Pengguna (\textit{Frontend}):} Dibangun menggunakan pustaka {React.js} dan perkakas \textit{build} \textbf{Vite} untuk menghasilkan antarmuka web interaktif (\textit{Single Page Application}). Pertukaran data dengan server ditangani oleh {Axios}, khususnya pada fungsi endpoint \texttt{/sewa} dari proyek yang dijalankan di lingkungan lokal \texttt{PS E:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3>}.  
+    \item \textbf{Sistem \textit{Backend}:} Sebagaimana teknologi yang dipelajari pada Subbab~\ref{sec:node_js}, bagian ini dibangun menggunakan {Node.js} dengan kerangka kerja {Express.js} untuk memproses logika bisnis dan menyediakan layanan \textit{RESTful API} secara asinkronus, termasuk pengelolaan rute \texttt{/sewa}.
     \item \textbf{Basis Data:} Menggunakan \textbf{MySQL} yang terpusat pada ekosistem SRusun. Akses basis data dioptimalkan dengan pustaka \texttt{mysql2/promise} melalui \textit{connection pooling} agar tangguh menangani koneksi konkuren.
     \item \textbf{Manajemen Berkas:} Pustaka \textbf{Multer} digunakan untuk memproses pengunggahan (\textit{upload}) berkas \textit{multipart/form-data}, memfasilitasi penyimpanan dokumen bukti pelanggaran secara aman.
     \item \textbf{Keamanan dan Autentikasi:} 
@@ -19,13 +19,13 @@ Sejalan dengan landasan teori mengenai teknologi web yang telah diuraikan pada S
         \item Otorisasi hak akses menggunakan \textbf{JSON Web Token (JWT)} dari ekosistem SRusun melalui modul \texttt{jsonwebtoken}.
         \item Keamanan interaksi lintas domain dijaga menggunakan modul \textit{middleware} \textbf{CORS} (\textit{Cross-Origin Resource Sharing}).
     \end{itemize} 
-    \item \textbf{Ekspor Data:} Fitur konversi data ke format \textbf{CSV} didukung oleh pustaka \textbf{json2csv} untuk kebutuhan audit dan pelaporan eksternal.
+    \item \textbf{Ekspor Data:} Fitur konversi data ke format {CSV} didukung oleh pustaka {json2csv} untuk kebutuhan audit dan pelaporan eksternal.
 \end{itemize}
 
 
 
-\subsubsection{Strategi Deployment} 
-Peluncuran aplikasi ke lingkungan produksi (\textit{production environment}) dilakukan secara bertahap dalam tiga fase: Fase Sebelum Integrasi (Modul Mandiri), Tahap Sementara, dan Fase Setelah Integrasi. Perubahan skema ini didasari oleh arahan dan evaluasi dari dosen pembimbing guna memastikan sistem dapat diuji dan digunakan secara optimal. Pembangunan Tahap Sementara bertujuan untuk mempercepat proses pengumpulan data di lapangan, dikarenakan integrasi penuh dengan aplikasi \textit{Member} The Jarrdin memerlukan masa sosialisasi internal terlebih dahulu dengan pihak p3srs.thejarrdin.com.
+\subsection{Strategi Deployment} 
+Peluncuran aplikasi ke lingkungan produksi (\textit{production environment}) dilakukan secara bertahap dalam tiga fase: Fase Sebelum Integrasi (Modul Mandiri), Tahap Sementara, dan Fase Setelah Integrasi. Perubahan skema ini didasari oleh arahan dan evaluasi dari dosen pembimbing guna memastikan sistem dapat diuji dan digunakan secara optimal. Pembangunan Tahap Sementara bertujuan untuk mempercepat proses pengumpulan data di lapangan, dikarenakan integrasi penuh dengan aplikasi {Member} The Jarrdin memerlukan masa sosialisasi internal terlebih dahulu dengan pihak p3srs.thejarrdin.com.
 
 \textbf{Fase 1: Sebelum Integrasi (Modul Mandiri)}\\
 Pada tahap awal pengembangan atas arahan dari dosen pembimbing sistem diunggah (\textit{deploy}) ke server SRusun dengan alamat \texttt{steffi.srusun.id}. Tujuan utamanya adalah agar aplikasi dapat langsung diakses secara luas berbasis web (tidak hanya berjalan secara lokal), sehingga mempermudah implementasi lapangan oleh pengguna. Seluruh rangkaian langkah \textit{deployment} pada fase ini dieksekusi melalui aplikasi \textit{terminal}, yang meliputi tahapan sebagai berikut.
@@ -33,9 +33,9 @@ Pada tahap awal pengembangan atas arahan dari dosen pembimbing sistem diunggah (
 \begin{enumerate}[label=\alph*.]
     \item Membuka aplikasi \textit{terminal} dan melakukan koneksi jarak jauh ke server menggunakan protokol SSH (\textit{Secure Shell}) melalui perintah \texttt{ssh -p 1996 srusun-steffi@steffi.srusun.id}, kemudian memasukkan kata sandi (\textit{password}) autentikasi server.
 
-    \item Melakukan pengunggahan kode sumber (\textit{source code}) dari direktori lokal (berlokasi di \texttt{D:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3}) ke server menggunakan perintah \textit{Secure Copy Protocol} (\textit{SCP}). Perintah yang digunakan adalah \texttt{scp -P 1996 -R ./DataCapture6 srusun-steffi@steffi.srusun.id:\textasciitilde/htdocs/steffi.srusun.id/DataCapture6} untuk menyalin seluruh isi folder proyek ke direktori tujuan di server. Kemudian masukkan kembali kata sandi server untuk memvalidasi proses hingga seluruh berkas tersalin sepenuhnya.
+    \item Melakukan pengunggahan kode sumber (\textit{source code}) dari direktori lokal (berlokasi di \texttt{D:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3}) ke server menggunakan perintah \textit{Secure Copy Protocol} (\textit{SCP}). Perintah yang digunakan adalah {\it scp -P 1996 -R ./DataCapture6 srusun-steffi@steffi.srusun.id:\textasciitilde/htdocs/steffi.srusun.id/DataCapture6} untuk menyalin seluruh isi folder proyek ke direktori tujuan di server. Kemudian masukkan kembali kata sandi server untuk memvalidasi proses hingga seluruh berkas tersalin sepenuhnya.
     
-    \item Menjalankan aplikasi pada server menggunakan \textit{process manager} \textbf{PM2} dengan perintah \texttt{pm2 start app.js}. Penggunaan PM2 bertujuan untuk memastikan aplikasi tetap berjalan dan dapat merespons permintaan melalui domain \texttt{steffi.srusun.id} secara terus-menerus.
+    \item Menjalankan aplikasi pada server menggunakan \textit{process manager} {PM2} dengan perintah \texttt{pm2 start app.js}. Penggunaan PM2 bertujuan untuk memastikan aplikasi tetap berjalan dan dapat merespons permintaan melalui domain \texttt{steffi.srusun.id} secara terus-menerus.
 
     \item Apabila terdapat kebutuhan untuk melakukan perbaikan (\textit{bug fixing}) atau modifikasi langsung pada kode sumber tanpa harus mengunggah ulang, dapat menjalankan perintah \texttt{cd htdocs/steffi.srusun.id/DataCapture6} pada terminal. Selanjutnya, berkas dibuka dan diedit menggunakan perintah \textbf{nano} (contoh perintah: \texttt{nano public/index.html} untuk mengubah kode pada berkas \textit{index.html} di direktori \textit{public}). Setelah selesai edit berkas tertentu, berkas disimpan agar perubahan tersimpan pada sistem. 
 
@@ -64,10 +64,10 @@ Pada tahap awal pengembangan atas arahan dari dosen pembimbing sistem diunggah (
 
 
 \textbf{Fase 2: Tahap Sementara}\\
-Guna mempercepat proses pengumpulan data di lapangan, sistem dideploy pada server \texttt{visitor.thejarrdin.com} dengan skema akses mandiri, namun sudah berada di luar server \texttt{steffi.srusun.id}. Pada tahap ini, login belum terintegrasi dengan akses aplikasi \textit{Member} The Jarrdin karena proses tersebut masih memerlukan sosialisasi internal dengan pihak \texttt{p3srs.thejarrdin.com}. Pelaku komersil masih memungkinkan untuk melakukan pendaftaran akun secara mandiri dan login melalui halaman web terpisah. Untuk mengakses menu navigasi dan proses \textit{logout}, pengguna menggunakan mekanisme yang terletak pada bagian \textit{sidebar}. Secara garis besar, metode \textit{deployment} yang dilakukan sama dengan Fase Setelah Integrasi yang memanfaatkan Git melalui panel kontrol server.
+Guna mempercepat proses pengumpulan data di lapangan, sistem dideploy pada server {\it visitor.thejarrdin.com} dengan skema akses mandiri, namun sudah berada di luar server \texttt{steffi.srusun.id}. Pada tahap ini, login belum terintegrasi dengan akses aplikasi \textit{Member} The Jarrdin karena proses tersebut masih memerlukan sosialisasi internal dengan pihak {p3srs.thejarrdin.com}. Pelaku komersil masih memungkinkan untuk melakukan pendaftaran akun secara mandiri dan login secara mandiri. Untuk mengakses menu navigasi dan proses \textit{logout}, pengguna menggunakan mekanisme yang terletak pada bagian \textit{sidebar}. \textit{Deployment} yang dilakukan sama dengan Fase Setelah Integrasi yang memanfaatkan Git melalui panel kontrol server.
 
 \textbf{Fase 3: Setelah Integrasi}\\
-Pada tahap akhir penyempurnaan sistem, dosen pembimbing utama mengarahkan agar aplikasi {data capture} diintegrasikan secara penuh dengan ekosistem aplikasi {Member} The Jarrdin. Oleh karena itu, proses \textit{deployment} difokuskan ke server produksi secara utuh. Langkah-langkah \textit{deployment} pada fase terintegrasi ini meliputi sebagai berikut (langkah pada \textit{deployment} \textbf{Tahap Sementara} memiliki kesamaan dengan langkah-langkah di bawah ini untuk bagian unggah backend \texttt{visitor}).
+Pada tahap akhir penyempurnaan sistem, dosen pembimbing mengarahkan agar aplikasi {data capture} diintegrasikan secara penuh dengan ekosistem aplikasi {Member} The Jarrdin (aplikasi induk). Oleh karena itu, proses \textit{deployment} difokuskan ke server produksi secara utuh. Langkah-langkah \textit{deployment} pada fase terintegrasi ini meliputi sebagai berikut (langkah pada \textit{deployment} \textbf{Tahap Sementara} memiliki kesamaan dengan langkah-langkah di bawah ini untuk bagian unggah modul sistem data capture).
 \begin{enumerate}[label=\alph*.]
     \begin{figure}[H]
         \centering
@@ -101,13 +101,8 @@ Pada tahap akhir penyempurnaan sistem, dosen pembimbing utama mengarahkan agar a
     \end{figure}
     \item Melakukan sinkronisasi pembaruan kode dengan menekan tombol \textit{Pull now} pada bagian \textit{Latest commits}, yang kemudian dilanjutkan dengan menekan tombol \textit{Deploy now} pada bagian \textit{Deployment}.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Terminal_Build_Local.png}
-        \caption{Proses Kompilasi Frontend (npm run build) di Terminal Lokal}
-        \label{fig:build_local} %ss
-    \end{figure}
-    \item Beralih ke lingkungan pengembangan lokal. Melalui aplikasi \textit{terminal}, menavigasi masuk ke dalam direktori \texttt{client} dari proyek aplikasi (dalam hal ini berlokasi di direktori \texttt{E:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3>}), lalu menjalankan perintah \texttt{npm run build} untuk mengompilasi kode \textit{frontend} menjadi berkas statis produksi (\textit{production build}). 
+    
+    \item Beralih ke lingkungan pengembangan lokal. Melalui aplikasi \textit{terminal}, menavigasi masuk ke dalam direktori \texttt{client} dari proyek aplikasi (dalam hal ini berlokasi di direktori \texttt{E:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3>}), lalu menjalankan perintah \texttt{npm run build} untuk mengompilasi  aplikasi Member The Jarrdin menjadi berkas statis produksi (\textit{production build}). Hal ini dilakukan karena file pada member.thejarrdin.com sudah di-{\it minify}.
 
     \begin{figure}[H]
         \centering
@@ -115,7 +110,7 @@ Pada tahap akhir penyempurnaan sistem, dosen pembimbing utama mengarahkan agar a
         \caption{Pemilihan Domain member.thejarrdin.com untuk Integrasi Frontend}
         \label{fig:select_member}
     \end{figure}
-    \item Kembali ke antarmuka web panel kontrol (\url{https://server3.konsep.net/}), kemudian pada halaman \textit{Websites and Domains} memilih domain aplikasi induk tempat \textit{frontend} akan ditempatkan, yaitu \texttt{member.thejarrdin.com}. Lalu mengakses menu \textit{Files} pada pengaturan domain tersebut.
+    \item Kembali ke antarmuka web panel kontrol (\url{https://server3.konsep.net/}), kemudian pada halaman \textit{Websites and Domains} memilih domain \texttt{member.thejarrdin.com}. Lalu mengakses menu \textit{Files} pada pengaturan domain tersebut.
 
     \begin{figure}[H]
         \centering
@@ -123,20 +118,19 @@ Pada tahap akhir penyempurnaan sistem, dosen pembimbing utama mengarahkan agar a
         \caption{Proses Unggah Folder Dist ke File Manager Server}
         \label{fig:upload_dist}
     \end{figure} %ss kalo upload dist auto si index.html keubah namanya?
-    \item Mengunggah folder \texttt{dist} hasil kompilasi lokal agar antarmuka sistem {data capture} dapat terintegrasi dan diakses oleh pengguna.
+    \item Mengunggah folder \texttt{dist} hasil kompilasi lokal agar antarmuka  Member The Jarrdin.
     
     \item Untuk melakukan perubahan berkas, dapat dilakukan modifikasi secara lokal terlebih dahulu, kemudian mengunggah perubahan tersebut (\textit{push}) ke repositori GitHub yang telah terhubung dengan server. Setelah repositori diperbarui, tekan tombol \textit{Pull now} dan \textit{Deploy now} pada panel kontrol server agar perubahan segera diterapkan.
-    \item Apabila perubahan dilakukan pada bagian aplikasi \textit{Member} (\textit{frontend}), pengembang harus melakukan proses kompilasi ulang (\textit{build}) di lingkungan lokal. Melalui aplikasi \textit{terminal} di direktori proyek (\texttt{E:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3>}), pengembang masuk ke folder \textit{client} dan menjalankan perintah \texttt{npm run build} untuk menghasilkan berkas produksi yang telah di-\textit{minify}.
-    \item Kembali ke antarmuka web panel kontrol server, pada halaman \textit{Websites and Domains} pilih domain \texttt{member.thejarrdin.com}, akses menu \textit{Files}, lalu unggah kembali folder \texttt{dist} hasil kompilasi terbaru untuk memperbarui antarmuka pengguna.
+    \item Apabila perubahan dilakukan pada bagian aplikasi \textit{Member} (\textit{frontend}), pengembang harus melakukan proses kompilasi ulang (\textit{build}) di lingkungan lokal. Melalui aplikasi \textit{terminal} di direktori proyek (\texttt{E:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3>}), kemudian masuk ke folder \textit{client} dan menjalankan perintah \texttt{npm run build} untuk menghasilkan berkas produksi yang telah di-\textit{minify}. Kembali ke antarmuka web panel kontrol server, pada halaman \textit{Websites and Domains} pilih domain \texttt{member.thejarrdin.com}, akses menu \textit{Files}, lalu unggah kembali folder \texttt{dist} hasil kompilasi terbaru untuk memperbarui antarmuka pengguna.
 
-    \item Pengelolaan operasional basis data (CRUD) dilakukan melalui antarmuka web \url{https://mysql.srusun.id/phpmyadmin/}. Setelah melakukan \textit{login}, dapat dipilih basis data dengan nama \texttt{thejarrdin\_visitor} untuk menjalankan sintaks SQL guna melakukan manipulasi data sesuai dengan kebutuhan sistem.
+    \item Pengelolaan operasional basis data (CRUD) dilakukan melalui antarmuka web \url{https://mysql.srusun.id/phpmyadmin/}. Setelah melakukan \textit{login}, dapat dipilih basis data dengan nama \texttt{thejarrdin\_visitor} untuk menjalankan sintaks SQL guna melakukan manipulasi data sesuai dengan kebutuhan.
 \end{enumerate}
 
 
 
     
 \subsection{Pemodelan Sistem}
-Pengembangan sistem dilakukan secara iteratif, dibagi menjadi dua fase besar, yaitu fase sebelum integrasi (modul mandiri \texttt{steffi.srusun.id}) dan fase setelah integrasi dengan ekosistem {Member} The Jarrdin (\url{https://member.thejarrdin.com/}). Pemodelan divisualisasikan melalui {Use Case Diagram}, {Entity Relationship Diagram} (ERD), dan Diagram Basis Data.
+Pengembangan sistem dilakukan secara iteratif dan dibagi menjadi dua fase besar, yaitu fase sebelum integrasi (modul mandiri \texttt{steffi.srusun.id}) dan fase setelah integrasi dengan ekosistem {Member} The Jarrdin (\url{https://member.thejarrdin.com/}). Pemodelan divisualisasikan melalui {Use Case Diagram}, {Entity Relationship Diagram} (ERD), dan Diagram Basis Data.
 
 
 \subsubsection{Alur Kerja Fungsional Sistem}
@@ -146,16 +140,17 @@ Bagian ini menguraikan alur kerja fungsional inti dari aplikasi {data capture} y
     \item \textbf{Flowchart Input Data Unit}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Input Data Unit.png}
+        \includegraphics[width=0.3\textwidth]{Gambar/Flowchart Input Data Unit.png}
         \caption{Flowchart Proses Input Data Unit}
         \label{fig:flowchart_input_unit}
     \end{figure}
     Gambar~\ref{fig:flowchart_input_unit} menggambarkan alur pengelolaan data master unit. Pengelola dapat memasukkan data unit baru yang nantinya akan menjadi pilihan \textit{dropdown} bagi Pelaku Komersil saat menginput data penyewa.
 
+    \newpage
     \item \textbf{Flowchart Input Data Penyewa}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Input Data Penyewa.png}
+        \includegraphics[width=0.3\textwidth]{Gambar/Flowchart Input Data Penyewa.png}
         \caption{Flowchart Proses Input Data Penyewa}
         \label{fig:flowchart_input_penyewa}
     \end{figure}
@@ -164,7 +159,7 @@ Bagian ini menguraikan alur kerja fungsional inti dari aplikasi {data capture} y
     \item \textbf{Flowchart Lihat Data Penyewa}
     \begin{figure}[H]  
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Lihat Data Penyewa.png}
+        \includegraphics[width=0.25\textwidth]{Gambar/Flowchart Lihat Data Penyewa.png}
         \caption{Flowchart Proses Lihat Data Penyewa}
         \label{fig:flowchart_lihat_penyewa}
     \end{figure}
@@ -173,16 +168,17 @@ Bagian ini menguraikan alur kerja fungsional inti dari aplikasi {data capture} y
     \item \textbf{Flowchart Input Komentar Pelanggaran}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Input Komentar Pelanggaran.png}
+        \includegraphics[width=0.25\textwidth]{Gambar/Flowchart Input Komentar Pelanggaran.png}
         \caption{Flowchart Proses Input Komentar Pelanggaran}
         \label{fig:flowchart_input_komentar}
     \end{figure}
     Gambar~\ref{fig:flowchart_input_komentar} menjelaskan proses pencatatan temuan pelanggaran. Pengelola dapat menandai pelanggaran yang ditemukan berdasarkan temuan fisik di lapangan.
 
+    \newpage
     \item \textbf{Flowchart Input Pelanggaran pada Dashboard}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Input Pelanggaran.png}
+        \includegraphics[width=0.2\textwidth]{Gambar/Flowchart Input Pelanggaran.png}
         \caption{Flowchart Proses Input Pelanggaran}
         \label{fig:flowchart_input_pelanggaran}
     \end{figure} %??
@@ -191,30 +187,32 @@ Bagian ini menguraikan alur kerja fungsional inti dari aplikasi {data capture} y
     \item \textbf{Flowchart \textit{Data Training}}
     \begin{figure}[H] 
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Proses Data Training.png}
+        \includegraphics[width=0.5\textwidth]{Gambar/Flowchart Proses Data Training.png}
         \caption{Flowchart \textit{Data Training}}
         \label{fig:flowchart_data_training}
     \end{figure}
     Gambar~\ref{fig:flowchart_data_training} menunjukkan proses persiapan data historis penyewa. Data tersebut melalui tahap pra-pemrosesan untuk digunakan sebagai data pelatihan (\textit{data training}) bagi model klasifikasi \textit{machine learning}.
 
+    \newpage
     \item \textbf{Flowchart Analisis dan Notifikasi Penyewa Mencurigakan}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Proses Analisis & Notif.png}
+        \includegraphics[width=0.5\textwidth]{Gambar/Flowchart Proses Analisis & Notif.png}
         \caption{Flowchart untuk Deteksi Penyewa Mencurigakan}
         \label{fig:flowchart_deteksi_penyewa_mencurigakan}
     \end{figure}
-    Gambar~\ref{fig:flowchart_deteksi_penyewa_mencurigakan} menggambarkan mekanisme inferensi model terhadap data yang baru dimasukkan. Setelah proses input selesai, algoritma akan menganalisis parameter data penyewa tersebut. Jika hasil klasifikasi mendeteksi profil penyewa normal, data akan langsung disimpan ke dalam basis data dengan label ``normal''. Sebaliknya, jika sistem mendeteksi adanya pola parameter yang menyimpang (misalnya waktu \textit{check-in} di luar jam normal), data tersebut akan disimpan dengan label ``mencurigakan'' dan sistem akan secara otomatis memicu notifikasi peringatan dini (\textit{early warning}) kepada pengguna melalui {dashboard}.
+    Gambar~\ref{fig:flowchart_deteksi_penyewa_mencurigakan} menggambarkan mekanisme inferensi model terhadap data yang baru dimasukkan. Setelah proses input selesai, algoritma akan menganalisis parameter data penyewa tersebut. Jika hasil klasifikasi mendeteksi profil penyewa normal, data akan langsung disimpan ke dalam basis data dengan label ``normal''. Sebaliknya, jika sistem mendeteksi adanya pola parameter yang menyimpang (misalnya waktu \textit{check-in} di luar jam normal), data tersebut akan disimpan dengan label ``mencurigakan'' dan sistem akan secara otomatis memicu notifikasi peringatan dini (\textit{early warning}) kepada pengguna.
 \end{enumerate}
 
+\newpage
 \subsubsection{Alur Kerja Fase Sebelum Integrasi dan Tahap Sementara}
 Pada fase ini, sistem diunggah ke {server} SRusun dan beroperasi secara independen melalui tautan \texttt{steffi.srusun.id}. Tahap Sementara juga menerapkan alur kerja yang sama persis dengan fase ini, namun dengan \textit{server} yang berada di \texttt{visitor.thejarrdin.com}. %?? usecase dulu baru UI
 
 \begin{enumerate}
-    \item \textbf{Arsitektur Autentikasi (Pendaftaran dan {Login})}
+    \item \textbf{Pendaftaran dan {Login}}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Pendaftaran.png}
+        \includegraphics[width=0.25\textwidth]{Gambar/Flowchart Pendaftaran.png}
         \caption{Flowchart Proses Pendaftaran Akun (Sebelum Integrasi)}
         \label{fig:flowchart_pendaftaran}
     \end{figure}
@@ -222,7 +220,7 @@ Pada fase ini, sistem diunggah ke {server} SRusun dan beroperasi secara independ
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/Flowchart Login_Sblm.png}
+        \includegraphics[width=0.25\textwidth]{Gambar/Flowchart Login_Sblm.png}
         \caption{Flowchart Proses Login (Sebelum Integrasi)}
         \label{fig:flowchart_login}
     \end{figure}
@@ -235,24 +233,25 @@ Pada fase ini, sistem diunggah ke {server} SRusun dan beroperasi secara independ
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.47\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Use Case Diagram Pengelola.png}
+        \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Use Case Diagram Pengelola.png}
         \caption{\textit{Use Case Diagram} Aktor Pengelola}
         \label{fig:use_case_pengelola}
     \end{figure}
     
-    Sementara itu, alur interaksi spesifik untuk aktor \textbf{Pelaku Komersil} pada fase sebelum integrasi (dengan mekanisme pendaftaran dan \textit{login} mandiri) diilustrasikan pada Gambar~\ref{fig:use_case_komersil_sebelum}.
+    Sementara itu, alur interaksi spesifik untuk aktor \textbf{Pelaku Komersil} pada fase sebelum integrasi (dengan mekanisme pendaftaran mandiri) diilustrasikan pada Gambar~\ref{fig:use_case_komersil_sebelum}.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.47\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Use Case Diagram Komersil Sebelum.png}
+        \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Use Case Diagram Komersil Sebelum.png}
         \caption{\textit{Use Case Diagram} Aktor Pelaku Komersil (Sebelum Integrasi)}
         \label{fig:use_case_komersil_sebelum}
     \end{figure} 
 
+    \newpage
     \item \textbf{Struktur Basis Data (ERD dan {Database Diagram})}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\textwidth]{Gambar/ERD Sebelum.png}
+        \includegraphics[width=0.9\textwidth]{Gambar/ERD Sebelum.png}
         \caption{Entity Relationship Diagram (ERD) Sistem (Sebelum Integrasi)}
         \label{fig:erd_sebelum}
     \end{figure} %?? buat ver sblm
@@ -260,7 +259,7 @@ Pada fase ini, sistem diunggah ke {server} SRusun dan beroperasi secara independ
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Database Diagram Sebelum.png}
+        \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Database Diagram Sebelum.png}
         \caption{Database Diagram Sistem (Sebelum Integrasi)}
         \label{fig:db_diagram_sebelum}
     \end{figure} %?? buat ver sblm
@@ -271,34 +270,44 @@ Pada fase ini, sistem diunggah ke {server} SRusun dan beroperasi secara independ
 Fase ini membawa perubahan signifikan pada arsitektur otorisasi. Pengguna yang mengakses tautan \url{https://visitor.thejarrdin.com/} akan dialihkan ke halaman {login} aplikasi {Member} The Jarrdin. Proses pendaftaran mandiri ditiadakan, digantikan mekanisme \textit{Single Sign-On} (SSO) menggunakan token JWT (JSON \textit{Web Token}) dari basis data utama SRusun. 
 
 \begin{enumerate}
+    \item \textbf{Arsitektur Autentikasi ({Login})}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.3\textwidth]{Gambar/Flowchart Login_Ssdh.png}
+        \caption{Flowchart Proses Login (Setelah Integrasi)}
+        \label{fig:flowchart_login_sesudah}
+    \end{figure}
+    Berbeda dengan tahap sebelumnya, proses pendaftaran ditiadakan pada fase ini. Gambar~\ref{fig:flowchart_login_sesudah} menunjukkan mekanisme autentikasi di mana pengguna cukup memasukkan {email} atau nomor WhatsApp. Setelah itu, pengguna harus menginputkan kode OTP (\textit{One-Time Password}) yang didapatkan. Jika verifikasi OTP berhasil, pengguna akan diberikan akses masuk ke dalam aplikasi.
+
     \item \textbf{Interaksi Pengguna (\textit{Use Case Diagram})}\\
     Pada fase terintegrasi, alur operasional menjadi lebih ringkas karena aktor beserta hak aksesnya diwariskan langsung dari aplikasi induk \textit{Member} The Jarrdin. Interaksi fungsional untuk aktor \textbf{Pengelola} tetap dipertahankan sama seperti fase sebelumnya (dapat dilihat kembali pada Gambar~\ref{fig:use_case_pengelola}). 
     
-    Perubahan utama terjadi pada alur interaksi aktor \textbf{Pelaku Komersil}. Pengguna kini tidak perlu lagi mendaftar secara mandiri; mereka hanya perlu melakukan \textit{login} melalui mekanisme autentikasi aplikasi induk dan mengakses modul \textit{data capture} melalui menu ``Penyewaan Unit''. Pembaruan alur interaksi untuk Pelaku Komersil pada tahap integrasi ini ditunjukkan pada Gambar~\ref{fig:use_case_komersil_sesudah}.
+    Perubahan utama terjadi pada alur interaksi aktor \textbf{Pelaku Komersil}. Pengguna kini tidak perlu lagi mendaftar secara mandiri; mereka hanya perlu melakukan \textit{login} melalui mekanisme autentikasi aplikasi induk dan mengakses modul {data capture} melalui menu ``Penyewaan Unit''. Pembaruan alur interaksi untuk Pelaku Komersil pada tahap integrasi ini ditunjukkan pada Gambar~\ref{fig:use_case_komersil_sesudah}.
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.47\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Use Case Diagram Komersil Sesudah.png}
+        \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Use Case Diagram Komersil Sesudah.png}
         \caption{\textit{Use Case Diagram} Aktor Pelaku Komersil (Sesudah Integrasi)}
         \label{fig:use_case_komersil_sesudah}
     \end{figure}
 
+    \newpage
     \item \textbf{Struktur Basis Data (ERD dan {Database Diagram})}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\textwidth]{Gambar/ERD Sesudah.png}
+        \includegraphics[width=0.9\textwidth]{Gambar/ERD Sesudah.png}
         \caption{Entity Relationship Diagram (ERD) Sistem Terintegrasi}
         \label{fig:erd_setelah}
     \end{figure}
-    Struktur basis data (Gambar~\ref{fig:erd_setelah}) mengalami penyesuaian. Tabel \texttt{users} lokal dihapus dan digantikan oleh tabel \texttt{Pengguna}, \texttt{Role}, dan \texttt{pengguna\_role} yang dikelola oleh basis data SRusun. Relasi tabel \texttt{rentals}, \texttt{units}, \texttt{violations}, dan \texttt{rental\_logs} dikaitkan menggunakan (\textit{foreign key}) id yang merujuk pada identitas pengguna di sistem induk.
+    Struktur basis data (Gambar~\ref{fig:erd_setelah}) mengalami penyesuaian. Tabel \texttt{users} lokal dihapus dan digantikan oleh tabel \texttt{Pengguna}, \texttt{role}, dan \texttt{pengguna\_role} yang dikelola oleh basis data SRusun. Relasi tabel \texttt{rentals}, \texttt{units}, \texttt{violations}, dan \texttt{rental\_logs} dikaitkan menggunakan (\textit{foreign key}) id yang merujuk pada identitas pengguna di sistem induk.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Database Diagram Sesudah.png}
+        \includegraphics[width=0.9\textwidth, height=0.6\textheight, keepaspectratio]{Gambar/Database Diagram Sesudah.png}
         \caption{Database Diagram Sistem Terintegrasi}
         \label{fig:db_diagram_setelah}
     \end{figure}
-    Gambar~\ref{fig:db_diagram_setelah} memperlihatkan skema fisik hasil integrasi. Desain ini dioptimalkan untuk memastikan integritas data terpusat.
+    Gambar~\ref{fig:db_diagram_setelah} memperlihatkan skema Database Diagram hasil integrasi. Desain ini dioptimalkan untuk memastikan integritas data terpusat.
 \end{enumerate}
 
 
@@ -319,9 +328,9 @@ Sistem dibangun menggunakan \textbf{Node.js}. Proses pengembangannya dilakukan s
 Transformasi antarmuka pengguna (UI) sistem mencerminkan kematangan sistem melalui proses iterasi berbasis Node.js sebagai berikut.
 
 \begin{enumerate}[label=\Alph*.]
-    \item \textbf{Tahap Awal (Sebelum Wawancara):} modul mandiri untuk validasi fungsi dasar. Fokus pada formulir {input} dan tabel data penyewa. Halaman Lihat Data hanya memiliki fitur input waktu \textit{check-out} dan \textit{checklist} komentar.
-    \item \textbf{Tahap Pasca-Wawancara Pertama:} penambahan kolom NIB agen, perluasan ceklis komentar khusus Agen (visibilitas eksklusif \textit{Master Key}), dan fitur unduh \textit{log history}.
-    \item \textbf{Tahap Pasca-Wawancara Kedua:} penerapan peran \textit{Master Key} (Ketua Agen, P3SRS, PKJ) dengan akses penuh, berbeda dengan Agen yang \textit{read-only} pada data sendiri. Penambahan Manajemen Unit, opsi Jenis Sewa di formulir, edit Jenis Sewa/Metode Pembayaran, filter pelanggaran, cek duplikat, dan {pop-up} detail log yang dapat diunduh.
+    \item \textbf{Tahap Awal (Sebelum Wawancara):} modul mandiri untuk validasi fungsi dasar. Fokus pada formulir {input} dan lihat data penyewa. Halaman Lihat Data hanya memiliki fitur input waktu \textit{check-out} dan \textit{checklist} komentar.
+    \item \textbf{Tahap Pasca-Wawancara Pertama:} penambahan kolom NIB Pelaku Komersil, perluasan ceklis komentar khusus Pelaku Komersil (visibilitas eksklusif \textit{Master Key}), dan fitur unduh \textit{log history}.
+    \item \textbf{Tahap Pasca-Wawancara Kedua:} penerapan peran \textit{Master Key} (Pengelola) dengan akses penuh, berbeda dengan Pelaku Komersil yang \textit{read-only} pada data sendiri. Penambahan Manajemen Unit, opsi Jenis Sewa di formulir, edit Jenis Sewa/Metode Pembayaran, filter pelanggaran, cek duplikat, dan {pop-up} detail log yang dapat diunduh.
     \item \textbf{Tahap Final: Integrasi Ekosistem Member:} sinkronisasi penuh. Penerapan SSO OTP, penyesuaian visual UI selaras aplikasi induk, dan penambahan menu akses langsung ``Penyewaan Unit'' pada beranda menu {Member}.
 \end{enumerate}
 
@@ -336,22 +345,23 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Daftar_Sebelum.png} 
+        \includegraphics[width=0.6\textwidth]{Gambar/UI_Daftar_Sebelum.png} 
         \caption{Antarmuka Pendaftaran Pelaku Komersil (Sebelum Integrasi)}
         \label{fig:ui_daftar_sebelum}
     \end{figure}
+    \vspace{-0.5cm}
     Berikut keterangan antarmuka pendaftaran (Gambar~\ref{fig:ui_daftar_sebelum}).
     \begin{itemize}
         \item[\textbf{A.}] Kolom {input email}.
         \item[\textbf{B.}] Kolom {input} Nomor Induk Berusaha (NIB).
-        \item[\textbf{C.}] Kolom {input password} (kata sandi).
+        \item[\textbf{C.}] Kolom {input {\it password}} (kata sandi).
         \item[\textbf{D.}] Tombol ``Daftar'' untuk mengeksekusi pendaftaran.
         \item[\textbf{E.}] Tautan ``Login di sini'' bagi Pelaku Komersil yang sudah memiliki akun.
     \end{itemize}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Daftar_Sementara.png} 
+        \includegraphics[width=0.6\textwidth]{Gambar/UI_Daftar_Sementara.png} 
         \caption{Antarmuka Pendaftaran Pelaku Komersil (Tahap Sementara)}
         \label{fig:ui_daftar_sementara}
     \end{figure}
@@ -359,7 +369,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{itemize}
         \item[\textbf{A.}] Kolom {Nama Lengkap}.
         \item[\textbf{B.}] Kolom {input email}.
-        \item[] \item[\textbf{C.}] Kolom {input password} (kata sandi).
+        \item[] \item[\textbf{C.}] Kolom {input {\it password}} (kata sandi).
         \item[\textbf{D.}] Kolom {input} Nomor Induk Berusaha (NIB).
         \item[\textbf{E.}] Kolom {role}.
         \item[\textbf{F.}] Tombol ``Daftar'' untuk mengeksekusi pendaftaran.
@@ -470,14 +480,14 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{itemize}
         \item[\textbf{A.}] Nama pengguna (\textit{user}) yang sedang masuk.
         \item[\textbf{B.}] Keterangan peran pengguna.
-        \item[\textbf{C.}] Tombol Pengaturan Akun (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_akun}).
+        \item[\textbf{C.}] Tombol Pengaturan Akun (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_akun1}, \ref{fig:popup_akun2}, dan \ref{fig:popup_akun3}).
         \item[\textbf{D.}] Tombol Notifikasi (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_notifikasi}).
         \item[\textbf{E.}] Tombol Dokumen Rusunami The Jarrdin Cihampelas (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_dokumen}).
         \item[\textbf{F.}] Menu Pengumuman Pengelola.
         \item[\textbf{G.}] Menu Tagihan Bulanan.
         \item[\textbf{H.}] Menu Buletin Kegiatan.
         \item[\textbf{I.}] Menu Informasi Paket.
-        \item[\textbf{J.}] Menu Penyewaan Unit (akses modul \textit{data capture}).
+        \item[\textbf{J.}] Menu Penyewaan Unit (akses modul {data capture}).
         \item[\textbf{K.}] Menu Pengumuman.
         \item[\textbf{L.}] Tombol \textit{Logout}.
     \end{itemize}
@@ -492,14 +502,14 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{itemize}
         \item[\textbf{A.}] Nama pengguna yang sedang masuk.
         \item[\textbf{B.}] Keterangan peran pengguna.
-        \item[\textbf{C.}] Tombol Pengaturan Akun (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_akun}).
+        \item[\textbf{C.}] Tombol Pengaturan Akun (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_akun1}, \ref{fig:popup_akun2}, dan \ref{fig:popup_akun3}).
         \item[\textbf{D.}] Tombol Notifikasi (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_notifikasi}).
         \item[\textbf{E.}] Tombol Dokumen Rusunami The Jarrdin Cihampelas (detail \textit{pop-up} dapat dilihat pada Gambar~\ref{fig:popup_dokumen}).
         \item[\textbf{F.}] Menu Pengumuman.
         \item[\textbf{G.}] Menu Pengumuman Pengelola.
         \item[\textbf{H.}] Menu Tagihan Bulanan.
         \item[\textbf{I.}] Menu Buletin Kegiatan.
-        \item[\textbf{J.}] Menu Penyewaan Unit (akses modul \textit{data capture}).
+        \item[\textbf{J.}] Menu Penyewaan Unit (akses modul {data capture}).
         \item[\textbf{K.}] Tombol \textit{Logout}.
     \end{itemize}
 
@@ -507,11 +517,23 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.5\textwidth]{Gambar/PopUp_Pengaturan_Akun1.png} 
+        \includegraphics[width=0.5\textwidth]{Gambar/PopUp_Pengaturan_Akun1.png}
+        \caption{Antarmuka \textit{Pop-up} Pengaturan Akun 1}
+        \label{fig:popup_akun1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
         \includegraphics[width=0.5\textwidth]{Gambar/PopUp_Pengaturan_Akun2.png} 
+        \caption{Antarmuka \textit{Pop-up} Pengaturan Akun 2}
+        \label{fig:popup_akun2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
         \includegraphics[width=0.5\textwidth]{Gambar/PopUp_Pengaturan_Akun3.png} 
-        \caption{Antarmuka \textit{Pop-up} Pengaturan Akun}
-        \label{fig:popup_akun}
+        \caption{Antarmuka \textit{Pop-up} Pengaturan Akun 3}
+        \label{fig:popup_akun3}
     \end{figure}
 
     \begin{figure}[H]
@@ -540,13 +562,13 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Sidebar_Pengelola_Sebelum.png} 
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Pengelola_Sebelum.png} 
         \caption{Antarmuka Menu Side Bar Pengelola (Sebelum Integrasi dan Tahap Sementara)}
         \label{fig:sidebar_pengelola_sebelum}
     \end{figure}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Sidebar_Pengelola_Sementara.png} 
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Pengelola_Sementara.png} 
         \caption{Antarmuka Menu Side Bar Pelaku Komersil (Tahap Sementara)}
         \label{fig:sidebar_pengelola_sementara}
     \end{figure}
@@ -562,21 +584,21 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Sidebar_Komersil_Sebelum.png} 
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Komersil_Sebelum.png} 
         \caption{Antarmuka Menu Side Bar Pelaku Komersil (Sebelum Integrasi dan Tahap Sementara)}
         \label{fig:sidebar_komersil_sebelum}
     \end{figure} %?? lengkapi dgn github
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Sidebar_Komersil_Sementara.png} 
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Komersil_Sementara.png} 
         \caption{Antarmuka Menu Side Bar Pelaku Komersil (Tahap Sementara)}
         \label{fig:sidebar_komersil_sementara}
     \end{figure}
-    Keterangan Menu Komersil - Sebelum dan Tahap Sementara (Gambar~\ref{fig:sidebar_komersil_sebelum}): Sama dengan Pengelola, namun \textbf{tanpa} elemen E (Manajemen Unit).
+    Keterangan Menu Komersil - Sebelum dan Tahap Sementara (Gambar~\ref{fig:sidebar_komersil_sementara}): Sama dengan Pengelola, namun \textbf{tanpa} elemen E (Manajemen Unit).
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Sidebar_Pengelola_Sesudah.png} 
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Pengelola_Sesudah.png} 
         \caption{Antarmuka Menu Side Bar Pengelola (Sesudah Integrasi)}
         \label{fig:ui_sidebar_pengelola_sesudah}
     \end{figure}
@@ -592,7 +614,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Sidebar_Komersil_Sesudah.png} 
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Komersil_Sesudah.png} 
         \caption{Antarmuka Menu Side Bar Pelaku Komersil (Sesudah Integrasi)}
         \label{fig:ui_sidebar_komersil_sesudah}
     \end{figure}
@@ -622,7 +644,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
         \item[\textbf{C.}] Visualisasi grafik garis (\textit{line chart}) jumlah unit disewakan per periode.
         \item[\textbf{D.}] Visualisasi grafik batang (\textit{bar chart}) 5 unit paling populer.
         \item[\textbf{E.}] Statistik detail produktivitas setiap Pelaku Komersil.
-        \item[\textbf{F.}] Visualisasi grafik garis (\textit{line chart}) jumlah unit disewakan per periode.
+        \item[\textbf{F.}] Visualisasi grafik batang (\textit{bar chart}) jumlah unit disewakan per periode.
         \item[\textbf{G.}] Visualisasi grafik batang (\textit{bar chart}) 5 unit paling populer.
         \item[\textbf{H.}] Panel Laporan Pelanggaran yang menampilkan nama penyewa, unit, deskripsi, foto, serta tombol aksi ``Edit Deskripsi'' dan ``Hapus Laporan''.
         \item[\textbf{I.}] Panel unggah laporan pelanggaran baru, spesifik pada bagian pemilihan entitas penyewa.
@@ -654,6 +676,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
         \item[\textbf{E.}] Panel peninjauan Laporan Pelanggaran; jika terdapat laporan, panel ini akan menampilkan nama penyewa yang melakukan pelanggaran, unit yang disewa, deskripsi kejadian, serta foto bukti pelanggaran (Pelaku Komersil hanya memiliki hak akses tinjau tanpa wewenang untuk mengunggah, edit, atau menghapus).
     \end{itemize}
 
+    \newpage
     \item \textbf{Antarmuka Manajemen Unit}\\
     Halaman eksklusif bagi Pengelola untuk mendata unit master yang dialokasikan kepada Pelaku Komersil. Berikut perbandingan antarmuka.
     
@@ -733,8 +756,8 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Notifikasi_Pelanggaran.png} 
-        \caption{Notifikasi Indikasi Pelanggaran pada Antarmuka Input Data Penyewa}
+        \includegraphics[width=0.25\textwidth]{Gambar/UI_Notifikasi_Pelanggaran.png} 
+        \caption{Notifikasi Indikasi Pelanggaran}
         \label{fig:notif}
     \end{figure}
 
@@ -752,13 +775,13 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
         \item[\textbf{J.}] Kolom pemilihan tanggal \textit{check-out}.
         \item[\textbf{K.}] Keterangan Lama Menginap (dihitung otomatis).
         \item[\textbf{L.}] Tombol ``Simpan Data''.
-        \item[\textbf{M.}] Notifikasi indikasi pelanggaran. Peringatan ini akan muncul secara otomatis sesaat setelah pengguna menekan tombol simpan apabila sistem mendeteksi adanya potensi pelanggaran pada profil penyewa yang baru saja dimasukkan. Sebaliknya, jika data terindikasi normal, notifikasi ini tidak akan ditampilkan.
+        \item \ref{fig:notif} Notifikasi indikasi pelanggaran. Peringatan ini akan muncul secara otomatis sesaat setelah pengguna menekan tombol simpan apabila sistem mendeteksi adanya potensi pelanggaran pada profil penyewa yang baru saja dimasukkan. Sebaliknya, jika data terindikasi normal, notifikasi ini tidak akan ditampilkan.
     \end{itemize}
 
 
 
     \item \textbf{Antarmuka Lihat/Edit Data dan \textit{Pop-up} Riwayat}\\
-    Berfungsi sebagai pusat pengelolaan operasional dengan segregasi wewenang yang ketat. Pengelola berhak memeriksa duplikasi data, {filter} data dengan indikasi pelanggaran, serta memodifikasi Jenis Sewa dan Metode Pembayaran. Guna menjaga integritas data, sistem merekam jejak audit (\textit{Log History}) yang membandingkan nilai lama dan baru beserta \textit{timestamp} dan \texttt{User ID} yang dapat ditinjau langsung melalui {pop-up} Detail \textit{Log History}. Seluruh rekapitulasi profil, transaksi, dan riwayat aktivitas tersebut dapat diekspor ke format CSV menggunakan pustaka \texttt{json2csv} untuk kebutuhan pelaporan eksternal dengan batasan yang disesuaikan dengan hak akses masing-masing pengguna.
+    Berfungsi sebagai pusat pengelolaan operasional dengan segregasi wewenang yang ketat. Pengelola berhak memeriksa duplikasi data, {filter} data dengan indikasi pelanggaran, serta memodifikasi Jenis Sewa dan Metode Pembayaran. Guna menjaga integritas data, sistem merekam jejak audit (\textit{Log History}) yang membandingkan nilai lama dan baru beserta \textit{timestamp} dan \texttt{User ID} yang dapat ditinjau langsung melalui {\it pop-up} Detail \textit{Log History}. Seluruh rekapitulasi profil, transaksi, dan riwayat aktivitas tersebut dapat diekspor ke format CSV menggunakan pustaka \texttt{json2csv} untuk kebutuhan pelaporan eksternal dengan batasan yang disesuaikan dengan hak akses masing-masing pengguna.
 
 
 
@@ -766,10 +789,16 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_Lihat_Edit_Data_Pengelola_Sebelum.png} 
+        \includegraphics[width=0.6\textwidth]{Gambar/UI_Lihat_Edit_Data_Pengelola_Sebelum.png} 
+        \caption{Antarmuka Lihat/{\it Pop Up} Edit Data - Pengelola (Sebelum Integrasi)}
+        \label{fig:ui_lihat_edit_pengelola_sblm1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
         \includegraphics[width=0.7\textwidth]{Gambar/UI_PopUp_Lihat_Edit_Data_Pengelola_Sebelum.png} 
-        \caption{Antarmuka Lihat/Edit Data - Pengelola (Sebelum Integrasi)}
-        \label{fig:ui_lihat_edit_pengelola_sblm}
+        \caption{Antarmuka Lihat/{\it Pop Up} Edit Data - Pengelola (Sebelum Integrasi)}
+        \label{fig:ui_lihat_edit_pengelola_sblm2}
     \end{figure}
     Berikut keterangan antarmuka Lihat/Edit Data Pengelola (Sebelum Integrasi).
     \begin{itemize}
@@ -794,9 +823,15 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{Gambar/UI_Lihat_Edit_Data_Komersil_Sebelum.png} 
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_PopUp_Lihat_Edit_Data_Komersil_Sebelum.png} 
         \caption{Antarmuka Lihat/Edit Data - Pelaku Komersil (Sebelum Integrasi)}
-        \label{fig:ui_lihat_edit_komersil_sblm}
+        \label{fig:ui_lihat_edit_komersil_sblm1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{Gambar/UI_PopUp_Lihat_Edit_Data_Komersil_Sebelum.png} 
+        \caption{Antarmuka Lihat/{\it Pop Up} Edit Data - Pelaku Komersil (Sebelum Integrasi)}
+        \label{fig:ui_lihat_edit_komersil_sblm2}
     \end{figure}
     
     Berikut keterangan elemen antarmuka Lihat/Edit Data untuk Pelaku Komersil (Sebelum Integrasi). Pada antarmuka ini, Pelaku Komersil tidak memiliki hak akses terhadap fitur filter pelanggaran maupun pendeteksi duplikasi data. 
@@ -820,9 +855,15 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{Gambar/UI_Lihat_Edit_Data_Pengelola_Sesudah.png} 
-        \includegraphics[width=0.7\textwidth]{Gambar/UI_PopUp_Lihat_Edit_Data_Pengelola_Sesudah.png}
         \caption{Antarmuka Lihat/Edit Data - Pengelola (Sesudah Integrasi)}
-        \label{fig:ui_lihat_edit_pengelola_ssdh}
+        \label{fig:ui_lihat_edit_pengelola_ssdh1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering 
+        \includegraphics[width=0.7\textwidth]{Gambar/UI_PopUp_Lihat_Edit_Data_Pengelola_Sesudah.png}
+        \caption{Antarmuka {\it Pop Up} Lihat/Edit Data - Pengelola (Sesudah Integrasi)}
+        \label{fig:ui_lihat_edit_pengelola_ssdh2}
     \end{figure}
     
     Berikut keterangan elemen antarmuka Lihat/Edit Data untuk Pengelola (Sesudah Integrasi).
@@ -874,6 +915,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \end{itemize}
 
 \end{itemize}
+
 
 
 

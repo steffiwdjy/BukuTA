@@ -1,76 +1,309 @@
-%versi 2 (8-10-2016)
-\chapter{Hasil Eksperimen}
+\chapter{Kode untuk Pembuatan Data Sintesis}
 \label{lamp:B}
 
-\def\scl{1}
-% \def\leg{\legend{Switching,Homotopic,Buffer*Length,Length}}
-\def\leg{} 
-\def\std{none}
-\def\ymin{}
-\def\ymax{}
+\begin{lstlisting}[language=JavaScript, caption={Kode 1}]
+import mysql from 'mysql2/promise'
+import { faker } from '@faker-js/faker';
 
-Hasil eksperimen berikut dibuat dengan menggunakan {\sc tikzpicture} (bukan hasil excel yg diubah ke file bitmap). Sangat berguna jika ingin menampilkan tabel (yang kuantitasnya sangat banyak) yang datanya dihasilkan dari program komputer.\\
-\begin{minipage}[c]{0.49\textwidth}
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}[scale=\scl]
-		\begin{axis}[\ymin,\ymax,xlabel= $P_{var}$(\%),ylabel=Number of Segments, xticklabel style={/pgf/number format/.cd, fixed,fixed zerofill, precision=1},legend pos = outer north east]
-		\addplot+[smooth][color=green] coordinates {(0,3.846) (10,3.796) (20,3.553) (30,3.314) (40,3.308) (50,3.072) };
-		\addplot+[smooth][color=red] coordinates {(0,7.098) (10,5.279) (20,4.641) (30,3.389) (40,2.960) (50,2.736) };
-		\addplot+[smooth][color=blue] coordinates {(0,6.285) (10,5.798) (20,5.777) (30,5.408) (40,5.300) (50,5.217) };
-		\addplot+[smooth][color=black] coordinates {(0,5.614) (10,5.114) (20,5.021) (30,4.417) (40,4.272) (50,4.228) };
-		\leg
-		\end{axis}
-		\end{tikzpicture}
-		\caption[Hasil 1]{Hasil 1}
-		\label{fig:l1hasil1}
-	\end{figure}
-\end{minipage}
-\begin{minipage}[c]{0.49\linewidth}
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}[scale=\scl]
-		\begin{axis}[\ymin,\ymax,xlabel=$m'$,ylabel=Number of Segments, xticklabel style={/pgf/number format/.cd, fixed,fixed zerofill, precision=1},legend pos = outer north east]
-		\addplot+[smooth][color=green] coordinates {(8,3.427) (9,3.776) (10,3.600) (11,3.846) (12,3.760) (13,3.634) (14,3.516) (15,3.992) (16,3.933) (17,3.519) };
-		\addplot+[smooth][color=red] coordinates {(8,7.058) (9,7.055) (10,7.167) (11,7.098) (12,7.150) (13,7.158) (14,6.977) (15,7.337) (16,7.287) (17,6.949) };
-		\addplot+[smooth][color=blue] coordinates {(8,6.584) (9,6.482) (10,6.448) (11,6.285) (12,6.172) (13,6.038) (14,5.769) (15,6.010) (16,5.969) (17,5.857) };
-		\addplot+[smooth][color=black] coordinates {(8,5.769) (9,5.747) (10,5.641) (11,5.614) (12,5.612) (13,5.492) (14,5.302) (15,5.428) (16,5.381) (17,5.222) };
-		\leg
-		\end{axis}
-		\end{tikzpicture}
-		\caption[Hasil 2]{Hasil 2}
-		\label{fig:l1hasil2}
-	\end{figure}
-\end{minipage}\\
-\begin{minipage}[c]{0.48\linewidth}
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}[scale=\scl]
-		\begin{axis}[\ymin,\ymax,xlabel=$m'$,ylabel=Number of Segments, xticklabel style={/pgf/number format/.cd, fixed,fixed zerofill, precision=1},legend pos = outer north east]
-		\addplot+[smooth][color=green] coordinates {(8,3.326) (9,3.139) (10,3.158) (11,3.314) (12,3.366) (13,3.068) (14,3.204) (15,3.163) (16,3.236) (17,3.599) };
-		\addplot+[smooth][color=red] coordinates {(8,3.464) (9,3.329) (10,3.370) (11,3.389) (12,3.452) (13,3.433) (14,3.524) (15,3.633) (16,3.388) (17,3.563) };
-		\addplot+[smooth][color=blue] coordinates {(8,6.214) (9,5.830) (10,5.646) (11,5.408) (12,5.101) (13,5.014) (14,4.725) (15,4.508) (16,3.989) (17,3.169) };
-		\addplot+[smooth][color=black] coordinates {(8,4.976) (9,4.881) (10,4.542) (11,4.417) (12,4.277) (13,4.144) (14,3.893) (15,3.794) (16,3.390) (17,2.790) };
-		\leg
-		\end{axis}
-		\end{tikzpicture}
-		\caption[Hasil 3]{Hasil 3}
-		\label{fig:l1hasil3}
-	\end{figure}
-\end{minipage}
-\begin{minipage}[c]{0.48\linewidth}
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}[scale=\scl]
-		\begin{axis}[\ymin,\ymax,xlabel=$m'$, xticklabel style={/pgf/number format/.cd, fixed,fixed zerofill, precision=1},legend pos = outer north east]
-		\addplot+[smooth][color=green] coordinates {(8,0.463) (9,0.534) (10,0.499) (11,0.498) (12,0.465) (13,0.507) (14,0.504) (15,0.498) (16,0.489) (17,0.487) };
-		\addplot+[smooth][color=red] coordinates {(8,0.152) (9,0.156) (10,0.150) (11,0.124) (12,0.133) (13,0.118) (14,0.102) (15,0.134) (16,0.153) (17,0.117) };
-		\addplot+[smooth][color=blue] coordinates {(8,0.119) (9,0.110) (10,0.129) (11,0.143) (12,0.174) (13,0.174) (14,0.203) (15,0.242) (16,0.342) (17,0.452) };
-		\addplot+[smooth][color=black] coordinates {(8,0.164) (9,0.130) (10,0.159) (11,0.195) (12,0.231) (13,0.244) (14,0.266) (15,0.301) (16,0.383) (17,0.492) };
-		\leg
-		\end{axis}
-		\end{tikzpicture}
-		\caption[Hasil 4]{Hasil 4} 
-		\label{fig:l1hasil4}
-	\end{figure}
-\end{minipage}
+// CONFIGURATION
+const dbConfig = {
+  host: '127.0.0.1',
+  user: 'root',
+  password: '',
+  database: 'hotel_booking_2'
+};
+
+// --- SUSPICIOUS COMMENTS ---
+const suspiciousComments = [
+  "Ditemukan alat suntik di tempat sampah",
+  "Ditemukan kondom dalam jumlah banyak",
+  "Kerusakan parah pada fasilitas",
+  "Kebisingan berlebihan di malam hari",
+  "Penyalahgunaan alkohol/narkoba",
+  "Kekerasan atau ancaman kepada penghuni lain",
+  "Merokok di area terlarang",
+  "Tidak menjaga kebersihan unit",
+  "Terpantau adanya tamu yang keluar masuk pada malam hari",
+  "Menyewakan kembali unit yang disewa"
+];
+
+// --- GENERATE REALISTIC NIK ---
+function generateNIK(sex, birthDate) {
+  const province = faker.helpers.arrayElement(['31', '32', '33', '34', '35', '36', '51']);
+  const city = faker.string.numeric(2);
+  const district = faker.string.numeric(2);
+  const regionCode = `${province}${city}${district}`;
+
+  let day = birthDate.getDate();
+  const month = (birthDate.getMonth() + 1).toString().padStart(2, '0');
+  const year = birthDate.getFullYear().toString().slice(-2);
+
+  if (sex === 'female') {
+    day += 40;
+  }
+  const dayCode = day.toString().padStart(2, '0');
+  const serial = faker.string.numeric(4);
+
+  return `${regionCode}${dayCode}${month}${year}${serial}`;
+}
+
+async function seed() {
+  const { faker } = await import('@faker-js/faker');
+  const connection = await mysql.createConnection(dbConfig);
+  console.log("Connected to database...");
+
+  try {
+    // =================================================
+    // CLEAN DATABASE
+    // =================================================
+    console.log("Cleaning old data...");
+    await connection.query('SET FOREIGN_KEY_CHECKS = 0');
+    await connection.query('TRUNCATE TABLE violations');
+    await connection.query('TRUNCATE TABLE rental_logs');
+    await connection.query('TRUNCATE TABLE rentals');
+    await connection.query('TRUNCATE TABLE units');
+    await connection.query('TRUNCATE TABLE users');
+    await connection.query('SET FOREIGN_KEY_CHECKS = 1');
+
+    // =================================================
+    // SEED USERS
+    // =================================================
+    console.log("Seeding Users...");
+    const users = [];
+
+    for (let i = 0; i < 50; i++) {
+      users.push([
+        faker.internet.email(),
+        faker.internet.password(),
+        faker.string.numeric(13),
+        'agen',
+        faker.person.fullName()
+      ]);
+    }
+    
+    await connection.query(`INSERT INTO users (email, password, nib, role, name) VALUES ?`, [users]);
+    await connection.query(`
+      INSERT INTO \`users\` (\`email\`, \`password\`, \`nib\`, \`role\`,name, \`created_at\`) VALUES
+      ('ketua_agen@gmail.com', '$2a$12$gi8waPwYFYunLlAaLavLZ.yp1t/DAe8NuC7a1kDrOr3x6Wnf7PGre', '', 'Pengelola','ketua', '2025-10-04 18:25:32'),
+      ('PelakuKomersil@gmail.com', '$2a$12$pd0wjRxHx9NzMAtGznOlre7oAZKrJgGsKMabk8VEkmSwA0vOGt6Xy', '', 'PelakuKomersil','PelakuKomersil', '2025-10-04 18:40:28');
+    `);
+    // Fetch emails for child tables
+    const [userRows] = await connection.query('SELECT email FROM users');
+    const allEmails = userRows.map(u => u.email);
+
+    // =================================================
+    // SEED UNITS
+    // =================================================
+    console.log(`Seeding Units (15 per user)...`);
+    const units = [];
+    const usedUnitNumbers = new Set();
+
+    for (const email of allEmails) {
+      for (let i = 0; i < 15; i++) {
+        let isUnique = false;
+        let formattedUnit = '';
+        while (!isUnique) {
+          const tower = faker.helpers.arrayElement(['A', 'B', 'C', 'D']);
+          const lantai = faker.number.int({ min: 1, max: 25 });
+          const unitNum = faker.number.int({ min: 1, max: 30 });
+          formattedUnit = `${tower}-${lantai}-${unitNum}`;
+          if (!usedUnitNumbers.has(formattedUnit)) {
+            usedUnitNumbers.add(formattedUnit);
+            isUnique = true;
+            units.push([formattedUnit, email, tower, lantai, unitNum]);
+          }
+        }
+      }
+    }
+
+    const unitChunkSize = 1000;
+    for (let i = 0; i < units.length; i += unitChunkSize) {
+      await connection.query(`INSERT INTO units (unit_number, user_email, tower, lantai, unit) VALUES ?`, [units.slice(i, i + unitChunkSize)]);
+    }
+
+    // =================================================
+    // SEED RENTALS (BATCHED INSERT)
+    // =================================================
+    console.log("Seeding Rentals (Generating data)...");
+    const rentals = [];
+    const rentalCount = 10000;
+
+    // FIX: Fetch ID AND Email so we can match them
+    const [unitObjects] = (await connection.query('SELECT unit_number, user_email FROM units'));
+
+    for (let i = 0; i < rentalCount; i++) {
+      // A. Identity
+      const sex = faker.person.sexType();
+      const fullName = `${faker.person.firstName(sex)} ${faker.person.lastName(sex)}`;
+      const birthDate = faker.date.birthdate({ min: 18, max: 60, mode: 'age' });
+      const realNIK = generateNIK(sex, birthDate);
+
+      // B. RENTAL TYPE & DURATION LOGIC
+      const jenis_sewa = faker.helpers.arrayElement(['Harian', 'Mingguan', 'Bulanan']);
+      let lama_menginap = 0;
+
+      if (jenis_sewa === 'Harian') {
+        lama_menginap = faker.number.int({ min: 0, max: 6 });
+      } else if (jenis_sewa === 'Mingguan') {
+        const weeks = faker.number.int({ min: 1, max: 3 });
+        lama_menginap = weeks * 7;
+      } else { // Bulanan
+        const months = faker.number.int({ min: 1, max: 5 });
+        lama_menginap = months * 30;
+      }
+
+      // C. CALCULATE DATES
+      const checkinObj = faker.date.between({ from: '2010-01-01', to: new Date() });
+      const checkoutObj = new Date(checkinObj);
+      checkoutObj.setDate(checkoutObj.getDate() + lama_menginap);
+
+      // Handle Times
+      if (lama_menginap === 0) {
+        const hoursToAdd = faker.number.int({ min: 3, max: 12 });
+        checkoutObj.setHours(checkoutObj.getHours() + hoursToAdd);
+      } else {
+        checkinObj.setHours(faker.number.int({ min: 13, max: 20 }));
+        checkinObj.setMinutes(faker.number.int({ min: 0, max: 59 }));
+        checkoutObj.setHours(faker.number.int({ min: 7, max: 12 }));
+        checkoutObj.setMinutes(faker.number.int({ min: 0, max: 59 }));
+      }
+
+      // D. FORMAT SQL
+      const sqlCheckinDate = checkinObj.toISOString().slice(0, 10);
+      const sqlCheckinTime = checkinObj.toTimeString().split(' ')[0].slice(0,5);
+      const sqlCheckoutDate = checkoutObj.toISOString().slice(0, 10);
+      const sqlCheckoutTime = checkoutObj.toTimeString().split(' ')[0].slice(0,5);
+
+      const oneDay = 24 * 60 * 60 * 1000;
+      const d1 = new Date(sqlCheckinDate);
+      const d2 = new Date(sqlCheckoutDate);
+      const finalDuration = Math.round(Math.abs((d2 - d1) / oneDay));
+
+      // E. COMMENT LOGIC
+      const paymentMethod = faker.helpers.arrayElement(['Cash', 'Kartu Kredit', 'Kartu Debit', 'QRIS', 'Others']);
+      const checkoutHour = checkoutObj.getHours();
+
+      let selectedKomentar = null;
+      let shouldAddComment = false;
+
+      if (finalDuration <= 1) {
+        if (Math.random() < 0.80) shouldAddComment = true;
+      }
+      else if ((checkoutHour >= 0 && checkoutHour <= 5) && paymentMethod === 'Cash') {
+        if (Math.random() < 0.75) shouldAddComment = true;
+      }
+
+      if (shouldAddComment) {
+        selectedKomentar = faker.helpers.arrayElement(suspiciousComments);
+      }
+
+      // F. PICK RANDOM UNIT (AND MATCH OWNER)
+      const randomUnit = faker.helpers.arrayElement(unitObjects);
+
+      rentals.push([
+        fullName,
+        realNIK,
+        faker.helpers.arrayElement(['Menikah', 'Belum Menikah']),
+        faker.helpers.arrayElement(['WNI', 'WNA']),
+        jenis_sewa,
+        randomUnit.unit_number,
+        paymentMethod,
+        paymentMethod === 'Others' ? faker.helpers.arrayElement(['crypto', 'ovo', 'gopay', 'dana', 'paylater', 'shopeepay', 'linkaja']) : null,
+        sqlCheckinDate,
+        sqlCheckinTime,
+        sqlCheckoutDate,
+        sqlCheckoutTime,
+        finalDuration,
+        selectedKomentar,
+        randomUnit.user_email, // FIX: Match the email to the unit owner
+        null,
+        selectedKomentar ? 'tidak normal' : 'normal'
+      ]);
+    }
+
+    // --- INSERT FOR 10,000 ROWS ---
+    console.log("Inserting Rentals in batches...");
+    const rentalChunkSize = 2000; // Insert 2000 at a time to prevent timeout
+    for (let i = 0; i < rentals.length; i += rentalChunkSize) {
+      const chunk = rentals.slice(i, i + rentalChunkSize);
+      await connection.query(
+        `INSERT INTO rentals (nama, nik, status_pasutri, status_kewarganegaraan, jenis_sewa, unit_number, metode_pembayaran, metode_lain, tanggal_checkin, waktu_checkin, tanggal_checkout, waktu_checkout, lama_menginap, komentar, user_email, diedit_oleh, classification) VALUES ?`,
+        [chunk]
+      );
+      console.log(`Inserted rentals batch ${i} to ${i + chunk.length}`);
+    }
+
+    // =================================================
+    // SEED LOGS & VIOLATIONS
+    // =================================================
+    console.log("Seeding Logs and Violations...");
+    const [rentalRows] = await connection.query('SELECT * FROM rentals');
+    const rentalIds = rentalRows.map(r => r.id);
+
+    // Add create logs for each rental
+    const createLogQuery = `INSERT INTO rental_logs (action, field_changed, new_value, email, rental_id) VALUES ?`;
+    const createLogEntries = rentalRows.map(row => ['create', 'all', JSON.stringify(row), row.user_email, row.id]);
+    const logChunkSize = 1000;
+    for (let i = 0; i < createLogEntries.length; i += logChunkSize) {
+      const chunk = createLogEntries.slice(i, i + logChunkSize);
+      await connection.query(createLogQuery, [chunk]);
+      console.log(`Inserted create logs batch ${i} to ${i + chunk.length}`);
+    }
+
+    const logs = [];
+    const fake = (type, old) => {
+      let value = "";
+      if (type === 'waktu_checkout') {
+        value = faker.date.future().toISOString().slice(0, 19).replace('T', ' ');
+      } else if (type === 'metode_pembayaran') {
+        value = faker.helpers.arrayElement(['Cash', 'Kartu Kredit', 'Kartu Debit', 'QRIS']);
+      } else if (type === 'jenis_sewa') {
+        value = faker.helpers.arrayElement(['Harian', 'Mingguan', 'Bulanan']);
+      } else if (type === 'komentar') {
+        // add several susspicious comments randomly unique
+        const size = Math.floor(Math.random() * 4) + 1;
+        const randomizedComment = faker.helpers.shuffle(suspiciousComments);
+        const comments = randomizedComment.slice(0, size).join(",");
+        value = comments;
+      }
+      if (value == old) {
+        return fake(type, old);
+      }
+      return value;
+    }
+    let rentaUpdate = [];
+    for (let i = 0; i < 50; i++) {
+      const field = faker.helpers.arrayElement(['waktu_checkout', 'metode_pembayaran', 'jenis_sewa', 'komentar']);
+      const firstFieldValue = fake(field);
+      const rentalId = faker.helpers.arrayElement(rentalIds);
+      const email = faker.helpers.arrayElement(allEmails);
+      logs.push([rentalId,
+        faker.helpers.arrayElement(['create', 'update']),
+        field,
+        firstFieldValue,
+        fake(field, firstFieldValue),
+        email]);
+      rentaUpdate.push([rentalId, email]);
+    }
+    await connection.query(`INSERT INTO rental_logs (rental_id, action, field_changed, old_value, new_value, email) VALUES ?`, [logs]);
+    for (const [rentalId, email] of rentaUpdate) {
+      await connection.query(`UPDATE rentals SET diedit_oleh = ? WHERE id = ?`, [email, rentalId]);
+    }
+
+    const violations = [];
+    for (let i = 0; i < 20; i++) {
+      violations.push([faker.helpers.arrayElement(rentalIds), faker.image.url(), faker.lorem.sentence(), faker.helpers.arrayElement(allEmails)]);
+    }
+    await connection.query(`INSERT INTO violations (rental_id, photo_url, description, uploaded_by) VALUES ?`, [violations]);
+
+    console.log("Database seeded successfully!");
+    process.exit();
+
+  } catch (error) {
+    console.error("Seeding failed:", error);
+    process.exit(1);
+  }
+}
+
+seed();
+\end{lstlisting}

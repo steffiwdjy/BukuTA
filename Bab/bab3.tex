@@ -1,7 +1,7 @@
-\chapter{Analisis Penyelesaian Masalah}
+\chapter{EKSPLORASI TEKNOLOGI DAN ANALISIS MASALAH}
 \label{chap:analisis}
 
-Bab ini membahas analisis mendalam mengenai permasalahan yang dihadapi dalam pengelolaan penyewaan unit di Rusunami The Jarrdin Cihampelas (RTJC) dan pendekatan teknologi yang dipilih untuk menyelesaikan masalah tersebut.
+Bab ini membahas analisis mendalam mengenai permasalahan yang dihadapi dalam pengelolaan penyewaan unit di Rusunami The Jarrdin Cihampelas (RTJC). Analisis tersebut didukung oleh pelaksanaan wawancara dan survei guna menyesuaikan spesifikasi kebutuhan sistem yang akan dibangun, serta menguraikan pendekatan teknologi yang dipilih untuk menyelesaikan masalah tersebut.
 
 
 
@@ -15,16 +15,3 @@ Bab ini membahas analisis mendalam mengenai permasalahan yang dihadapi dalam pen
 \input{Bab/BAB 3/Perancangan Sistem}
 
 
-
-
-% Berdasarkan seluruh rangkaian analisis yang telah dilakukan, dapat disimpulkan bahwa:
-
-% \begin{enumerate}
-%     \item \textbf{Solusi Teknologi:} Migrasi dari desain awal (Python/Streamlit) ke \textbf{Node.js} merupakan langkah tepat yang menjamin integrasi sistem dengan platform \texttt{srusun.id} yang sudah ada di The Jarrdin, serta menghilangkan biaya infrastruktur cloud (GCP) yang tidak perlu.
-    
-%     \item \textbf{Solusi Data:} Implementasi fitur \textit{Data Capture} yang dilengkapi dengan \textit{Log History} berhasil menjawab masalah ketiadaan data terstruktur. Log aktivitas penyuntingan data terbukti menjadi fitur kunci (\textit{golden feature}) dalam mendeteksi perilaku mencurigakan.
-    
-%     \item \textbf{Solusi Algoritma:} Algoritma \textbf{Balanced Random Forest (BRF)} terbukti secara empiris dan teoritis lebih unggul dibandingkan XGBoost, SVM, dan KNN untuk kasus data tidak seimbang ini. Dengan \textit{threshold} 0.82, model mampu memberikan prediksi yang presisi, meminimalkan gangguan terhadap penyewa normal, sekaligus tetap waspada terhadap potensi ancaman.
-% \end{enumerate}
-
-% Sistem ini memberikan landasan digital yang kuat bagi pengelola Rusunami The Jarrdin Cihampelas untuk beralih dari pengawasan reaktif (menunggu kejadian) menjadi pengawasan preventif berbasis data.

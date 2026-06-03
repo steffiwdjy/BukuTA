@@ -4,7 +4,7 @@ Proses penentuan teknologi untuk pembangunan sistem dalam penelitian ini mengala
 
 \begin{enumerate}
     \item \textbf{Tahap awal (Google Cloud Platform)} \\
-    Pada perencanaan awal, sistem dirancang untuk menggunakan layanan \textit{cloud} berbasis \textit{Google Cloud Platform} (GCP), yang mana konsep teoritis dan keunggulannya telah dibahas pada Subbab~\ref{sec:gcp}, mengingat kapabilitasnya yang kuat dalam manajemen data dan \textit{machine learning}. Namun, pendekatan ini tidak dilanjutkan karena faktor biaya operasional (\textit{cost}) yang tinggi dan kurang efisien untuk skala implementasi penelitian skripsi ini.
+    Pada perencanaan awal, sistem dirancang untuk menggunakan layanan \textit{cloud} berbasis \textit{Google Cloud Platform} (GCP), yang mana konsep teoritis dan keunggulannya telah dibahas pada Subbab~\ref{sec:gcp}, mengingat kapabilitasnya yang kuat dalam manajemen data dan \textit{machine learning}. Namun, pendekatan ini tidak dilanjutkan karena faktor biaya operasional (\textit{cost}) yang tinggi dan kurang efisien untuk skala implementasi penelitian Tugas Akhir ini.
 
     \item \textbf{Tahap eksplorasi (Python dan Streamlit)} \\
     % Sebagai alternatif, penulis mengembangkan prototipe sistem menggunakan bahasa pemrograman \textbf{Python} dengan \textit{framework} \textbf{Streamlit}. Pemilihan ini didasarkan pada kemudahan Python dalam pengolahan data dan pembangunan model \textit{machine learning}. Meskipun prototipe ini berhasil berfungsi secara mandiri, ditemukan kendala signifikan dalam aspek interoperabilitas. Sistem berbasis Python sulit untuk diintegrasikan secara langsung dengan ekosistem aplikasi yang sedang dikembangkan oleh rekan mahasiswa lain dalam satu tim bimbingan.
@@ -97,9 +97,9 @@ Proses penentuan teknologi untuk pembangunan sistem dalam penelitian ini mengala
         
         \item {Buat virtual environment}\\
         Untuk mengisolasi dependensi proyek:
-        \begin{lstlisting}[language=Bash]
-            python -m venv venv
-        \end{lstlisting}
+            \begin{lstlisting}[language=Bash]
+                python -m venv venv
+            \end{lstlisting}
 
         % \newpage
         \item {Aktifkan virtual environment}
@@ -116,15 +116,15 @@ Proses penentuan teknologi untuk pembangunan sistem dalam penelitian ini mengala
         \end{itemize}
         
         \item {Install library yang dibutuhkan}
-        \begin{lstlisting}[language=Bash]
-            pip install streamlit pandas bcrypt python-dotenv requests pillow streamlit-option-menu
-        \end{lstlisting}
+            \begin{lstlisting}[language=Bash]
+                pip install streamlit pandas bcrypt python-dotenv requests pillow streamlit-option-menu
+            \end{lstlisting}
         
         \item {Simpan dependensi}
         Simpan daftar library ke file \texttt{requirements.txt} untuk keperluan deploy ke Streamlit Cloud.
-        \begin{lstlisting}[language=Bash]
-            pip freeze > requirements.txt
-        \end{lstlisting}
+            \begin{lstlisting}[language=Bash]
+                pip freeze > requirements.txt
+            \end{lstlisting}
       \end{enumerate}
 
       % \newpage
@@ -185,7 +185,7 @@ Proses penentuan teknologi untuk pembangunan sistem dalam penelitian ini mengala
             \end{lstlisting}
       \end{enumerate}
 
-      \newpage
+    %   \newpage
       \item {Struktur kode utama (\texttt{app.py})}
       \begin{enumerate}
         \item {Login dan register Pelaku Komersil}\\
@@ -271,7 +271,7 @@ Proses penentuan teknologi untuk pembangunan sistem dalam penelitian ini mengala
     
     Sistem \textit{} ini memanfaatkan teknologi Python dan Streamlit yang mudah digunakan dan dikembangkan. Penyimpanan data menggunakan JSON di GitHub Gist memudahkan kolaborasi. Penggunaan library seperti \texttt{bcrypt} meningkatkan keamanan autentikasi Pelaku Komersil. Sistem ini mendukung proses \textit{monitoring} dan analisis data penyewa secara efektif untuk mencegah potensi pelanggaran.
 
-    Setelah seluruh proses implementasi dilakukan, sistem \textit{} berhasil dibangun menggunakan \textit{framework} Streamlit. Sistem ini memiliki dua fitur utama, yaitu formulir input data penyewa dan halaman untuk melihat serta mengedit data penyewa. Sistem ini dapat dijalankan secara lokal maupun di-\textit{deploy} ke Streamlit Cloud, sehingga dapat diakses melalui peramban web oleh Pelaku Komersil yang telah terdaftar. Berikut adalah tangkapan layar dari antarmuka sistem yang berhasil dibangun. Gambar-gambar ini menampilkan fitur-fitur utama dari sistem, yakni halaman daftar atau login Pelaku Komersil, formulir untuk input atau edit data penyewa, tampilan data penyewa dalam bentuk tabel, serta fitur ekspor data ke format CSV.
+    Setelah seluruh proses implementasi dilakukan, sistem \textit{} berhasil dibangun menggunakan \textit{framework} Streamlit. Sistem ini memiliki dua fitur utama, yaitu formulir input data penyewa dan halaman untuk melihat serta mengedit data penyewa. Sistem ini dapat dijalankan secara lokal maupun di-\textit{deploy} ke Streamlit Cloud, sehingga dapat diakses melalui web oleh Pelaku Komersil yang telah terdaftar. Berikut adalah tangkapan layar dari antarmuka sistem yang berhasil dibangun. Gambar-gambar ini menampilkan fitur-fitur utama dari sistem, yakni halaman daftar dan login Pelaku Komersil, formulir untuk input atau edit data penyewa, tampilan data penyewa dalam bentuk tabel, serta fitur ekspor data ke format CSV.
     
     \begin{figure}[H]
         \centering

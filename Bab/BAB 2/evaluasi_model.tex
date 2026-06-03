@@ -1,4 +1,4 @@
-\section{Evaluasi Model}
+\section{Evaluasi Model}\label{sec:evaluasi_model}
 
 Evaluasi performa model merupakan tahapan penting dalam pembelajaran mesin (\textit{machine learning}) untuk menilai seberapa baik model mampu melakukan prediksi terhadap data yang belum pernah dilihat sebelumnya. Menurut Tan, Steinbach, dan Kumar (2019) dalam buku \textit{Introduction to Data Mining}, beberapa metrik umum yang digunakan dalam evaluasi model klasifikasi mencakup akurasi, presisi, recall, dan F1-score. Masing-masing metrik memberikan perspektif berbeda terhadap performa model, sehingga pemilihan metrik yang tepat bergantung pada konteks dan karakteristik data.
     
@@ -61,9 +61,9 @@ Evaluasi performa model merupakan tahapan penting dalam pembelajaran mesin (\tex
     \text{F1-score} = 2 \cdot \frac{0{,}60 \cdot 0{,}90}{0{,}60 + 0{,}90} = \frac{1{,}08}{1{,}50} = 0{,}72 \quad (72\%)
     \]
             
-    Hasil evaluasi ini menunjukkan fenomena yang dikenal sebagai Paradoks Akurasi (\textit{Accuracy Paradox}). Meskipun model seolah-olah berkinerja sangat luar biasa dengan akurasi 99,3\%, nilai presisinya hanya 60\%. Hal ini berarti 40\% dari total peringatan yang dikeluarkan oleh sistem adalah alarm palsu (\textit{false positive}). Dalam konteks penyewaan properti, jika pengelola hanya melihat nilai akurasi, mereka mungkin menganggap sistem sudah sempurna. Namun, presisi 60\% menunjukkan risiko tinggi di mana banyak penyewa normal yang baik-baik saja akan dituduh atau ditandai sebagai penyewa mencurigakan. Kesalahan identifikasi ini dapat memicu konflik dengan penyewa, pelanggaran privasi, atau hilangnya pendapatan penyewaan. 
+    Hasil evaluasi ini menunjukkan fenomena yang dikenal sebagai Paradoks Akurasi (\textit{Accuracy Paradox}). Meskipun model seolah-olah berkinerja sangat luar biasa dengan akurasi 99,3\%, nilai presisinya hanya 60\%. Hal ini berarti 40\% dari total peringatan yang dikeluarkan oleh sistem adalah alarm palsu (\textit{false positive}). Dalam konteks penyewaan properti, jika Pengelola hanya melihat nilai akurasi, mereka mungkin menganggap sistem sudah sempurna. Namun, presisi 60\% menunjukkan risiko tinggi di mana banyak penyewa normal yang baik-baik saja akan dituduh atau ditandai sebagai penyewa mencurigakan. Kesalahan identifikasi ini dapat memicu konflik dengan penyewa, pelanggaran privasi, atau hilangnya pendapatan penyewaan. 
     
-    Kelemahan metrik ini sejalan dengan temuan Fawcett (2006) dalam \textit{An Introduction to ROC Analysis}, yang menyatakan bahwa akurasi cenderung tidak dapat diandalkan ketika jumlah kasus positif sangat sedikit. Lebih lanjut, menurut Saito dan Rehmsmeier (2015) dalam jurnal \textit{PLOS ONE}, metrik presisi dan \textit{recall} (termasuk \textit{F1-score}) terbukti lebih informatif dan memberikan gambaran performa yang jauh lebih jujur dibandingkan akurasi pada dataset yang tidak seimbang. Maka dari itu, evaluasi performa model dalam penelitian ini akan lebih menitikberatkan pada metrik presisi, guna meminimalkan tingkat \textit{false positive} dan menjaga keandalan sistem dalam mendeteksi penyewa mencurigakan.
+    Kelemahan metrik ini sejalan dengan temuan Fawcett (2006) dalam \textit{An Introduction to ROC Analysis}, yang menyatakan bahwa akurasi cenderung tidak dapat diandalkan ketika jumlah kasus positif sangat sedikit. Lebih lanjut, menurut Saito dan Rehmsmeier (2015) dalam jurnal \textit{PLOS ONE}, metrik presisi dan \textit{recall} (termasuk \textit{F1-score}) terbukti lebih informatif dan memberikan gambaran performa yang lebih baik dibandingkan akurasi pada dataset yang tidak seimbang. Maka dari itu, evaluasi performa model dalam penelitian ini akan lebih menitikberatkan pada metrik presisi, guna meminimalkan tingkat \textit{false positive} dan menjaga keandalan sistem dalam mendeteksi penyewa mencurigakan.
 
 
 
@@ -71,3 +71,4 @@ Evaluasi performa model merupakan tahapan penting dalam pembelajaran mesin (\tex
 
     
     
+

@@ -1,9 +1,9 @@
 \section{Feature Selection}\label{sec:feature_selection}
 
-Proses seleksi fitur (\textit{feature selection}) bertujuan untuk memilih bagian data (kolom) yang paling berkaitan dengan target akhir. Pemilihan ini penting untuk membuat hasil prediksi lebih akurat, mempercepat proses perhitungan komputer, dan mencegah model hanya menghafal data tanpa memahami polanya (\textit{overfitting}). Secara umum, pemilihan fitur dibagi menjadi tiga cara: berdasarkan pengetahuan dari pakar (\textit{domain knowledge}), perhitungan statistik (\textit{filter methods}), dan pendekatan heuristik atau pencarian terarah (\textit{wrapper methods}).
+Proses seleksi fitur (\textit{feature selection}) bertujuan untuk memilih bagian data (kolom) yang paling berkaitan dengan target akhir. Pemilihan ini penting untuk membuat hasil prediksi lebih akurat, mempercepat proses perhitungan komputer, dan mencegah model hanya menghafal data tanpa memahami polanya (\textit{overfitting}). Secara umum, pemilihan fitur dibagi menjadi tiga cara, yaitu berdasarkan pengetahuan dari pakar (\textit{domain knowledge}), perhitungan statistik (\textit{filter methods}), dan pendekatan heuristik atau pencarian terarah (\textit{wrapper methods}).
 
 \subsection{Pendekatan Pengetahuan Pakar (\textit{Domain Knowledge})}
-Sebelum melakukan pemilihan data kepada algoritma komputer, langkah pertama yang paling penting adalah menyaring data menggunakan pengetahuan pakar di lapangan (\textit{domain knowledge}). Cara ini dilakukan dengan menentukan informasi apa saja yang secara pengalaman nyata berkaitan erat dengan apa yang ingin ditebak, misalnya melalui wawancara mendalam dengan pengelola apartemen atau petugas keamanan.
+Sebelum melakukan pemilihan data kepada algoritma komputer, langkah pertama yang paling penting adalah menyaring data menggunakan pengetahuan pakar di lapangan (\textit{domain knowledge}). Cara ini dilakukan dengan menentukan informasi apa saja yang secara pengalaman nyata berkaitan erat dengan apa yang ingin ditebak, misalnya melalui wawancara mendalam dengan Pengelola apartemen atau petugas keamanan.
 
 Menurut Kuhn dan Johnson (2013), pemanfaatan pengetahuan domain sering kali lebih penting daripada teknik pemilihan fitur otomatis mana pun. Hal ini dikarenakan algoritma seleksi fitur murni secara matematis berpotensi memilih variabel yang hanya memiliki korelasi kebetulan (\textit{spurious correlation}) tanpa adanya dasar hubungan sebab-akibat yang logis. Untuk mendeteksi penyewa yang bermasalah, wawasan dari para pakar lapangan ini sangat membantu menentukan fitur khusus---seperti ada tidaknya riwayat pelanggaran atau ketidakwajaran waktu \textit{check-in}---sebagai tanda yang kuat (\textit{strong signal}) adanya aktivitas yang tidak normal.
 
@@ -39,18 +39,37 @@ Setelah fitur-fitur awal ditentukan, metode statistik digunakan untuk menghitung
         \end{tabular}
     \end{table}
 
-    Langkah-langkah perhitungannya adalah sebagai berikut.
+    Langkah-langkah perhitungannya adalah sebagai berikut. Nilai observasi ($O_{ij}$) seperti angka 40, 15, dan 5 didapatkan langsung dari perhitungan data riil pada tabel kontingensi di atas. Kemudian, nilai harapan ($E_{ij}$) untuk masing-masing sel dihitung menggunakan rumus:
     $$
     E_{ij} = \frac{\text{(Total Baris)} \times \text{(Total Kolom)}}{\text{Grand Total}}
     $$
-    Misalnya untuk menghitung nilai harapan bagi kelompok Tunai dan Normal:
-    $$
-    E_{\text{Tunai, Normal}} = \frac{55 \times 80}{100} = 44
-    $$
+    
+    Berikut adalah rincian perhitungan nilai harapan ($E_i$) untuk setiap kombinasi kategori:
+    \begin{itemize}
+        \item \textbf{Tunai dan Normal}:
+        $$
+        E_{\text{Tunai, Normal}} = \frac{55 \times 80}{100} = 44
+        $$
+        \item \textbf{Tunai dan Tidak Normal}:
+        $$
+        E_{\text{Tunai, Tidak Normal}} = \frac{55 \times 20}{100} = 11
+        $$
+        \item \textbf{Kartu dan Normal}:
+        $$
+        E_{\text{Kartu, Normal}} = \frac{45 \times 80}{100} = 36
+        $$
+        \item \textbf{Kartu dan Tidak Normal}:
+        $$
+        E_{\text{Kartu, Tidak Normal}} = \frac{45 \times 20}{100} = 9
+        $$
+    \end{itemize}
 
-    Perhitungan total nilai $\chi^2$:
+    Berdasarkan rincian nilai $O_i$ dan $E_i$ tersebut, perhitungan total nilai $\chi^2$ adalah sebagai berikut.
     $$
-    \chi^2 = \frac{(40 - 44)^2}{44} + \frac{(15 - 11)^2}{11} + \frac{(40 - 36)^2}{36} + \frac{(5 - 9)^2}{9} \approx 0{,}36 + 1{,}45 + 0{,}44 + 1{,}77 = 4{,}02
+    \chi^2 = \frac{(40 - 44)^2}{44} + \frac{(15 - 11)^2}{11} + \frac{(40 - 36)^2}{36} + \frac{(5 - 9)^2}{9}
+    $$
+    $$
+    \chi^2 \approx 0{,}36 + 1{,}45 + 0{,}44 + 1{,}77 = 4{,}02
     $$
 
     Semakin besar angka $\chi^2$, semakin kuat hubungan antara fitur tersebut dengan target hasil. Nilai $p$ dari distribusi hasil ini kemudian bisa digunakan untuk memastikan apakah hubungan tersebut benar-benar dapat dipercaya secara statistik (signifikan).
@@ -177,72 +196,4 @@ Setelah fitur-fitur awal ditentukan, metode statistik digunakan untuk menghitung
     
     Nilai MI sebesar 0,049 menunjukkan bahwa fitur lama menginap hanya memberikan sedikit informasi tambahan untuk menebak status penyewa pada kelompok data yang sangat timpang ini.
 
-    \vspace{0.5cm}
     
-    Berdasarkan konsep teoretis di atas, berikut adalah contoh penulisan kode Python untuk menyeleksi fitur terbaik menggunakan penggabungan skor metode statistik pada \textit{machine learning}.
-    
-    \begin{lstlisting}[language=Python]
-    from sklearn.feature_selection import SelectKBest, chi2, mutual_info_classif
-    from sklearn.preprocessing import MinMaxScaler
-    import pandas as pd
-
-    # 1. Menghitung Skor Menggunakan Masing-masing Metode
-
-    # a. Uji Chi-Square 
-    chi2_selector = SelectKBest(score_func=chi2, k='all')
-    chi2_selector.fit(X_train, y_train)
-
-    # b. Korelasi Pearson 
-    train_df = X_train.copy()
-    train_df['label'] = y_train
-    pearson_scores = train_df.corr(method='pearson')['label'].drop('label').abs().values
-
-    # c. Mutual Information (MI)
-    mi_selector = SelectKBest(score_func=mutual_info_classif, k='all')
-    mi_selector.fit(X_train, y_train)
-
-    # 2. Menyusun Hasil Skor ke Dalam Tabel DataFrame
-    fs_df = pd.DataFrame({
-        'Feature': X_train.columns,
-        'Chi-Square': chi2_selector.scores_,
-        'Pearson (Abs)': pearson_scores,
-        'Mutual Info': mi_selector.scores_
-    })
-
-    # 3. Normalisasi Seluruh Skor
-    scaler = MinMaxScaler()
-    fs_df[['Chi2_Norm', 'Pearson_Norm', 'MI_Norm']] = scaler.fit_transform(
-        fs_df[['Chi-Square', 'Pearson (Abs)', 'Mutual Info']]
-    )
-
-    # 4. Menghitung Rata-rata Gabungan Total Skor 
-    fs_df['Total_Score'] = fs_df[['Chi2_Norm', 'Pearson_Norm', 'MI_Norm']].mean(axis=1)
-
-    # Mengurutkan fitur dari skor tertinggi ke terendah
-    fs_df = fs_df.sort_values(by='Total_Score', ascending=False).reset_index(drop=True)
-
-    # 5. Memilih N Fitur Terbaik
-    n_select = 4
-    selected_features = fs_df['Feature'].head(n_select).tolist()
-    print(f"\n-> Fitur yang dipilih ({n_select} terbaik): {selected_features}")
-
-    # Menerapkan fitur yang telah dipilih pada data latih dan data uji
-    X_train = X_train[selected_features]
-    X_test = X_test[selected_features]
-        \end{lstlisting}
-
-\end{enumerate}
-
-\subsection{Metode Heuristik (Wrapper Methods)}
-Selain menghitung probabilitas statistik, pemilihan fitur juga dapat dilakukan menggunakan metode heuristik. Cara ini diperlukan karena mencoba mencocokkan setiap kemungkinan kombinasi kolom data satu per satu akan memakan waktu dan daya komputer yang sangat besar. Metode heuristik mencari subset fitur yang mendekati optimal dengan menggunakan ``aturan praktis'' atau algoritma optimasi untuk memandu pencarian (Tan, Steinbach, Karpatne, \& Kumar, 2019).Berbeda dengan metode statistik yang menilai kelayakan tiap kolom secara mandiri, metode heuristik langsung menguji kelompok kolom sekaligus dengan melihat seberapa akurat tebakan model \textit{machine learning} tersebut. Beberapa teknik heuristik yang sering digunakan saat ini adalah sebagai berikut.
-
-\begin{enumerate}
-    \item \textbf{Sequential Forward Selection (SFS)} \\ 
-    Metode ini dimulai dari nol (tanpa menggunakan fitur apa pun), kemudian perlahan menambahkan satu per satu fitur yang terbukti paling meningkatkan akurasi tebakan model. Penambahan akan berhenti ketika fitur baru tidak lagi memberikan manfaat yang berarti. SFS efektif untuk mengurangi dimensi, namun memiliki kelemahan tidak dapat menghapus fitur yang sudah terpilih jika di kemudian hari fitur tersebut menjadi redundan (Zaki \& Meira, 2020).
-
-    \item \textbf{Sequential Backward Elimination (SBE)} \\
-    SBE adalah kebalikan dari SFS. Metode ini berawal dari memasukkan semua fitur yang ada, lalu perlahan membuang fitur yang paling tidak berguna bagi akurasi model. SBE cenderung lebih baik dalam menangkap interaksi antar fitur dibandingkan SFS, namun membutuhkan biaya komputasi yang lebih tinggi di awal proses (Kelleher, Mac Namee, \& D'Arcy, 2020).
-
-    \item \textbf{Evolutionary Algorithms} \\
-    Algoritma ini terinspirasi dari proses adaptasi biologi (seperti seleksi alam) untuk mencari kombinasi fitur terbaik secara acak namun terarah. Keunggulan metode ini adalah kemampuannya untuk menghindari jebakan optimum lokal yang sering terjadi pada metode \textit{greedy} seperti SFS dan SBE, sehingga lebih berpeluang menemukan subset fitur global terbaik (Xue, Zhang, \& Browne, 2020).
-\end{enumerate}

@@ -1,4 +1,4 @@
-%% skripsi.tex
+% skripsi.tex
 %% Copyright 2011-2020 Lionov W.
 %%
 %% This file is part of the 'Template Skripsi/Tugas Akhir FTIS UNPAR'
@@ -37,6 +37,7 @@
 %=============================================================================
 
 \documentclass[11pt,a4paper,twoside,openright,notitlepage]{report}  
+\usepackage[utf8]{inputenc}%UTF-8 input encoding
 \usepackage[bahasa]{babel}%bahasa indonesia
 \usepackage{lmodern}%font latin modern
 \usepackage[T1]{fontenc}%encoding
@@ -49,6 +50,7 @@
 \usepackage{fancyhdr}%mengubah tampilan header & footer
 \usepackage{titlesec}% mengubah tamnpilan judul bab
 \usepackage{float} %penempatan gambar di tempat yg seharusnya 
+\usepackage{multirow} %untuk menggabungkan baris di tabel
 \usepackage{setspace}%line spacing
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}% untuk \autoref,\phantomsection & link 
 \usepackage[pagewise]{lineno}%line numbering
@@ -107,7 +109,9 @@
     showspaces=false,                
     showstringspaces=false,
     showtabs=false,                  
-    tabsize=2
+    tabsize=2,
+    inputencoding=utf8,
+    extendedchars=true
 }
 
 \newcommand{\vtemplateauthor}{lionov}
@@ -517,7 +521,7 @@
 \pagestyle{fancy}%header 
 
 %include bab 
-\foreach \i in \vbab { \edef\vfile{Bab/bab\i} \IfFileExists{\vfile}{\include{\vfile}}} 
+\foreach \i in \vbab { \edef\vfile{Bab/bab\i} \IfFileExists{\vfile.tex}{\input{\vfile}}{\IfFileExists{\vfile}{\input{\vfile}}{}}} 
 
 %update nama daftar referensi
 \renewcommand{\bibname}{Daftar Referensi}
@@ -533,6 +537,6 @@
 \appendix%Penomoran lampiran dengan huruf  
 
 %include lampiran
-\foreach \i in \vlamp { \edef\vfile{Lampiran/lamp\i} \IfFileExists{\vfile}{\include{\vfile}}} 
+\foreach \i in \vlamp { \edef\vfile{Lampiran/lamp\i} \IfFileExists{\vfile.tex}{\input{\vfile}}{\IfFileExists{\vfile}{\input{\vfile}}{}}} 
 
 \end{document}

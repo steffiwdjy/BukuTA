@@ -1,4 +1,4 @@
-\section{\it XGBoost}
+\section{\it XGBoost}\label{sec:xgboost}
 
 {\it Extreme Gradient Boosting} (XGBoost) merupakan algoritma klasifikasi berbasis pohon keputusan yang dikembangkan dari metode {\it Gradient Boosting Machine} (GBM) dan dioptimalkan untuk efisiensi, skalabilitas, serta akurasi (Chen \& Guestrin, 2016). XGBoost bekerja dengan cara membangun model secara bertahap melalui penambahan pohon-pohon keputusan secara berurutan untuk memperbaiki kesalahan prediksi dari model sebelumnya. Pada setiap iterasi, model baru dilatih untuk meminimalkan fungsi kerugian yang dikombinasikan dengan regularisasi guna mencegah {\it overfitting} (Friedman, 2001).
 
@@ -6,9 +6,7 @@
     $$
     \mathcal{L}(\phi) = \sum_{i=1}^{n} l(\hat{y}_i, y_i) + \sum_{k=1}^{K} \Omega(f_k)
     $$
-    dengan $\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2$.
-    
-    Di dalam rumus ini, $l$ mewakili tingkat kesalahan (kerugian) antara tebakan sistem dan data aslinya. Sedangkan $\Omega$ berfungsi sebagai ``rem'' (regularisasi) agar aturan keputusan yang dibentuk tidak terlalu rumit atau sekadar menghafal data. Simbol $T$ menunjukkan jumlah ujung cabang (daun) pada pohon, dan $w_j$ adalah nilai bobot di ujung cabang ke-$j$. Intinya, XGBoost berusaha menekan tingkat kesalahan $\mathcal{L}$ sekecil mungkin agar tebakannya akurat, namun tetap menjaga bentuk pohon se-sederhana mungkin.
+    dengan $\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2$. Di dalam rumus ini, $l$ mewakili tingkat kesalahan (kerugian) antara tebakan sistem dan data aslinya. Sedangkan $\Omega$ berfungsi sebagai ``rem'' (regularisasi) agar aturan keputusan yang dibentuk tidak terlalu rumit atau sekadar menghafal data. Simbol $T$ menunjukkan jumlah ujung cabang (daun) pada pohon, dan $w_j$ adalah nilai bobot di ujung cabang ke-$j$. Intinya, XGBoost berusaha menekan tingkat kesalahan $\mathcal{L}$ sekecil mungkin agar tebakannya akurat, namun tetap menjaga bentuk pohon se-sederhana mungkin.
     
     Sebagai ilustrasi komputasional dari cara kerjanya, simulasi perhitungan berikut diadaptasi dari kerangka algoritma matematis yang dijabarkan pada literatur asli XGBoost (Chen \& Guestrin, 2016) serta formulasi \textit{boosting} dalam buku \textit{The Elements of Statistical Learning} (Hastie, Tibshirani, \& Friedman, 2009), yang kemudian diterapkan ke dalam konteks data penyewa pada penelitian ini. Misalkan kita memiliki tiga data penyewa untuk dilatih:
     \begin{itemize}

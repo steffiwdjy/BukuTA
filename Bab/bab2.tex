@@ -1,19 +1,19 @@
-\chapter{Landasan Teori dan Eksplorasi Teknologi}
+\chapter{LANDASAN TEORI}
 \label{chap:teori}
 
 Seperti telah dijelaskan pada Subbab~\ref{sec:1:latar_belakang}, lingkungan Rusunami The Jarrdin Cihampelas memiliki tingkat mobilitas penyewa yang tinggi serta variasi pola penyewaan yang cukup dinamis. Hal ini menimbulkan tantangan dalam mendeteksi potensi perilaku penyewa mencurigakan, terutama karena sistem pengawasan yang masih manual dan tidak terintegrasi di satu basis data. Dengan tersedianya data historis penyewa yang telah diberi label, pendekatan berbasis \textit{machine learning}—khususnya klasifikasi—dapat dimanfaatkan untuk mempelajari pola perilaku penyewa berisiko dan memberikan rekomendasi secara otomatis. Untuk mendukung pengembangan solusi tersebut, bab ini menyajikan kajian teori dan eksplorasi teknologi yang relevan. Pembahasan dimulai dari teori mengenai hunian vertikal dan sistem pengelolaan penyewa di lingkungan rumah susun, termasuk dinamika penyewaan dan potensi risiko yang sering muncul.
 
-Selanjutnya, teori terkait \textit{machine learning} akan dibahas, meliputi konsep \textit{supervised learning}, tahapan pemrosesan data, pembersihan dan transformasi data, teknik seleksi fitur, serta berbagai algoritma klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost}. Aspek penting dalam penelitian ini, yaitu penanganan \textit{imbalanced dataset}, juga diuraikan mencakup teknik \textit{cost-sensitive learning} dan penyesuaian ambang keputusan (\textit{threshold tuning}). Selain itu, teori mengenai metrik evaluasi model seperti \textit{precision}, \textit{recall}, \textit{F1-score}, dan \textit{confusion matrix} turut dijelaskan sebagai dasar pemilihan model terbaik. Dengan demikian, teori dan teknologi yang dipaparkan pada bab ini menjadi dasar konseptual yang digunakan dalam analisis, perancangan, implementasi, dan evaluasi sistem deteksi perilaku penyewa tidak normal di Rusunami The Jarrdin Cihampelas.
+Selanjutnya, teori terkait \textit{machine learning} akan dibahas secara mendalam, meliputi paradigma pembelajaran mesin (khususnya \textit{supervised learning}), deteksi anomali (\textit{anomaly detection}), serta tahapan pemrosesan data termasuk ekstraksi fitur (\textit{feature engineering}) dan pemilihan fitur (\textit{feature selection}). Berbagai algoritma klasifikasi akan diuraikan, mencakup \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine} (SVM), \textit{K-Nearest Neighbors} (KNN), dan \textit{XGBoost}. Aspek utama dalam penelitian ini, yaitu penanganan ketidakseimbangan kelas (\textit{imbalanced dataset}), dibahas melalui teknik \textit{cost-sensitive learning} dan optimasi parameter model melalui \textit{hyperparameter tuning}. Teori mengenai metrik evaluasi model seperti \textit{precision}, \textit{recall}, \textit{F1-score}, dan \textit{confusion matrix} turut dijelaskan sebagai dasar pemilihan model terbaik untuk dataset tidak seimbang. Terakhir, bab ini juga membahas teknologi pendukung implementasi, meliputi \textbf{Python}, \textit{Streamlit}, \textbf{Node.js}, dan Google Cloud Platform (GCP). Dengan demikian, teori dan teknologi yang dipaparkan pada bab ini menjadi dasar konseptual yang digunakan dalam analisis, perancangan, implementasi, dan evaluasi sistem deteksi perilaku penyewa mencurigakan di Rusunami The Jarrdin Cihampelas.
 
  
 
 % Sub-bab 2.1 rumah susun
 \input{Bab/BAB 2/rumah_susun}
 
-% Sub-bab 2.2 pola_perilaku}
+% Sub-bab 2.2 pola_perilaku
 \input{Bab/BAB 2/pola_perilaku}
 
-% Sub-bab 2.3 machine_learning}
+% Sub-bab 2.3 machine_learning
 \input{Bab/BAB 2/machine_learning}
 
 % Sub-bab 2.4 Anomaly Detection
@@ -43,20 +43,17 @@ Selanjutnya, teori terkait \textit{machine learning} akan dibahas, meliputi kons
 % Sub-bab 2.12 cost sensitive learning
 \input{Bab/BAB 2/cost_sensitive_learning}
 
-% Sub-bab 2.13 evaluasi_model
+% Sub-bab 2.13 hyperparameter tuning
+\input{Bab/BAB 2/hyperparameter_tuning}
+
+% Sub-bab 2.14 evaluasi_model
 \input{Bab/BAB 2/evaluasi_model}
 
-% Sub-bab 2.14 gcp
+% Sub-bab 2.15 gcp
 \input{Bab/BAB 2/gcp}
 
-% Sub-bab 2.15 python_streamlit
+% Sub-bab 2.16 python_streamlit
 \input{Bab/BAB 2/python_streamlit}
 
-% Sub-bab 2.16 node js
+% Sub-bab 2.17 node js
 \input{Bab/BAB 2/node_js}
-
-
-
-
-
-

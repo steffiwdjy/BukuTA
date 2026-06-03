@@ -1,4 +1,13 @@
 \section{Kesimpulan}
+\label{sec:kesimpulan}
+Terdapat beberapa hal yang dapat disimpulkan berdasarkan penelitian yang telah dilakukan, yaitu:
 
-
-abc
+\begin{enumerate}
+    \item Pola perilaku penyewa di Rusunami The Jarrdin Cihampelas (RTJC) beserta langkah-langkah antisipatif yang telah diterapkan berhasil dianalisis melalui studi lapangan, survei, dan wawancara dengan Pengelola serta para Pelaku Komersil. Hasil analisis ini memberikan wawasan faktual mengenai indikator-indikator perilaku mencurigakan di lapangan yang menjadi acuan utama dalam pembentukan fitur-fitur pada dataset.
+    
+    \item Model klasifikasi yang paling sesuai untuk mendeteksi perilaku penyewa mencurigakan di RTJC telah berhasil ditentukan melalui serangkaian proses pelatihan dan komparasi terhadap algoritma \textit{Decision Tree, Random Forest, Support Vector Machine} (SVM), \textit{K-Nearest Neighbors} (KNN), dan \textit{XGBoost}. Evaluasi menggunakan metrik yang relevan (seperti \textit{precision, recall,} dan \textit{F1-score}) serta pengujian kecepatan komputasi membuktikan bahwa model \textit{XGBoost} versi tanpa \textit{tuning} memberikan performa paling optimal. Model ini tidak hanya berkinerja sangat baik dalam menangani karakteristik kelas data dengan mempertahankan \textit{Recall} sempurna (\textit{1,0000}) pada kelas minoritas, tetapi juga memiliki waktu eksekusi prediksi yang paling cepat dibandingkan model kandidat lainnya, sehingga model terbaik inilah yang akhirnya dipilih untuk diintegrasikan dengan aplikasi Data Capture.
+    
+    \item Model klasifikasi terbaik telah berhasil dibangun secara utuh menggunakan bahasa pemrograman \textbf{Python}. Model ini telah melewati serangkaian tahapan, mulai dari prapemrosesan data, \textit{feature engineering}, hingga \textit{feature selection} untuk mendapatkan atribut yang paling relevan (tanpa memerlukan penambahan kompleksitas dari \textit{hyperparameter tuning}), sehingga model menghasilkan prediksi yang akurat, ringan, dan cepat untuk diintegrasikan.
+    
+    \item Sistem aplikasi berbasis \textit{web} menggunakan teknologi \textbf{Node.js} telah berhasil dibangun dan diintegrasikan dengan model \textit{machine learning}. Sistem ini mampu mengotomatiskan proses identifikasi dengan menyediakan antarmuka bagi Pelaku Komersil untuk melakukan input data penyewa, melakukan klasifikasi di latar belakang, serta mendistribusikan informasi berupa notifikasi hasil klasifikasi secara \textit{real-time} kepada para pemangku kepentingan apabila terdeteksi potensi pelanggaran.
+\end{enumerate}

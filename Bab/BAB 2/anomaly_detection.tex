@@ -1,9 +1,10 @@
 % \newpage
-\section{Deteksi Anomali}
+\section{Deteksi Anomali}\label{sec:anomaly_detection}
 
 {Deteksi anomali} merupakan proses identifikasi pola atau data yang menyimpang secara signifikan dari perilaku mayoritas dan dapat digunakan untuk mengungkap aktivitas tidak biasa seperti penipuan, intrusi sistem, maupun penyewa mencurigakan (Chandola, Banerjee, \& Kumar, 2009; Aggarwal, 2013). Deteksi anomali berguna ketika data yang dianalisis tidak memiliki label, sehingga membutuhkan metode {\it unsupervised learning}. Dua metode umum dalam kategori ini adalah {\it Isolation Forest} dan {\it One-Class Support Vector Machine (SVM)}.
     
     \begin{enumerate}
+      \newpage
       \item {{\it Isolation Forest}}
     
       {\it Isolation Forest} adalah algoritma berbasis pohon keputusan yang didesain untuk mengisolasi data anomali lebih cepat daripada data normal dengan cara membuat pembelahan acak berulang terhadap fitur data (Liu, Ting, \& Zhou, 2008). Data yang dapat dipisahkan dalam sedikit pembelahan dianggap sebagai anomali. Kedalaman rata-rata isolasi sebuah data dari banyak pohon digunakan untuk menghitung skor anomali. Berikut rumusnya

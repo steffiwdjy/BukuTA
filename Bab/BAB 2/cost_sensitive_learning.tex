@@ -1,8 +1,8 @@
-\section{\textit{Cost-Sensitive Learning}}
+\section{\textit{Cost-Sensitive Learning}}\label{sec:cost_sensitive}
 
 \textit{Cost-Sensitive Learning} adalah metode penanganan ketidakseimbangan kelas (\textit{class imbalance}) yang bekerja dengan cara memberikan hukuman (penalti) atau bobot kesalahan yang lebih besar saat model gagal mendeteksi kelas minoritas. Berbeda dengan teknik memanipulasi jumlah data (seperti menggandakan atau menghapus baris data asli), metode ini langsung mengubah cara algoritma belajar sehingga keaslian pola data tetap terjaga (He \& Garcia, 2009).
 
-Pada sistem klasifikasi standar, semua kesalahan dianggap memiliki tingkat kerugian yang sama—baik itu salah memprediksi penyewa normal (0) sebagai tidak normal (1), maupun sebaliknya. Namun, di dunia nyata, gagal mendeteksi penyewa yang bermasalah (\textit{false negative}) membawa risiko bahaya dan kerugian finansial yang jauh lebih besar. Sebaliknya, salah mencurigai penyewa yang sebenarnya normal (\textit{false positive}) umumnya hanya sebatas memunculkan peringatan palsu yang mudah diverifikasi (Elkan, 2001).
+Pada sistem klasifikasi standar, semua kesalahan dianggap memiliki tingkat kerugian yang sama—baik itu salah memprediksi penyewa normal (0) sebagai tidak normal (1) maupun sebaliknya. Namun, di dunia nyata, gagal mendeteksi penyewa yang bermasalah (\textit{false negative}) membawa risiko bahaya dan kerugian finansial yang jauh lebih besar. Sebaliknya, salah mencurigai penyewa yang sebenarnya normal (\textit{false positive}) umumnya hanya sebatas memunculkan peringatan palsu yang mudah diverifikasi (Elkan, 2001).
 
 Secara matematis, pendekatan ini menggunakan matriks biaya (\textit{cost matrix}) $C$, di mana $C(i, j)$ adalah skor kerugian jika model memprediksi kelas $i$ padahal data aslinya adalah kelas $j$. Jika prediksi model benar, maka tidak ada kerugian yang dihitung ($C(i, i) = 0$). Perhitungan kerugian yang diharapkan (\textit{expected cost}) dari sebuah data $x$ jika diprediksi sebagai kelas $i$ dirumuskan sebagai berikut:
 $$
@@ -10,7 +10,7 @@ L(x, i) = \sum_{j} P(j \mid x) C(i, j)
 $$
 dengan $P(j \mid x)$ adalah probabilitas (peluang) bahwa data $x$ sesungguhnya adalah kelas $j$ berdasarkan perhitungan model. Model kemudian akan memilih prediksi kelas yang menghasilkan total kerugian $L(x, i)$ paling kecil.
 
-Sebagai contoh perhitungan, misalkan ditetapkan matriks biaya sebagai berikut:
+Sebagai contoh perhitungan, misalkan ditetapkan matriks biaya sebagai berikut.
 \begin{itemize}
     \item Biaya salah memprediksi Normal padahal aslinya Tidak Normal: $C(0, 1) = 5$ (kerugian besar).
     \item Biaya salah memprediksi Tidak Normal padahal aslinya Normal: $C(1, 0) = 1$ (kerugian kecil).

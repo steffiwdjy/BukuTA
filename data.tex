@@ -46,12 +46,16 @@
 \usepackage{longtable}
 \usepackage{amssymb}
 \usepackage{todo}
+% \usepackage[hyphens]{url}
 \usepackage{verbatim} 		%multiline comment
 \usepackage{pgfplots}
 \usepackage{enumitem}
 \usepackage{pifont}
 \usepackage{subcaption}
 \usepackage{pgffor}
+% \usepackage{fontawesome5}
+% \usepackage{fontspec}
+
 
 %\overfullrule=3mm % memperlihatkan overfull 
 %=============================================================================
@@ -207,9 +211,9 @@
 % Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda
 %=============================================================================
 \namanpm{Steffi Widjaya}{6182101054}
-\tanggal{20}{10}{2025}         %isi bulan dengan angka
+\tanggal{02}{06}{2026}         %isi bulan dengan angka
 \pembimbing{\GDK}{}
-\penguji{\MTA}{\KAL} %dosen penguji 
+\penguji{\MTA}{} %dosen penguji 
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -241,13 +245,13 @@
 \abstrakINA{
 Rusunami The Jarrdin Cihampelas (RTJC) merupakan hunian vertikal dengan tingkat mobilitas penyewa yang tinggi dan sistem penyewaan yang fleksibel, sehingga berpotensi menimbulkan berbagai aktivitas ilegal yang sulit terdeteksi melalui pengawasan manual. Sepanjang tahun 2024 tercatat beberapa kasus penyalahgunaan unit seperti prostitusi terselubung, penggunaan narkoba, serta tindakan kriminal lainnya. Kondisi ini menunjukkan perlunya pendekatan berbasis data yang mampu mengidentifikasi pola perilaku penyewa mencurigakan secara dini. Penelitian ini mengusulkan pembangunan sistem deteksi penyewa berisiko menggunakan pendekatan \textit{supervised machine learning} dengan memanfaatkan data penyewa yang telah diberi label (normal dan tidak normal). Beberapa algoritma klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost} diuji untuk menentukan model terbaik berdasarkan metrik evaluasi pada data yang tidak seimbang.
 
-Selain pengembangan model klasifikasi, penelitian ini juga membangun sistem berbasis Node.js guna mengotomatisasi proses input data penyewa serta menampilkan hasil klasifikasi secara {\it real-time} kepada ketua agen, PKJ, P3SRS, dan para agen. Hasil penelitian menunjukkan bahwa model klasifikasi yang dikembangkan mampu mengenali pola perilaku penyewa berisiko dengan tingkat akurasi dan presisi yang cukup baik. Sistem yang dihasilkan juga mendukung proses pemantauan penyewa secara lebih cepat, transparan, dan efisien. Dengan demikian, solusi ini berpotensi menjadi alat bantu proaktif dalam meningkatkan keamanan lingkungan hunian vertikal RTJC.
+Selain pengembangan model klasifikasi, penelitian ini juga membangun sistem berbasis Node.js guna mengotomatisasi proses input data penyewa serta menampilkan hasil klasifikasi secara {\it real-time} kepada Pengelola dan Pelaku Komersil. Hasil penelitian menunjukkan bahwa model klasifikasi yang dikembangkan mampu mengenali pola perilaku penyewa berisiko dengan tingkat akurasi dan presisi yang cukup baik. Sistem yang dihasilkan juga mendukung proses pemantauan penyewa secara lebih cepat, transparan, dan efisien. Dengan demikian, solusi ini berpotensi menjadi alat bantu proaktif dalam meningkatkan keamanan lingkungan hunian vertikal RTJC.
 }
 
 \abstrakENG{
 Rusunami The Jarrdin Cihampelas (RTJC) is a vertical residence with a high level of tenant mobility and a flexible rental system, thereby creating the potential for various illegal activities that are difficult to detect through manual supervision. Throughout 2024, several cases of unit misuse were recorded, such as covert prostitution, drug use, and other criminal acts. This condition demonstrates the need for a data-driven approach capable of identifying suspicious tenant behavior patterns at an early stage. This research proposes the development of a risky tenant detection system using a {supervised machine learning} approach by utilizing tenant data that has been labeled (normal and abnormal). Several classification algorithms such as {Decision Tree}, {Random Forest}, {Support Vector Machine}, {K-Nearest Neighbors}, and {XGBoost} were tested to determine the best model based on evaluation metrics on imbalanced data.
 
-In addition to the development of the classification model, this research also builds a Node.js-based system to automate the tenant data input process as well as displaying classification results in { real-time} to the head agent, PKJ, P3SRS, and the agents. The research results indicate that the developed classification model is capable of recognizing risky tenant behavior patterns with a quite good level of accuracy and precision. The resulting system also supports a faster, more transparent, and efficient tenant monitoring process. Thus, this solution has the potential to become a proactive tool in enhancing the security of the RTJC vertical residential environment.
+In addition to the development of the classification model, this research also builds a Node.js-based system to automate the tenant data input process as well as displaying classification results in {real-time} to the Pengelola and Pelaku Komersil. The research results indicate that the developed classification model is capable of recognizing risky tenant behavior patterns with a quite good level of accuracy and precision. The resulting system also supports a faster, more transparent, and efficient tenant monitoring process. Thus, this solution has the potential to become a proactive tool in enhancing the security of the RTJC vertical residential environment.
 
 }
 %=============================================================================
@@ -275,7 +279,7 @@ In addition to the development of the classification model, this research also b
 \untuk{Kedua orang tua, adik, serta para sahabat tercinta sebagai sumber dukungan dan doa yang tiada henti; dosen pembimbing dan para penguji atas bimbingan, arahan, dan masukan yang berharga;  
 serta rekan-rekan di The Jarrdin Cihampelas yang telah memberi dorongan dan bantuan.  
 
-Karya ini juga saya persembahkan bagi para peneliti, pengembang, dan mahasiswa yang tertarik pada studi klasifikasi dengan data tidak seimbang, dengan harapan skripsi ini dapat menjadi preseden atau contoh dalam perancangan, implementasi, dan pengujian sistem serupa di masa mendatang.}
+Karya ini juga saya persembahkan bagi para peneliti, pengembang, dan mahasiswa yang tertarik pada studi klasifikasi dengan data tidak seimbang, dengan harapan Tugas Akhir ini dapat menjadi preseden atau contoh dalam perancangan, implementasi, dan pengujian sistem serupa di masa mendatang.}
 %=============================================================================
 
 %_____________________________________________________________________________
@@ -287,7 +291,7 @@ Karya ini juga saya persembahkan bagi para peneliti, pengembang, dan mahasiswa y
 % Petunjuk: hilangkan tanda << & >>, dan isi sesuai dengan data anda.
 %=============================================================================
 \prakata{
-Puji dan syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas berkat dan rahmat-Nya, sehingga penulis dapat menyelesaikan tugas akhir yang berjudul \textit{"Deteksi Perilaku Penyewa Rusunami The Jarrdin Cihampelas"} dengan baik. Tugas akhir ini disusun sebagai salah satu syarat untuk memperoleh gelar Sarjana pada Program Studi Informatika, Universitas Katolik Parahyangan.
+Puji dan syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas berkat dan rahmat-Nya, sehingga penulis dapat menyelesaikan tugas akhir yang berjudul \textit{``Deteksi Perilaku Penyewa Rusunami The Jarrdin Cihampelas''} dengan baik. Tugas akhir ini disusun sebagai salah satu syarat untuk memperoleh gelar Sarjana pada Program Studi Informatika, Universitas Katolik Parahyangan.
 
 Penelitian ini dilatarbelakangi oleh kebutuhan akan sistem pendukung keamanan hunian vertikal yang mampu mendeteksi perilaku penyewa berisiko secara lebih cepat, akurat, dan berbasis data. Tingginya mobilitas penyewa serta fleksibilitas pola penyewaan di Rusunami The Jarrdin Cihampelas menimbulkan tantangan tersendiri dalam proses pengawasan. Oleh karena itu, tugas akhir ini mengusulkan pemanfaatan metode \textit{supervised machine learning} untuk membangun model klasifikasi perilaku penyewa mencurigakan, serta pengembangan sistem berbasis Node.js untuk mengotomatiskan proses identifikasi dan penyampaian informasi para kepada pemangku kepentingan.
 
