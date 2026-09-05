@@ -385,10 +385,28 @@
 % \end{enumerate}
 
 
-\section{Analisis Masalah dan Kebutuhan Sistem}
+
+\section{Analisis Masalah dan Usulan Solusi}
 \label{sec:analisis}
 
-Analisis masalah dilakukan melalui pendekatan kualitatif dengan melakukan wawancara mendalam serta survei lapangan terhadap pemangku kepentingan utama di lingkungan Rusunami The Jarrdin Cihampelas (RTJC).
+Analisis permasalahan pada penelitian ini dilakukan melalui pendekatan kualitatif yang mencakup wawancara mendalam serta survei lapangan terhadap pemangku kepentingan utama di lingkungan Rusunami The Jarrdin Cihampelas (RTJC). Berdasarkan hasil identifikasi tersebut, tahapan penelitian dijabarkan secara sistematis ke dalam alur pemecahan masalah yang mencakup analisis kebutuhan sistem, perumusan usulan solusi, hingga implementasi akhir.
+
+\subsection{Analisis Kebutuhan Sistem}
+Berdasarkan temuan dari survei dan wawancara, diperoleh kebutuhan utama bahwa pengelola memerlukan mekanisme proaktif untuk memantau mobilitas dan mendeteksi potensi perilaku mencurigakan di area hunian secara \textit{real-time}. Hal ini melandasi kebutuhan terhadap pengembangan suatu sistem terintegrasi yang mampu mengolah data operasional secara otomatis.
+
+\subsection{Usulan Solusi}
+Sebagai solusi atas permasalahan tersebut, diusulkan pembangunan sistem dengan alur proses \textit{end-to-end} yang terdiri dari tiga tahapan utama sebagai berikut.
+\begin{enumerate}
+    \item Pengumpulan Data (\textit{Data Capture}):\\
+    Perekaman dan pengumpulan data aktivitas serta mobilitas penghuni secara terstruktur melalui aplikasi operasional.
+    \item Pengembangan Model (\textit{Model Development}):\\
+    Perancangan dan pelatihan model pembelajaran mesin (\textit{machine learning}) untuk mengklasifikasikan pola perilaku anomali atau berisiko berdasarkan data historis yang tersedia.
+    \item Peluncuran Model (\textit{Model Deployment}):\\
+    Integrasi model yang telah dikembangkan secara langsung (\textit{embedded}) ke dalam aplikasi \textit{data capture}, sehingga sistem dapat memberikan notifikasi dini secara otomatis terkait potensi perilaku mencurigakan kepada pihak pengelola.
+\end{enumerate}
+
+
+
 
 \subsection{Kondisi Faktual Pengelolaan Penyewaan}
 

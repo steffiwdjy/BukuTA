@@ -7,7 +7,7 @@
       \newpage
       \item {{\it Isolation Forest}}
     
-      {\it Isolation Forest} adalah algoritma berbasis pohon keputusan yang didesain untuk mengisolasi data anomali lebih cepat daripada data normal dengan cara membuat pembelahan acak berulang terhadap fitur data (Liu, Ting, \& Zhou, 2008). Data yang dapat dipisahkan dalam sedikit pembelahan dianggap sebagai anomali. Kedalaman rata-rata isolasi sebuah data dari banyak pohon digunakan untuk menghitung skor anomali. Berikut rumusnya
+      {\it Isolation Forest} adalah algoritma berbasis pohon keputusan yang didesain untuk mengisolasi data anomali lebih cepat daripada data normal dengan cara membuat pembelahan acak berulang terhadap fitur data \cite{liu2008isolation}. Data yang dapat dipisahkan dalam sedikit pembelahan dianggap sebagai anomali. Kedalaman rata-rata isolasi sebuah data dari banyak pohon digunakan untuk menghitung skor anomali. Berikut rumusnya
       \[
       s(x, n) = 2 - \frac{E(h(x))}{c(n)}
       \]
@@ -27,11 +27,11 @@
       \[
         s(x, n) = 2^{-\frac{2,33}{1,5}} = 2^{-1,553} \approx 0,341
       \]
-      Skor mendekati 0{.}5 menunjukkan data cenderung normal, sedangkan jika skor mendekati 1, maka data dianggap anomali kuat (Liu et al., 2008).
+      Skor mendekati 0{.}5 menunjukkan data cenderung normal, sedangkan jika skor mendekati 1, maka data dianggap anomali kuat \cite{liu2008isolation}.
     
       \item {{\it One-Class SVM}}
     
-        {\it One-Class SVM} adalah metode margin maksimal yang dirancang untuk memisahkan distribusi data normal dari titik asal ({\it origin}) dalam ruang fitur (Sch\"{o}lkopf et al., 2001). Algoritma ini sering menggunakan fungsi kernel seperti {\it Radial Basis Function} (RBF) untuk memetakan data ke dimensi yang lebih tinggi, berikut rumusnya
+        {\it One-Class SVM} adalah metode margin maksimal yang dirancang untuk memisahkan distribusi data normal dari titik asal ({\it origin}) dalam ruang fitur \cite{scholkopf2001estimating}. Algoritma ini sering menggunakan fungsi kernel seperti {\it Radial Basis Function} (RBF) untuk memetakan data ke dimensi yang lebih tinggi, berikut rumusnya
         \[
         K(x_i, x_j) = \exp\left(-\gamma \cdot \|x_i - x_j\|^2\right)
         \]

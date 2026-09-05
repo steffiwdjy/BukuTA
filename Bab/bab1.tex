@@ -1,7 +1,7 @@
 \chapter{Pendahuluan}
 \label{chap:intro}
 
-Bab ini menjelaskan tentang latar belakang yang menjadi dasar pengerjaan dari penelitian pada tugas akhir ini. Kemudian, dijelaskan mengenai rumusan masalah, tujuan, serta batasan masalah yang membahas ruang lingkup dari penelitian ini. Kemudian, dibahas juga mengenai metodologi penelitian yang menjelaskan mengenai langkah-langkah penyelesaian berdasarkan rumusan masalah yang sudah didefinisikan. Bagian ini diakhiri dengan sistematika pembahasan yang menguraikan isi dari setiap bab pada laporan tugas akhir ini. Definisi dari terminologi yang digunakan dapat dilihat pada Lampiran~\ref{lamp:A}.
+Bab ini menjelaskan tentang latar belakang yang menjadi dasar pengerjaan dari penelitian pada tugas akhir ini. Kemudian, dijelaskan mengenai rumusan masalah, tujuan, serta batasan masalah yang membahas ruang lingkup dari penelitian ini. Kemudian, dibahas juga mengenai metodologi penelitian yang menjelaskan mengenai langkah-langkah penyelesaian berdasarkan rumusan masalah yang sudah didefinisikan. Bagian ini diakhiri dengan sistematika pembahasan yang menguraikan isi dari setiap bab pada laporan tugas akhir ini.
 
 \section{Latar Belakang}
 \label{sec:1:latar_belakang}
@@ -98,11 +98,11 @@ Metodologi penelitian yang digunakan dalam tugas akhir ini dirancang untuk menge
     \end{enumerate}
     
     \item \textbf{Pengujian model dan pengujian sistem} \\
-    Pengujian dilakukan untuk memastikan performa dan keandalan baik pada model maupun sistem.
+    Pengujian dilakukan untuk memastikan performa dan keandalan baik pada model maupun sistem. Rincian implementasi, kode program, serta hasil pengujian secara lengkap dapat merujuk pada Lampiran~\ref{lamp:A} untuk model klasifikasi dan Bab~\ref{chap:implemtasiPL} untuk implementasi sistem.
     \begin{itemize}
-        \item {Pengujian model} dilakukan menggunakan data uji untuk menilai kemampuan model dalam mengidentifikasi penyewa berisiko pada dataset tidak seimbang.
-        \item {Pengujian fungsional aplikasi} dilakukan untuk mengevaluasi seluruh fitur, termasuk input data terkait penyewaan, proses klasifikasi otomatis, penyajian hasil, validasi data, dan autentikasi pengguna.
-        \item {Pengujian integrasi} memastikan bahwa aplikasi data capture dan model {\it machine learning} dapat bekerja secara konsisten dan stabil.
+        \item \textit{Pengujian model} dilakukan menggunakan data uji untuk menilai kemampuan model dalam mengidentifikasi penyewa berisiko pada dataset tidak seimbang.
+        \item \textit{Pengujian fungsional aplikasi} dilakukan untuk mengevaluasi seluruh fitur, termasuk input data terkait penyewaan, proses klasifikasi otomatis, penyajian hasil, validasi data, dan autentikasi pengguna.
+        \item \textit{Pengujian integrasi} memastikan bahwa aplikasi \textit{data capture} dan model \textit{machine learning} dapat bekerja secara konsisten dan stabil.
     \end{itemize}
     
     \item \textbf{Penyusunan laporan akhir} \\
@@ -122,14 +122,14 @@ Sistematika pembahasan dalam tugas akhir ini disusun ke dalam enam bab yang sali
     \item \textbf{Bab 2 Landasan Teori} \\
     Menjelaskan teori-teori yang menjadi dasar dari penelitian ini, meliputi rumah susun, pola perilaku penyewa, \textit{machine learning}, dan deteksi anomali (\textit{anomaly detection}). Bab ini menguraikan paradigma pembelajaran mesin, terutama \textit{supervised learning} yang sesuai dengan karakteristik data berlabel. Selanjutnya, dibahas model klasifikasi seperti \textit{Decision Tree}, \textit{Random Forest}, \textit{Support Vector Machine}, \textit{K-Nearest Neighbors}, dan \textit{XGBoost}. Bab ini juga membahas penanganan ketidakseimbangan kelas melalui metode \textit{cost-sensitive learning}, teknik optimasi model melalui \textit{hyperparameter tuning}, ekstraksi dan pemilihan fitur (\textit{feature engineering} dan \textit{feature selection}), serta evaluasi performa model dengan metrik presisi, recall, dan \textit{F1-score} yang disesuaikan untuk dataset tidak seimbang. Pengenalan terhadap teknologi pendukung seperti Node.js, \textit{Python}, \textit{Streamlit}, dan GCP (\textit{Google Cloud Platform}) juga menjadi fokus bab ini.
 
-    \item \textbf{Bab 3 Analisis dan Perancangan Sistem} \\
+    \item \textbf{Bab 3 Analisis Masalah dan Perancangan Sistem Deteksi Perilaku Pelanggaran Penyewa} \\
     Bab ini membahas secara mendalam terkait analisis masalah dan kebutuhan sistem guna menyelesaikan persoalan yang ada. Selanjutnya, dijelaskan hasil analisis pemilihan teknologi implementasi yang akan digunakan, serta ditutup dengan perancangan sistem yang akan dibangun.
     
-    \item \textbf{Bab 4 Pengembangan Model} \\
+    \item \textbf{Bab 4 Pengembangan Model Deteksi Perilaku Pelanggaran Penyewa} \\
     Bab ini membahas tahapan eksperimen dan pengembangan model secara berurutan, mulai dari tahapan pengumpulan data, penyiapan data, \textit{Exploratory Data Analysis} (EDA), \textit{feature engineering}, pembagian data (\textit{train-test split}), \textit{feature selection}, proses melatih model, evaluasi model, hingga tahapan eksport model yang terbaik.
     
-    \item \textbf{Bab 5 Implementasi Perangkat Lunak} \\
-    Bab ini membahas mengenai penerapan rancangan sistem, di mana pembahasannya meliputi penggambaran detail antarmuka atau tampilan perangkat lunak yang telah berhasil dibangun dan kegiatan simulasi input data pada sistem.
+    \item \textbf{Bab 5 Implementasi dan Pengujian Sistem} \\
+    Bab ini membahas mengenai penerapan rancangan sistem dan pengujiannya, di mana pembahasannya meliputi penggambaran detail antarmuka atau tampilan perangkat lunak yang telah berhasil dibangun, kegiatan simulasi input data pada sistem, serta rangkaian pengujian untuk memastikan sistem dan model berfungsi dengan baik.
     
     \item \textbf{Bab 6 Kesimpulan dan Saran} \\
     Bab ini berisi kesimpulan dari seluruh tahapan penelitian yang telah dilakukan mulai dari analisis masalah, pengembangan model, hingga pembangunan aplikasi. Selain itu, bab ini juga memuat saran untuk pengembangan penelitian selanjutnya.

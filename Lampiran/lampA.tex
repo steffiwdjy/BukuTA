@@ -269,11 +269,11 @@ for name, model in models.items():
 \begin{lstlisting}[caption={Output 1}]
 rentals.csv
    id           nama               nik status_pasutri tower  lantai    unit  \
-0   1   Vina Pratama   227680402501652             ya     C       1  C-0111   
-1   2  Indah Saputra  7593586857022021  belum menikah     C      15  C-1524   
-2   3  Indah Hartono  2370884095724861             ya     B       8  B-0836   
-3   4   Wira Permata  5354259618773210             ya     C      17  C-1712   
-4   5   Rizky Wijaya  5413982250789516  belum menikah     B       9  B-0934   
+0   1   V*** P******   2**************             ya     C       1  C-0111   
+1   2  I**** S******  7***************  belum menikah     C      15  C-1524   
+2   3  I**** H******  2***************             ya     B       8  B-0836   
+3   4   W*** P******  5***************             ya     C      17  C-1712   
+4   5   R**** W*****  5***************  belum menikah     B       9  B-0934   
 
   status_kewarganegaraan jenis_sewa metode_pembayaran metode_lain  \
 0                    WNI   mingguan       Kartu Debit         NaN   
@@ -290,18 +290,18 @@ rentals.csv
 4      2024-03-09         23:44       2024-12-11          06:45   
 
    lama_menginap                                komentar        email_agent  \
-0             80    Ditemukan kondom dalam jumlah banyak  agent03@srusun.id   
-1            344          Kerusakan parah pada fasilitas  agent02@srusun.id   
-2            188  Ditemukan alat suntik di tempat sampah    sonny@gmail.com   
-3            328                                     NaN  agent02@srusun.id   
-4            277                                     NaN  agent03@srusun.id   
+0             80    Ditemukan kondom dalam jumlah banyak  a******@srusun.id   
+1            344          Kerusakan parah pada fasilitas  a******@srusun.id   
+2            188  Ditemukan alat suntik di tempat sampah    s****@gmail.com   
+3            328                                     NaN  a******@srusun.id   
+4            277                                     NaN  a******@srusun.id   
 
          diedit_oleh           created_at  
-0  agent03@srusun.id  2024-11-10 05:34:02  
-1  agent02@srusun.id  2024-07-23 08:46:51  
-2    sonny@gmail.com  2025-05-22 03:08:25  
-3  agent02@srusun.id  2025-06-25 09:19:29  
-4  agent03@srusun.id  2024-09-19 00:09:23  
+0  a******@srusun.id  2024-11-10 05:34:02  
+1  a******@srusun.id  2024-07-23 08:46:51  
+2    s****@gmail.com  2025-05-22 03:08:25  
+3  a******@srusun.id  2025-06-25 09:19:29  
+4  a******@srusun.id  2024-09-19 00:09:23  
 
 logs.csv
    id  rental_id  action field_changed old_value  \
@@ -312,11 +312,7 @@ logs.csv
 4   5       6042  insert           all       NaN   
 
                                            new_value              email  \
-0  {"nama": "Teguh Pribadi", "nik": "586334412453...  agent03@srusun.id   
-1  {"nama": "Rizky Nugroho", "nik": "133470760024...  agent04@srusun.id   
-2  {"nama": "Rizky Hadi", "nik": "981661715434746...  agent02@srusun.id   
-3  {"nama": "Nadia Pratama", "nik": "416028120097...  agent02@srusun.id   
-4  {"nama": "Eka Halim", "nik": "5719309091294409...  agent02@srusun.id   
+0  {"nama": "T**** P******", "nik": "5*****************************************"nama": "R**** N******", "nik": "1*****************************************"nama": "R**** H***", "nik": "9********************************************"nama": "N**** P******", "nik": "4*****************************************"nama": "E** H****", "nik": "5***************...  a******@srusun.id   
 
             time_stamp  
 0  2023-01-05 23:30:37  
@@ -325,7 +321,7 @@ logs.csv
 3  2023-01-08 19:27:08  
 4  2023-01-10 05:05:24  
 
-Bobot Kelas (Class weights): {0: np.float64(0.5715918833952558), 1: np.float64(3.992015968063872)}
+Bobot Kelas (Class weights): {0: np.float64(0.5***************), 1: np.float64(3.9**************)}
 
 === Evaluasi Korelasi Fitur ===
                     Fitur       Chi2  MutualInfo   Pearson
@@ -352,7 +348,7 @@ Parameter Terbaik (KNN): {'n_neighbors': 7, 'weights': 'distance'}
 Parameter Terbaik (SVM): {'svm__C': 0.1, 'svm__gamma': 'scale', 'svm__kernel': 'rbf'}
 
 >> Tuning XGBoost...
-Parameter Terbaik (XGB): {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200, 'scale_pos_weight': np.float64(6.984031936127744), 'subsample': 1.0}
+Parameter Terbaik (XGB): {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200, 'scale_pos_weight': np.float64(6.9**************), 'subsample': 1.0}
 
 ===== Decision Tree (Tuned) =====
 Classification Report:
@@ -723,11 +719,11 @@ for name, model in models.items():
 \begin{lstlisting}[caption={Output 2}]
 rentals.csv
    id            nama               nik status_pasutri tower  lantai  unit  \
-0   1  Nama Penyewa 1  3200000000000001  Belum Menikah     A       1    13   
-1   2  Nama Penyewa 2  3200000000000002        Menikah     D       3     4   
-2   3  Nama Penyewa 3  3200000000000003  Belum Menikah     B      18     2   
-3   4  Nama Penyewa 4  3200000000000004  Belum Menikah     B      11     7   
-4   5  Nama Penyewa 5  3200000000000005        Menikah     A      14     6   
+0   1  N*** P****** 1  3***************  Belum Menikah     A       1    13   
+1   2  N*** P****** 2  3***************        Menikah     D       3     4   
+2   3  N*** P****** 3  3***************  Belum Menikah     B      18     2   
+3   4  N*** P****** 4  3***************  Belum Menikah     B      11     7   
+4   5  N*** P****** 5  3***************        Menikah     A      14     6   
 
   status_kewarganegaraan jenis_sewa metode_pembayaran  metode_lain  \
 0                    WNI    Bulanan              Cash          NaN   
@@ -744,18 +740,18 @@ rentals.csv
 4      2024-10-29      11:00:00       2024-11-02       08:00:00   
 
    lama_menginap                             komentar       email_agent  \
-0              9                                  NaN  agen10@gmail.com   
-1             13  Kebisingan berlebihan di malam hari  agen14@gmail.com   
-2              1                                  NaN  agen27@gmail.com   
-3              6                                  NaN  agen44@gmail.com   
-4              4                                  NaN   agen7@gmail.com   
+0              9                                  NaN  a*****@gmail.com   
+1             13  Kebisingan berlebihan di malam hari  a*****@gmail.com   
+2              1                                  NaN  a*****@gmail.com   
+3              6                                  NaN  a*****@gmail.com   
+4              4                                  NaN   a****@gmail.com   
 
         diedit_oleh           created_at  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
 logs.csv
    id  rental_id  action  field_changed  old_value  new_value  \
@@ -766,13 +762,13 @@ logs.csv
 4   5          5  CREATE            NaN        NaN        NaN   
 
               email           time_stamp  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
-Bobot Kelas (Class weights): {0: np.float64(0.5554012774229381), 1: np.float64(5.012531328320802)}
+Bobot Kelas (Class weights): {0: np.float64(0.5***************), 1: np.float64(5.0**************)}
 
 === Evaluasi Korelasi Fitur ===
                     Fitur      Chi2  MutualInfo   Pearson
@@ -810,7 +806,7 @@ Parameters: { "use_label_encoder" } are not used.
 
   bst.update(dtrain, iteration=i, fobj=obj)
 
-Parameter Terbaik (XGB): {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 100, 'scale_pos_weight': np.float64(9.025062656641603), 'subsample': 1.0}
+Parameter Terbaik (XGB): {'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 100, 'scale_pos_weight': np.float64(9.0**************), 'subsample': 1.0}
 
 ===== Decision Tree (Tuned) =====
 Classification Report:
@@ -1094,11 +1090,11 @@ print("          -----------------\n")
 \begin{lstlisting}[caption={Output 3}]
 rentals.csv
    id            nama               nik status_pasutri tower  lantai  unit  \
-0   1  Nama Penyewa 1  3200000000000001  Belum Menikah     A       1    13   
-1   2  Nama Penyewa 2  3200000000000002        Menikah     D       3     4   
-2   3  Nama Penyewa 3  3200000000000003  Belum Menikah     B      18     2   
-3   4  Nama Penyewa 4  3200000000000004  Belum Menikah     B      11     7   
-4   5  Nama Penyewa 5  3200000000000005        Menikah     A      14     6   
+0   1  N*** P****** 1  3***************  Belum Menikah     A       1    13   
+1   2  N*** P****** 2  3***************        Menikah     D       3     4   
+2   3  N*** P****** 3  3***************  Belum Menikah     B      18     2   
+3   4  N*** P****** 4  3***************  Belum Menikah     B      11     7   
+4   5  N*** P****** 5  3***************        Menikah     A      14     6   
 
   status_kewarganegaraan jenis_sewa metode_pembayaran  metode_lain  \
 0                    WNI    Bulanan              Cash          NaN   
@@ -1115,18 +1111,18 @@ rentals.csv
 4      2024-10-29      11:00:00       2024-11-02       08:00:00   
 
    lama_menginap                             komentar       email_agent  \
-0              9                                  NaN  agen10@gmail.com   
-1             13  Kebisingan berlebihan di malam hari  agen14@gmail.com   
-2              1                                  NaN  agen27@gmail.com   
-3              6                                  NaN  agen44@gmail.com   
-4              4                                  NaN   agen7@gmail.com   
+0              9                                  NaN  a*****@gmail.com   
+1             13  Kebisingan berlebihan di malam hari  a*****@gmail.com   
+2              1                                  NaN  a*****@gmail.com   
+3              6                                  NaN  a*****@gmail.com   
+4              4                                  NaN   a****@gmail.com   
 
         diedit_oleh           created_at  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
 logs.csv
    id  rental_id  action  field_changed  old_value  new_value  \
@@ -1137,11 +1133,11 @@ logs.csv
 4   5          5  CREATE            NaN        NaN        NaN   
 
               email           time_stamp  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
 === Proses Resampling (SMOTETomek) ===
 Distribusi kelas sebelum resampling: 
@@ -1411,11 +1407,11 @@ best_thresholds["XGBoost"] = evaluate("XGBoost", xgb) # Posisi Argumen Diperbaik
 \begin{lstlisting}[caption={Output 4}]
 rentals.csv
    id            nama               nik status_pasutri tower  lantai  unit  \
-0   1  Nama Penyewa 1  3200000000000001  Belum Menikah     A       1    13   
-1   2  Nama Penyewa 2  3200000000000002        Menikah     D       3     4   
-2   3  Nama Penyewa 3  3200000000000003  Belum Menikah     B      18     2   
-3   4  Nama Penyewa 4  3200000000000004  Belum Menikah     B      11     7   
-4   5  Nama Penyewa 5  3200000000000005        Menikah     A      14     6   
+0   1  N*** P****** 1  3***************  Belum Menikah     A       1    13   
+1   2  N*** P****** 2  3***************        Menikah     D       3     4   
+2   3  N*** P****** 3  3***************  Belum Menikah     B      18     2   
+3   4  N*** P****** 4  3***************  Belum Menikah     B      11     7   
+4   5  N*** P****** 5  3***************        Menikah     A      14     6   
 
   status_kewarganegaraan jenis_sewa metode_pembayaran  metode_lain  \
 0                    WNI    Bulanan              Cash          NaN   
@@ -1432,18 +1428,18 @@ rentals.csv
 4      2024-10-29      11:00:00       2024-11-02       08:00:00   
 
    lama_menginap                             komentar       email_agent  \
-0              9                                  NaN  agen10@gmail.com   
-1             13  Kebisingan berlebihan di malam hari  agen14@gmail.com   
-2              1                                  NaN  agen27@gmail.com   
-3              6                                  NaN  agen44@gmail.com   
-4              4                                  NaN   agen7@gmail.com   
+0              9                                  NaN  a*****@gmail.com   
+1             13  Kebisingan berlebihan di malam hari  a*****@gmail.com   
+2              1                                  NaN  a*****@gmail.com   
+3              6                                  NaN  a*****@gmail.com   
+4              4                                  NaN   a****@gmail.com   
 
         diedit_oleh           created_at  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
 logs.csv
    id  rental_id  action  field_changed  old_value  new_value  \
@@ -1454,11 +1450,11 @@ logs.csv
 4   5          5  CREATE            NaN        NaN        NaN   
 
               email           time_stamp  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
 === Proses Resampling (SMOTETomek) ===
 Distribusi kelas sebelum resampling: 
@@ -1893,11 +1889,11 @@ best_thresholds["XGBoost"] = evaluate("XGBoost", xgb)
 \begin{lstlisting}[caption={Output 5}]
 rentals.csv
    id            nama               nik status_pasutri tower  lantai  unit  \
-0   1  Nama Penyewa 1  3200000000000001  Belum Menikah     A       1    13   
-1   2  Nama Penyewa 2  3200000000000002        Menikah     D       3     4   
-2   3  Nama Penyewa 3  3200000000000003  Belum Menikah     B      18     2   
-3   4  Nama Penyewa 4  3200000000000004  Belum Menikah     B      11     7   
-4   5  Nama Penyewa 5  3200000000000005        Menikah     A      14     6   
+0   1  N*** P****** 1  3***************  Belum Menikah     A       1    13   
+1   2  N*** P****** 2  3***************        Menikah     D       3     4   
+2   3  N*** P****** 3  3***************  Belum Menikah     B      18     2   
+3   4  N*** P****** 4  3***************  Belum Menikah     B      11     7   
+4   5  N*** P****** 5  3***************        Menikah     A      14     6   
 
   status_kewarganegaraan jenis_sewa metode_pembayaran  metode_lain  \
 0                    WNI    Bulanan              Cash          NaN   
@@ -1914,18 +1910,18 @@ rentals.csv
 4      2024-10-29      11:00:00       2024-11-02       08:00:00   
 
    lama_menginap                             komentar       email_agent  \
-0              9                                  NaN  agen10@gmail.com   
-1             13  Kebisingan berlebihan di malam hari  agen14@gmail.com   
-2              1                                  NaN  agen27@gmail.com   
-3              6                                  NaN  agen44@gmail.com   
-4              4                                  NaN   agen7@gmail.com   
+0              9                                  NaN  a*****@gmail.com   
+1             13  Kebisingan berlebihan di malam hari  a*****@gmail.com   
+2              1                                  NaN  a*****@gmail.com   
+3              6                                  NaN  a*****@gmail.com   
+4              4                                  NaN   a****@gmail.com   
 
         diedit_oleh           created_at  
-0  agen10@gmail.com  2025-11-17 09:13:08  
-1  agen14@gmail.com  2025-11-17 09:13:08  
-2  agen27@gmail.com  2025-11-17 09:13:08  
-3  agen44@gmail.com  2025-11-17 09:13:08  
-4   agen7@gmail.com  2025-11-17 09:13:08  
+0  a*****@gmail.com  2025-11-17 09:13:08  
+1  a*****@gmail.com  2025-11-17 09:13:08  
+2  a*****@gmail.com  2025-11-17 09:13:08  
+3  a*****@gmail.com  2025-11-17 09:13:08  
+4   a****@gmail.com  2025-11-17 09:13:08  
 
 === Distribusi Final Label ===
 label
@@ -2325,11 +2321,11 @@ print(f"Sukses! Final Model ({target_model_name}) beserta komponennya telah disi
 \begin{lstlisting}[caption={Output 6}]
 rentals.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -2353,11 +2349,11 @@ rentals.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -2770,11 +2766,11 @@ print(f"Sukses! Final Model ({target_model_name}) beserta komponennya telah disi
 \begin{lstlisting}[caption={Output 7}]
 rentals.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -2798,11 +2794,11 @@ rentals.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -3217,11 +3213,11 @@ print(f"Sukses! Final Model ({target_model_name}) beserta komponennya telah disi
 \begin{lstlisting}[caption={Output 8}]
 rentals.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -3245,11 +3241,11 @@ rentals.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -3267,41 +3263,37 @@ logs.csv
 4   5          5  create           all       NaN   
 
                                            new_value  \
-0  {"id":1,"nama":"Faith Barton","nik":"517895420...   
-1  {"id":2,"nama":"Edmund Pfeffer","nik":"3219671...   
-2  {"id":3,"nama":"Oscar Hansen","nik":"358283101...   
-3  {"id":4,"nama":"Nathan Barton-Bode","nik":"353...   
-4  {"id":5,"nama":"Richard Sauer","nik":"33966831...   
+0  {"id":1,"nama":"F**** B*****","nik":"5*******************"id":2,"nama":"E***** P******","nik":"3*****************"id":3,"nama":"O**** H*****","nik":"3*******************"id":4,"nama":"N***** B*****-B***","nik":"3*************"id":5,"nama":"R****** S****","nik":"33966831...   
 
                           email            timestamp  
-0   Ollie.Wilderman@hotmail.com  2025-12-08 19:13:06  
-1  Darrion_Wisoky41@hotmail.com  2025-12-08 19:13:06  
-2              Kian24@gmail.com  2025-12-08 19:13:06  
-3              Tyree5@gmail.com  2025-12-08 19:13:06  
-4      Keeley.Kuhic84@yahoo.com  2025-12-08 19:13:06  
+0   O**************@hotmail.com  2025-12-08 19:13:06  
+1  D***************@hotmail.com  2025-12-08 19:13:06  
+2              K*****@gmail.com  2025-12-08 19:13:06  
+3              T*****@gmail.com  2025-12-08 19:13:06  
+4      K*************@yahoo.com  2025-12-08 19:13:06  
 
 units.csv
   unit_number                   user_email tower  lantai  unit
-0      A-1-14     Keeley.Kuhic84@yahoo.com     A       1    14
-1      A-1-18         Ashton97@hotmail.com     A       1    18
-2      A-1-22  Ollie.Wilderman@hotmail.com     A       1    22
-3      A-1-24                pkj@gmail.com     A       1    24
-4      A-1-28  Ollie.Wilderman@hotmail.com     A       1    28
+0      A-1-14     K*************@yahoo.com     A       1    14
+1      A-1-18         A*******@hotmail.com     A       1    18
+2      A-1-22  O**************@hotmail.com     A       1    22
+3      A-1-24                p**@gmail.com     A       1    24
+4      A-1-28  O**************@hotmail.com     A       1    28
 
 users.csv
    id                         email         password           nib  role  \
-0   1    Yadira.Labadie22@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
-1   2           Robyn48@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
-2   3  Felton.Schamberger@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
-3   4       Moriah.Will73@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
-4   5         Edwin.Bosco@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
+0   1    Y***************@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
+1   2           R******@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
+2   3  F*****************@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
+3   4       M************@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
+4   5         E**********@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
 
                name           created_at  
-0        Ken Moen I  2025-12-08 19:13:05  
-1    Dr. Jared Lind  2025-12-08 19:13:05  
-2  Rosemarie Gibson  2025-12-08 19:13:05  
-3  Beatrice Kuvalis  2025-12-08 19:13:05  
-4      Marlene Dare  2025-12-08 19:13:05  
+0        K** M*** I  2025-12-08 19:13:05  
+1    D*. J**** L***  2025-12-08 19:13:05  
+2  R******** G*****  2025-12-08 19:13:05  
+3  B******* K******  2025-12-08 19:13:05  
+4      M****** D***  2025-12-08 19:13:05  
 
 violations.csv
    id  rental_id                                       photo_url  \
@@ -3319,11 +3311,11 @@ violations.csv
 4                         Comminor vis thorax absum.   
 
                          uploaded_by           created_at  
-0     Lisandro_Armstrong59@yahoo.com  2025-12-08 19:13:07  
-1        Ollie.Wilderman@hotmail.com  2025-12-08 19:13:07  
-2       Angeline.Ankunding@gmail.com  2025-12-08 19:13:07  
-3                  Shaun94@gmail.com  2025-12-08 19:13:07  
-4  Irwin.Runolfsdottir49@hotmail.com  2025-12-08 19:13:07  
+0     L*******************@yahoo.com  2025-12-08 19:13:07  
+1        O**************@hotmail.com  2025-12-08 19:13:07  
+2       A*****************@gmail.com  2025-12-08 19:13:07  
+3                  S******@gmail.com  2025-12-08 19:13:07  
+4  I********************@hotmail.com  2025-12-08 19:13:07  
 
 === Distribusi Label Setelah FIX ===
 label
@@ -3702,11 +3694,11 @@ for name, model in models.items():
 \begin{lstlisting}[caption={Output 9}]
 rentals.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -3730,11 +3722,11 @@ rentals.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -4051,11 +4043,11 @@ for name, model in models.items():
 \begin{lstlisting}[caption={Output 10}]
 rentals.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -4079,11 +4071,11 @@ rentals.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -4100,39 +4092,35 @@ logs.csv
 4   5          5  create           all       NaN   
 
                                            new_value  \
-0  {"id":1,"nama":"Faith Barton","nik":"517895420...   
-1  {"id":2,"nama":"Edmund Pfeffer","nik":"3219671...   
-2  {"id":3,"nama":"Oscar Hansen","nik":"358283101...   
-3  {"id":4,"nama":"Nathan Barton-Bode","nik":"353...   
-4  {"id":5,"nama":"Richard Sauer","nik":"33966831...   
+0  {"id":1,"nama":"F**** B*****","nik":"5*******************"id":2,"nama":"E***** P******","nik":"3*****************"id":3,"nama":"O**** H*****","nik":"3*******************"id":4,"nama":"N***** B*****-B***","nik":"3*************"id":5,"nama":"R****** S****","nik":"33966831...   
 
                           email            timestamp  
-0   Ollie.Wilderman@hotmail.com  2025-12-08 19:13:06  
-1  Darrion_Wisoky41@hotmail.com  2025-12-08 19:13:06  
-2              Kian24@gmail.com  2025-12-08 19:13:06  
-3              Tyree5@gmail.com  2025-12-08 19:13:06  
-4      Keeley.Kuhic84@yahoo.com  2025-12-08 19:13:06  
+0   O**************@hotmail.com  2025-12-08 19:13:06  
+1  D***************@hotmail.com  2025-12-08 19:13:06  
+2              K*****@gmail.com  2025-12-08 19:13:06  
+3              T*****@gmail.com  2025-12-08 19:13:06  
+4      K*************@yahoo.com  2025-12-08 19:13:06  
 units.csv
   unit_number                   user_email tower  lantai  unit
-0      A-1-14     Keeley.Kuhic84@yahoo.com     A       1    14
-1      A-1-18         Ashton97@hotmail.com     A       1    18
-2      A-1-22  Ollie.Wilderman@hotmail.com     A       1    22
-3      A-1-24                pkj@gmail.com     A       1    24
-4      A-1-28  Ollie.Wilderman@hotmail.com     A       1    28
+0      A-1-14     K*************@yahoo.com     A       1    14
+1      A-1-18         A*******@hotmail.com     A       1    18
+2      A-1-22  O**************@hotmail.com     A       1    22
+3      A-1-24                p**@gmail.com     A       1    24
+4      A-1-28  O**************@hotmail.com     A       1    28
 users.csv
    id                         email         password           nib  role  \
-0   1    Yadira.Labadie22@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
-1   2           Robyn48@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
-2   3  Felton.Schamberger@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
-3   4       Moriah.Will73@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
-4   5         Edwin.Bosco@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
+0   1    Y***************@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
+1   2           R******@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
+2   3  F*****************@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
+3   4       M************@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
+4   5         E**********@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
 
                name           created_at  
-0        Ken Moen I  2025-12-08 19:13:05  
-1    Dr. Jared Lind  2025-12-08 19:13:05  
-2  Rosemarie Gibson  2025-12-08 19:13:05  
-3  Beatrice Kuvalis  2025-12-08 19:13:05  
-4      Marlene Dare  2025-12-08 19:13:05  
+0        K** M*** I  2025-12-08 19:13:05  
+1    D*. J**** L***  2025-12-08 19:13:05  
+2  R******** G*****  2025-12-08 19:13:05  
+3  B******* K******  2025-12-08 19:13:05  
+4      M****** D***  2025-12-08 19:13:05  
 violations.csv
    id  rental_id                                       photo_url  \
 0   1        233      https://picsum.photos/seed/u717oX/983/2412   
@@ -4149,11 +4137,11 @@ violations.csv
 4                         Comminor vis thorax absum.   
 
                          uploaded_by           created_at  
-0     Lisandro_Armstrong59@yahoo.com  2025-12-08 19:13:07  
-1        Ollie.Wilderman@hotmail.com  2025-12-08 19:13:07  
-2       Angeline.Ankunding@gmail.com  2025-12-08 19:13:07  
-3                  Shaun94@gmail.com  2025-12-08 19:13:07  
-4  Irwin.Runolfsdottir49@hotmail.com  2025-12-08 19:13:07  
+0     L*******************@yahoo.com  2025-12-08 19:13:07  
+1        O**************@hotmail.com  2025-12-08 19:13:07  
+2       A*****************@gmail.com  2025-12-08 19:13:07  
+3                  S******@gmail.com  2025-12-08 19:13:07  
+4  I********************@hotmail.com  2025-12-08 19:13:07  
 
 === Proses Feature Selection ===
 
@@ -4638,11 +4626,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 11}]
 rentals.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -4666,11 +4654,11 @@ rentals.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -4687,39 +4675,35 @@ logs.csv
 4   5          5  create           all       NaN   
 
                                            new_value  \
-0  {"id":1,"nama":"Faith Barton","nik":"517895420...   
-1  {"id":2,"nama":"Edmund Pfeffer","nik":"3219671...   
-2  {"id":3,"nama":"Oscar Hansen","nik":"358283101...   
-3  {"id":4,"nama":"Nathan Barton-Bode","nik":"353...   
-4  {"id":5,"nama":"Richard Sauer","nik":"33966831...   
+0  {"id":1,"nama":"F**** B*****","nik":"5*******************"id":2,"nama":"E***** P******","nik":"3*****************"id":3,"nama":"O**** H*****","nik":"3*******************"id":4,"nama":"N***** B*****-B***","nik":"3*************"id":5,"nama":"R****** S****","nik":"33966831...   
 
                           email            timestamp  
-0   Ollie.Wilderman@hotmail.com  2025-12-08 19:13:06  
-1  Darrion_Wisoky41@hotmail.com  2025-12-08 19:13:06  
-2              Kian24@gmail.com  2025-12-08 19:13:06  
-3              Tyree5@gmail.com  2025-12-08 19:13:06  
-4      Keeley.Kuhic84@yahoo.com  2025-12-08 19:13:06  
+0   O**************@hotmail.com  2025-12-08 19:13:06  
+1  D***************@hotmail.com  2025-12-08 19:13:06  
+2              K*****@gmail.com  2025-12-08 19:13:06  
+3              T*****@gmail.com  2025-12-08 19:13:06  
+4      K*************@yahoo.com  2025-12-08 19:13:06  
 units.csv
   unit_number                   user_email tower  lantai  unit
-0      A-1-14     Keeley.Kuhic84@yahoo.com     A       1    14
-1      A-1-18         Ashton97@hotmail.com     A       1    18
-2      A-1-22  Ollie.Wilderman@hotmail.com     A       1    22
-3      A-1-24                pkj@gmail.com     A       1    24
-4      A-1-28  Ollie.Wilderman@hotmail.com     A       1    28
+0      A-1-14     K*************@yahoo.com     A       1    14
+1      A-1-18         A*******@hotmail.com     A       1    18
+2      A-1-22  O**************@hotmail.com     A       1    22
+3      A-1-24                p**@gmail.com     A       1    24
+4      A-1-28  O**************@hotmail.com     A       1    28
 users.csv
    id                         email         password           nib  role  \
-0   1    Yadira.Labadie22@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
-1   2           Robyn48@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
-2   3  Felton.Schamberger@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
-3   4       Moriah.Will73@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
-4   5         Edwin.Bosco@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
+0   1    Y***************@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
+1   2           R******@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
+2   3  F*****************@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
+3   4       M************@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
+4   5         E**********@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
 
                name           created_at  
-0        Ken Moen I  2025-12-08 19:13:05  
-1    Dr. Jared Lind  2025-12-08 19:13:05  
-2  Rosemarie Gibson  2025-12-08 19:13:05  
-3  Beatrice Kuvalis  2025-12-08 19:13:05  
-4      Marlene Dare  2025-12-08 19:13:05  
+0        K** M*** I  2025-12-08 19:13:05  
+1    D*. J**** L***  2025-12-08 19:13:05  
+2  R******** G*****  2025-12-08 19:13:05  
+3  B******* K******  2025-12-08 19:13:05  
+4      M****** D***  2025-12-08 19:13:05  
 violations.csv
    id  rental_id                                       photo_url  \
 0   1        233      https://picsum.photos/seed/u717oX/983/2412   
@@ -4736,11 +4720,11 @@ violations.csv
 4                         Comminor vis thorax absum.   
 
                          uploaded_by           created_at  
-0     Lisandro_Armstrong59@yahoo.com  2025-12-08 19:13:07  
-1        Ollie.Wilderman@hotmail.com  2025-12-08 19:13:07  
-2       Angeline.Ankunding@gmail.com  2025-12-08 19:13:07  
-3                  Shaun94@gmail.com  2025-12-08 19:13:07  
-4  Irwin.Runolfsdottir49@hotmail.com  2025-12-08 19:13:07  
+0     L*******************@yahoo.com  2025-12-08 19:13:07  
+1        O**************@hotmail.com  2025-12-08 19:13:07  
+2       A*****************@gmail.com  2025-12-08 19:13:07  
+3                  S******@gmail.com  2025-12-08 19:13:07  
+4  I********************@hotmail.com  2025-12-08 19:13:07  
 
 ==================================================
 === EXPLORATORY DATA ANALYSIS (EDA) ===
@@ -4750,7 +4734,7 @@ violations.csv
                   id           nama           nik status_pasutri  \
 count    9989.000000           9989  9.989000e+03           9989   
 unique           NaN           9894           NaN              2   
-top              NaN  Rudy Dietrich           NaN        Menikah   
+top              NaN  R*** D*******           NaN        Menikah   
 freq             NaN              3           NaN           5004   
 mean     5000.496746            NaN  3.649718e+15            NaN   
 std      2887.229484            NaN  6.341279e+14            NaN   
@@ -4789,7 +4773,7 @@ max            NaN             NaN           NaN              NaN
        waktu_checkout  lama_menginap komentar        user_email  \
 count            9989    9989.000000     9989              9989   
 unique            659            NaN       11                53   
-top          07:21:00            NaN      nan  Kian24@gmail.com   
+top          07:21:00            NaN      nan  K*****@gmail.com   
 freq               43            NaN     9243               223   
 mean              NaN      35.655321      NaN               NaN   
 std               NaN      45.875125      NaN               NaN   
@@ -4802,7 +4786,7 @@ max               NaN     150.000000      NaN               NaN
                         diedit_oleh           created_at classification  \
 count                            51                 9989           9989   
 unique                           35                    1              2   
-top     Jaime.Murazik28@hotmail.com  2025-12-08 19:13:06         normal   
+top     J**************@hotmail.com  2025-12-08 19:13:06         normal   
 freq                              3                 9989           9243   
 mean                            NaN                  NaN            NaN   
 std                             NaN                  NaN            NaN   
@@ -5431,11 +5415,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 12}]
 renatls.csv
    id                nama               nik status_pasutri  \
-0   1        Faith Barton  5178954204070908        Menikah   
-1   2      Edmund Pfeffer  3219671108856742        Menikah   
-2   3        Oscar Hansen  3582831012052287  Belum Menikah   
-3   4  Nathan Barton-Bode  3534442910807991  Belum Menikah   
-4   5       Richard Sauer  3396683107706646        Menikah   
+0   1        F**** B*****  5***************        Menikah   
+1   2      E***** P******  3***************        Menikah   
+2   3        O**** H*****  3***************  Belum Menikah   
+3   4  N***** B*****-B***  3***************  Belum Menikah   
+4   5       R****** S****  3***************        Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI   Mingguan      C-1-13              Cash         NaN   
@@ -5459,11 +5443,11 @@ renatls.csv
 4              0  Ditemukan alat suntik di tempat sampah   
 
                      user_email diedit_oleh           created_at  \
-0   Ollie.Wilderman@hotmail.com         NaN  2025-12-08 19:13:06   
-1  Darrion_Wisoky41@hotmail.com         NaN  2025-12-08 19:13:06   
-2              Kian24@gmail.com         NaN  2025-12-08 19:13:06   
-3              Tyree5@gmail.com         NaN  2025-12-08 19:13:06   
-4      Keeley.Kuhic84@yahoo.com         NaN  2025-12-08 19:13:06   
+0   O**************@hotmail.com         NaN  2025-12-08 19:13:06   
+1  D***************@hotmail.com         NaN  2025-12-08 19:13:06   
+2              K*****@gmail.com         NaN  2025-12-08 19:13:06   
+3              T*****@gmail.com         NaN  2025-12-08 19:13:06   
+4      K*************@yahoo.com         NaN  2025-12-08 19:13:06   
 
   classification  
 0         normal  
@@ -5480,39 +5464,35 @@ logs.csv
 4   5          5  create           all       NaN   
 
                                            new_value  \
-0  {"id":1,"nama":"Faith Barton","nik":"517895420...   
-1  {"id":2,"nama":"Edmund Pfeffer","nik":"3219671...   
-2  {"id":3,"nama":"Oscar Hansen","nik":"358283101...   
-3  {"id":4,"nama":"Nathan Barton-Bode","nik":"353...   
-4  {"id":5,"nama":"Richard Sauer","nik":"33966831...   
+0  {"id":1,"nama":"F**** B*****","nik":"5*******************"id":2,"nama":"E***** P******","nik":"3*****************"id":3,"nama":"O**** H*****","nik":"3*******************"id":4,"nama":"N***** B*****-B***","nik":"3*************"id":5,"nama":"R****** S****","nik":"33966831...   
 
                           email            timestamp  
-0   Ollie.Wilderman@hotmail.com  2025-12-08 19:13:06  
-1  Darrion_Wisoky41@hotmail.com  2025-12-08 19:13:06  
-2              Kian24@gmail.com  2025-12-08 19:13:06  
-3              Tyree5@gmail.com  2025-12-08 19:13:06  
-4      Keeley.Kuhic84@yahoo.com  2025-12-08 19:13:06  
+0   O**************@hotmail.com  2025-12-08 19:13:06  
+1  D***************@hotmail.com  2025-12-08 19:13:06  
+2              K*****@gmail.com  2025-12-08 19:13:06  
+3              T*****@gmail.com  2025-12-08 19:13:06  
+4      K*************@yahoo.com  2025-12-08 19:13:06  
 units.csv
   unit_number                   user_email tower  lantai  unit
-0      A-1-14     Keeley.Kuhic84@yahoo.com     A       1    14
-1      A-1-18         Ashton97@hotmail.com     A       1    18
-2      A-1-22  Ollie.Wilderman@hotmail.com     A       1    22
-3      A-1-24                pkj@gmail.com     A       1    24
-4      A-1-28  Ollie.Wilderman@hotmail.com     A       1    28
+0      A-1-14     K*************@yahoo.com     A       1    14
+1      A-1-18         A*******@hotmail.com     A       1    18
+2      A-1-22  O**************@hotmail.com     A       1    22
+3      A-1-24                p**@gmail.com     A       1    24
+4      A-1-28  O**************@hotmail.com     A       1    28
 users.csv
    id                         email         password           nib  role  \
-0   1    Yadira.Labadie22@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
-1   2           Robyn48@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
-2   3  Felton.Schamberger@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
-3   4       Moriah.Will73@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
-4   5         Edwin.Bosco@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
+0   1    Y***************@yahoo.com  oe4eaGaBLpQv76y  7.265157e+12  agen   
+1   2           R******@hotmail.com  UhoFvefkUMB44Cj  2.780507e+12  agen   
+2   3  F*****************@yahoo.com  Jf5D9lZJIGVf011  1.335353e+12  agen   
+3   4       M************@yahoo.com  DYPYEZs_Zh17IjQ  8.262239e+12  agen   
+4   5         E**********@gmail.com  1gcfQuFUGjUATHy  8.127913e+11  agen   
 
                name           created_at  
-0        Ken Moen I  2025-12-08 19:13:05  
-1    Dr. Jared Lind  2025-12-08 19:13:05  
-2  Rosemarie Gibson  2025-12-08 19:13:05  
-3  Beatrice Kuvalis  2025-12-08 19:13:05  
-4      Marlene Dare  2025-12-08 19:13:05  
+0        K** M*** I  2025-12-08 19:13:05  
+1    D*. J**** L***  2025-12-08 19:13:05  
+2  R******** G*****  2025-12-08 19:13:05  
+3  B******* K******  2025-12-08 19:13:05  
+4      M****** D***  2025-12-08 19:13:05  
 violations.csv
    id  rental_id                                       photo_url  \
 0   1        233      https://picsum.photos/seed/u717oX/983/2412   
@@ -5529,11 +5509,11 @@ violations.csv
 4                         Comminor vis thorax absum.   
 
                          uploaded_by           created_at  
-0     Lisandro_Armstrong59@yahoo.com  2025-12-08 19:13:07  
-1        Ollie.Wilderman@hotmail.com  2025-12-08 19:13:07  
-2       Angeline.Ankunding@gmail.com  2025-12-08 19:13:07  
-3                  Shaun94@gmail.com  2025-12-08 19:13:07  
-4  Irwin.Runolfsdottir49@hotmail.com  2025-12-08 19:13:07  
+0     L*******************@yahoo.com  2025-12-08 19:13:07  
+1        O**************@hotmail.com  2025-12-08 19:13:07  
+2       A*****************@gmail.com  2025-12-08 19:13:07  
+3                  S******@gmail.com  2025-12-08 19:13:07  
+4  I********************@hotmail.com  2025-12-08 19:13:07  
 
 ==================================================
 === EXPLORATORY DATA ANALYSIS (EDA) ===
@@ -5543,7 +5523,7 @@ violations.csv
                   id           nama           nik status_pasutri  \
 count    9989.000000           9989  9.989000e+03           9989   
 unique           NaN           9894           NaN              2   
-top              NaN  Rudy Dietrich           NaN        Menikah   
+top              NaN  R*** D*******           NaN        Menikah   
 freq             NaN              3           NaN           5004   
 mean     5000.496746            NaN  3.649718e+15            NaN   
 std      2887.229484            NaN  6.341279e+14            NaN   
@@ -5582,7 +5562,7 @@ max            NaN             NaN           NaN              NaN
        waktu_checkout  lama_menginap komentar        user_email  \
 count            9989    9989.000000     9989              9989   
 unique            659            NaN       11                53   
-top          07:21:00            NaN      nan  Kian24@gmail.com   
+top          07:21:00            NaN      nan  K*****@gmail.com   
 freq               43            NaN     9243               223   
 mean              NaN      35.655321      NaN               NaN   
 std               NaN      45.875125      NaN               NaN   
@@ -5595,7 +5575,7 @@ max               NaN     150.000000      NaN               NaN
                         diedit_oleh           created_at classification  \
 count                            51                 9989           9989   
 unique                           35                    1              2   
-top     Jaime.Murazik28@hotmail.com  2025-12-08 19:13:06         normal   
+top     J**************@hotmail.com  2025-12-08 19:13:06         normal   
 freq                              3                 9989           9243   
 mean                            NaN                  NaN            NaN   
 std                             NaN                  NaN            NaN   
@@ -6185,11 +6165,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 13}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -6227,11 +6207,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -6248,7 +6225,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -6869,11 +6846,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 14}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -6911,11 +6888,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -6932,7 +6906,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -7553,11 +7527,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 15}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -7595,11 +7569,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -7616,7 +7587,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -8238,11 +8209,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 16}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -8280,11 +8251,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -8301,7 +8269,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -8922,11 +8890,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 17}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -8964,11 +8932,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -8985,7 +8950,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -9606,11 +9571,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 18}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -9648,11 +9613,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -9669,7 +9631,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -10309,11 +10271,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 19}]
 rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -10351,11 +10313,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -10372,7 +10331,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -11018,11 +10977,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 20}]
 renatls.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -11060,11 +11019,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -11081,7 +11037,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -11777,11 +11733,11 @@ print(f"Sukses! Model dan Label Encoders telah disimpan sebagai file: {filename}
 \begin{lstlisting}[caption={Output 21}]
 renatls.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -11819,11 +11775,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -11840,7 +11793,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   
@@ -12472,11 +12425,11 @@ for model_name, filename in models_to_export.items():
 \begin{lstlisting}[caption={Output 22}]
  rentals.csv
    id                   nama               nik status_pasutri  \
-0   3  Novi Yanti Salsa Dewi  3204065911020004  Belum Menikah   
-1   4     Amilia Nur Halimah  3520064903040001  Belum Menikah   
-2   5     Achmad Agel Shahab  3525160508900001        Menikah   
-3   6            Cries Wandi  1471051210920001  Belum Menikah   
-4   7             SELO UTOMO  3171061909880002  Belum Menikah   
+0   3  N*** Y**** S**** D***  3***************  Belum Menikah   
+1   4     A***** N** H******  3***************  Belum Menikah   
+2   5     A***** A*** S*****  3***************        Menikah   
+3   6            C**** W****  1***************  Belum Menikah   
+4   7             S*** U****  3***************  Belum Menikah   
 
   status_kewarganegaraan jenis_sewa unit_number metode_pembayaran metode_lain  \
 0                    WNI     Harian     B-20-27              Cash         NaN   
@@ -12514,11 +12467,8 @@ logs.csv
 4  4906          7  create           all        NaN   
 
                                            new_value  email  pengguna_id  \
-0  {"nama":"Novi Yanti Salsa Dewi","nik":"3204065...    NaN         1267   
-1  {"nama":"Amilia Nur Halimah","nik":"3520064903...    NaN         1267   
-2  {"nama":"Achmad Agel Shahab","nik":"3525160508...    NaN         1267   
-3  {"nama":"Cries Wandi","nik":"1471051210920001"...    NaN         1267   
-4  {"nama":"SELO UTOMO","nik":"3171061909880002",...    NaN         1271   
+0  {"nama":"N*** Y**** S**** D***","nik":"3*************************************"nama":"A***** N** H******","nik":"3****************************************"nama":"A***** A*** S*****","nik":"3****************************************"nama":"C**** W****","nik":"1***************"...    NaN         1267   
+4  {"nama":"S*** U****","nik":"3***************",...    NaN         1271   
 
              timestamp  
 0  2026-05-20 13:09:49  
@@ -12535,7 +12485,7 @@ logs.csv
                 id                         nama           nik status_pasutri  \
 count   544.000000                          544  5.440000e+02            544   
 unique         NaN                          207           NaN              2   
-top            NaN  YOHANA MARIA SAROS SIANIPAR           NaN  Belum Menikah   
+top            NaN  Y***** M**** S**** S*******           NaN  Belum Menikah   
 freq           NaN                            8           NaN            330   
 mean    274.538603                          NaN  3.214330e+15            NaN   
 std     157.250941                          NaN  1.204147e+15            NaN   

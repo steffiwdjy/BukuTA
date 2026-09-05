@@ -1,4 +1,4 @@
-\section{Perancangan Sistem}
+\section{Perancangan Sistem Aplikasi Data Capture dan Peluncuran Model Sistem Deteksi Perilaku Pelanggaran Penyewa}
 
 Berdasarkan hasil analisis sistem dan wawancara dengan pihak terkait, sistem dirancang untuk mendigitalkan proses pencatatan yang sebelumnya manual dan belum terintegrasi, sekaligus untuk mendeteksi penyewa yang berpotensi melakukan pelanggaran. Pendekatan ini berfokus pada integritas data, keamanan akses, dan kemudahan pemantauan melalui notifikasi jika data yang diinput merupakan penyewa yang berpotensi melakukan pelanggaran.
 
@@ -122,6 +122,34 @@ Pada tahap akhir penyempurnaan sistem, dosen pembimbing mengarahkan agar aplikas
     
     \item Untuk melakukan perubahan berkas, dapat dilakukan modifikasi secara lokal terlebih dahulu, kemudian mengunggah perubahan tersebut (\textit{push}) ke repositori GitHub yang telah terhubung dengan server. Setelah repositori diperbarui, tekan tombol \textit{Pull now} dan \textit{Deploy now} pada panel kontrol server agar perubahan segera diterapkan.
     \item Apabila perubahan dilakukan pada bagian aplikasi \textit{Member} (\textit{frontend}), pengembang harus melakukan proses kompilasi ulang (\textit{build}) di lingkungan lokal. Melalui aplikasi \textit{terminal} di direktori proyek (\texttt{E:\textbackslash Kuliah\textbackslash TA\textbackslash TA1-v2\textbackslash Data Capture-3>}), kemudian masuk ke folder \textit{client} dan menjalankan perintah \texttt{npm run build} untuk menghasilkan berkas produksi yang telah di-\textit{minify}. Kembali ke antarmuka web panel kontrol server, pada halaman \textit{Websites and Domains} pilih domain \texttt{member.thejarrdin.com}, akses menu \textit{Files}, lalu unggah kembali folder \texttt{dist} hasil kompilasi terbaru untuk memperbarui antarmuka pengguna.
+    
+
+
+
+    \item Melakukan deployment API Model Klasifikasi pada server \texttt{visitor-api.srusun.id}. Proses ini dilakukan melalui akses \textit{remote} menggunakan \textit{terminal} atau \textit{Command Prompt} (CMD) dengan langkah-langkah berikut.
+    \begin{enumerate}
+        \item Melakukan akses SSH ke server \\
+        \texttt{ssh -p 1996 srusun-visitor-api@visitor-api.srusun.id} dan memasukkan kata sandi yang sesuai.
+        \item Melakukan kloning repositori untuk pertama kali, yakni saat direktori belum ada \\
+        \texttt{git clone https://github.com/steffiwdjy/DataCapture6.git visitor-api.srusun.id/}
+        \item Masuk ke direktori visitor-api.srusun.id/ dan memastikan versi Python \\
+        \texttt{cd visitor-api.srusun.id/} \\
+        \texttt{pip3 --version}
+        \item Mengambil \textit{branch} yang relevan dan melakukan sinkronisasi kode \\
+        \texttt{git checkout steffi} \\
+        \texttt{cd model-api/} \\
+        \texttt{git pull}
+        \item Menginstal dependensi yang diperlukan \\
+        \texttt{pip3 install -r requirements.txt}
+        \item Menjalankan API menggunakan \texttt{pm2} agar proses berjalan di latar belakang \\
+        \texttt{pm2 start app.py --name "model-api"} \\
+        \texttt{pm2 list} \\
+        \texttt{pm2 save}
+    \end{enumerate}
+    \item Setelah API aktif, memastikan aplikasi \textit{Data Capture} yang telah di-\textit{deploy} pada langkah sebelumnya melakukan \textit{request} ke \textit{endpoint} API tersebut (\texttt{https://visitor-api.srusun.id}) untuk proses inferensi model klasifikasi.
+
+
+
 
     \item Pengelolaan operasional basis data (CRUD) dilakukan melalui antarmuka web \url{https://mysql.srusun.id/phpmyadmin/}. Setelah melakukan \textit{login}, dapat dipilih basis data dengan nama \texttt{thejarrdin\_visitor} untuk menjalankan sintaks SQL guna melakukan manipulasi data sesuai dengan kebutuhan.
 \end{enumerate}
@@ -201,7 +229,7 @@ Bagian ini menguraikan alur kerja fungsional inti dari aplikasi {data capture} y
         \caption{Flowchart untuk Deteksi Penyewa Mencurigakan}
         \label{fig:flowchart_deteksi_penyewa_mencurigakan}
     \end{figure}
-    Gambar~\ref{fig:flowchart_deteksi_penyewa_mencurigakan} menggambarkan mekanisme inferensi model terhadap data yang baru dimasukkan. Setelah proses input selesai, algoritma akan menganalisis parameter data penyewa tersebut. Jika hasil klasifikasi mendeteksi profil penyewa normal, data akan langsung disimpan ke dalam basis data dengan label ``normal''. Sebaliknya, jika sistem mendeteksi adanya pola parameter yang menyimpang (misalnya waktu \textit{check-in} di luar jam normal), data tersebut akan disimpan dengan label ``mencurigakan'' dan sistem akan secara otomatis memicu notifikasi peringatan dini (\textit{early warning}) kepada pengguna.
+    Gambar~\ref{fig:flowchart_deteksi_penyewa_mencurigakan} menggambarkan mekanisme inferensi model terhadap data yang baru dimasukkan. Setelah proses input selesai, algoritma akan menganalisis parameter data penyewa tersebut. Jika hasil klasifikasi mendeteksi profil penyewa normal, data akan langsung disimpan ke dalam basis data dengan label ``normal''. Sebaliknya, jika sistem mendeteksi adanya pola parameter yang menyimpang (misalnya waktu \textit{check-in} di luar jam normal), sistem akan secara otomatis menampilkan notifikasi peringatan dini (\textit{early warning}) kepada pengguna. Namun, label data akan berubah saat adanya temuan pelanggaran yang diinputkan pada bagian Komentar oleh Pelaku Komersil atau Pengelola.
 \end{enumerate}
 
 \newpage
@@ -563,16 +591,16 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Pengelola_Sebelum.png} 
-        \caption{Antarmuka Menu Side Bar Pengelola (Sebelum Integrasi dan Tahap Sementara)}
+        \caption{Antarmuka Menu Sidebar Pengelola (Sebelum Integrasi)}
         \label{fig:sidebar_pengelola_sebelum}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Pengelola_Sementara.png} 
-        \caption{Antarmuka Menu Side Bar Pelaku Komersil (Tahap Sementara)}
+        \caption{Antarmuka Menu Sidebar Pengelola (Tahap Sementara)}
         \label{fig:sidebar_pengelola_sementara}
     \end{figure}
-    Berikut keterangan antarmuka Menu Pengelola - Sebelum dan Tahap Sementara (Gambar~\ref{fig:sidebar_pengelola_sebelum}).
+    Berikut keterangan antarmuka Menu Pengelola - Sebelum dan Tahap Sementara (Gambar~\ref{fig:sidebar_pengelola_sebelum} dan \ref{fig:sidebar_pengelola_sementara}).
     \begin{itemize}
         \item[\textbf{A.}] {Email} pengguna yang {login}.
         \item[\textbf{B.}] Menu {Dashboard}.
@@ -585,13 +613,13 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Komersil_Sebelum.png} 
-        \caption{Antarmuka Menu Side Bar Pelaku Komersil (Sebelum Integrasi dan Tahap Sementara)}
+        \caption{Antarmuka Menu Sidebar Pelaku Komersil (Sebelum Integrasi)}
         \label{fig:sidebar_komersil_sebelum}
     \end{figure} %?? lengkapi dgn github
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Komersil_Sementara.png} 
-        \caption{Antarmuka Menu Side Bar Pelaku Komersil (Tahap Sementara)}
+        \caption{Antarmuka Menu Sidebar Pelaku Komersil (Tahap Sementara)}
         \label{fig:sidebar_komersil_sementara}
     \end{figure}
     Keterangan Menu Komersil - Sebelum dan Tahap Sementara (Gambar~\ref{fig:sidebar_komersil_sementara}): Sama dengan Pengelola, namun \textbf{tanpa} elemen E (Manajemen Unit).
@@ -599,7 +627,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Pengelola_Sesudah.png} 
-        \caption{Antarmuka Menu Side Bar Pengelola (Sesudah Integrasi)}
+        \caption{Antarmuka Menu Sidebar Pengelola (Sesudah Integrasi)}
         \label{fig:ui_sidebar_pengelola_sesudah}
     \end{figure}
     Berikut keterangan antarmuka Menu Pengelola - Sesudah (Gambar~\ref{fig:ui_sidebar_pengelola_sesudah}).
@@ -615,7 +643,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{Gambar/UI_Sidebar_Komersil_Sesudah.png} 
-        \caption{Antarmuka Menu Side Bar Pelaku Komersil (Sesudah Integrasi)}
+        \caption{Antarmuka Menu Sidebar Pelaku Komersil (Sesudah Integrasi)}
         \label{fig:ui_sidebar_komersil_sesudah}
     \end{figure}
     Keterangan Menu Komersil - Sesudah (Gambar~\ref{fig:ui_sidebar_komersil_sesudah}): Sama dengan Pengelola, namun \textbf{tanpa} elemen F (Manajemen Unit).
@@ -663,7 +691,7 @@ Proses integrasi dengan ekosistem aplikasi {Member} The Jarrdin membawa perubaha
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\textwidth]{Gambar/UI_Dashboard_Komersil_Sesudah.png} 
-        \caption{Antarmuka Dashboard - Pelaku Komersil (Tahap Sementara dan Sesudah Integrasi}
+        \caption{Antarmuka Dashboard - Pelaku Komersil (Tahap Sementara dan Sesudah Integrasi)}
         \label{fig:ui_dashboard_komersil_sesudah}
     \end{figure} %sampe sini
 

@@ -1,6 +1,6 @@
 \section{\it XGBoost}\label{sec:xgboost}
 
-{\it Extreme Gradient Boosting} (XGBoost) merupakan algoritma klasifikasi berbasis pohon keputusan yang dikembangkan dari metode {\it Gradient Boosting Machine} (GBM) dan dioptimalkan untuk efisiensi, skalabilitas, serta akurasi (Chen \& Guestrin, 2016). XGBoost bekerja dengan cara membangun model secara bertahap melalui penambahan pohon-pohon keputusan secara berurutan untuk memperbaiki kesalahan prediksi dari model sebelumnya. Pada setiap iterasi, model baru dilatih untuk meminimalkan fungsi kerugian yang dikombinasikan dengan regularisasi guna mencegah {\it overfitting} (Friedman, 2001).
+{\it Extreme Gradient Boosting} (XGBoost) merupakan algoritma klasifikasi berbasis pohon keputusan yang dikembangkan dari metode {\it Gradient Boosting Machine} (GBM) dan dioptimalkan untuk efisiensi, skalabilitas, serta akurasi \cite{chen2016xgboost}. XGBoost bekerja dengan cara membangun model secara bertahap melalui penambahan pohon-pohon keputusan secara berurutan untuk memperbaiki kesalahan prediksi dari model sebelumnya. Pada setiap iterasi, model baru dilatih untuk meminimalkan fungsi kerugian yang dikombinasikan dengan regularisasi guna mencegah {\it overfitting} \cite{friedman2001greedy}.
 
     Secara matematis, tujuan utama dari algoritma XGBoost dirumuskan sebagai berikut.
     $$
@@ -8,7 +8,7 @@
     $$
     dengan $\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2$. Di dalam rumus ini, $l$ mewakili tingkat kesalahan (kerugian) antara tebakan sistem dan data aslinya. Sedangkan $\Omega$ berfungsi sebagai ``rem'' (regularisasi) agar aturan keputusan yang dibentuk tidak terlalu rumit atau sekadar menghafal data. Simbol $T$ menunjukkan jumlah ujung cabang (daun) pada pohon, dan $w_j$ adalah nilai bobot di ujung cabang ke-$j$. Intinya, XGBoost berusaha menekan tingkat kesalahan $\mathcal{L}$ sekecil mungkin agar tebakannya akurat, namun tetap menjaga bentuk pohon se-sederhana mungkin.
     
-    Sebagai ilustrasi komputasional dari cara kerjanya, simulasi perhitungan berikut diadaptasi dari kerangka algoritma matematis yang dijabarkan pada literatur asli XGBoost (Chen \& Guestrin, 2016) serta formulasi \textit{boosting} dalam buku \textit{The Elements of Statistical Learning} (Hastie, Tibshirani, \& Friedman, 2009), yang kemudian diterapkan ke dalam konteks data penyewa pada penelitian ini. Misalkan kita memiliki tiga data penyewa untuk dilatih:
+    Sebagai ilustrasi komputasional dari cara kerjanya, simulasi perhitungan berikut diadaptasi dari kerangka algoritma matematis yang dijabarkan pada literatur asli XGBoost \cite{chen2016xgboost} serta formulasi \textit{boosting} dalam buku \textit{The Elements of Statistical Learning} \cite{hastie2009elements}, yang kemudian diterapkan ke dalam konteks data penyewa pada penelitian ini. Misalkan kita memiliki tiga data penyewa untuk dilatih:
     \begin{itemize}
         \item Data 1: (lama menginap = 2 hari, check-in = 14.00) $\rightarrow$ label: 0 (kelas normal)
         \item Data 2: (lama menginap = 1 hari, check-in = 00.00) $\rightarrow$ label: 1 (kelas tidak normal)
@@ -38,7 +38,7 @@
       \item Data 3 masuk ke daun B
     \end{itemize}
     
-    Langkah berikutnya adalah menghitung bobot perbaikan tebakan di setiap ujung cabang (daun). Sesuai dengan pembuktian matematis XGBoost (Chen \& Guestrin, 2016), bobot pembaruan daun ($w_j$) dikalkulasi menggunakan persamaan Newton-Raphson sebagai berikut.
+    Langkah berikutnya adalah menghitung bobot perbaikan tebakan di setiap ujung cabang (daun). Sesuai dengan pembuktian matematis XGBoost \cite{chen2016xgboost}, bobot pembaruan daun ($w_j$) dikalkulasi menggunakan persamaan Newton-Raphson sebagai berikut.
     $$
     w_j = -\frac{\sum g_i}{\sum h_i + \lambda}
     $$
@@ -82,4 +82,4 @@
     
     Dapat dilihat bahwa persentase probabilitas Data 3 kini turun menjadi 0,47 (lebih rendah dari tebakan awal 0,5). Karena nilainya semakin menjauhi batas kecurigaan (misalnya ditetapkan batas klasifikasi 0,60), sistem menjadi semakin yakin bahwa Data 3 adalah penyewa kelas normal (0). Algoritma ini tidak berhenti di sini; algoritma ini akan terus mengulang proses yang sama, membentuk pohon-pohon tambahan secara berurutan untuk menekan sisa {\it error} prediksi tersebut (dari 0,47 agar semakin mendekati target aslinya yakni 0).
 
-    Keunggulan XGBoost terletak pada kemampuannya menangani data tidak seimbang menggunakan parameter seperti {\tt scale\_pos\_weight}, serta mendukung evaluasi pentingnya fitur melalui teknik {\it feature importance}. Hal ini menjadikannya sangat cocok untuk aplikasi yang menuntut akurasi tinggi serta kemampuan interpretasi terhadap pola perilaku, seperti pada deteksi penyewa tidak normal (Kou et al., 2021).
+    Keunggulan XGBoost terletak pada kemampuannya menangani data tidak seimbang menggunakan parameter seperti {\tt scale\_pos\_weight}, serta mendukung evaluasi pentingnya fitur melalui teknik {\it feature importance}. Hal ini menjadikannya sangat cocok untuk aplikasi yang menuntut akurasi tinggi serta kemampuan interpretasi terhadap pola perilaku, seperti pada deteksi penyewa tidak normal \cite{kou2014xgboost}.
